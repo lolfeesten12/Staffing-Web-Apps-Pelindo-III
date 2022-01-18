@@ -1,28 +1,21 @@
-    <!--begin::Fonts-->
-<link
-    rel="stylesheet"
-    href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700"
-/>
-<!--end::Fonts-->
+<!--plugins-->
+    <link href="assets/plugins/simplebar/css/simplebar.css" rel="stylesheet" />
+    <link href="assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet" />
+    <link href="assets/plugins/metismenu/css/metisMenu.min.css" rel="stylesheet" />
+    <!-- Bootstrap CSS -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="assets/css/bootstrap-extended.css" rel="stylesheet" />
+    <link href="assets/css/style.css" rel="stylesheet" />
+    <link href="assets/css/icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 
-<!--begin::Global Theme Styles(used by all pages)-->
-<link
-    href="user-assets/assets/plugins/global/plugins.bundle.css?v=7.0.6"
-    rel="stylesheet"
-    type="text/css"
-/>
-<link
-    href="user-assets/assets/plugins/custom/prismjs/prismjs.bundle.css?v=7.0.6"
-    rel="stylesheet"
-    type="text/css"
-/>
-<link
-    href="user-assets/assets/css/style.bundle.css?v=7.0.6"
-    rel="stylesheet"
-    type="text/css"
-/>
-<!--end::Global Theme Styles-->
+    <!-- loader-->
+    <link href="assets/css/pace.min.css" rel="stylesheet" />
 
-<!--begin::Layout Themes(used by all pages)-->
-<!--end::Layout Themes-->
-<link rel="shortcut icon" href="image/logo_new.png" />
+
+    <!--Theme Styles-->
+    <link href="assets/css/dark-theme.css" rel="stylesheet" />
+    <link href="assets/css/light-theme.css" rel="stylesheet" />
+    <link href="assets/css/semi-dark.css" rel="stylesheet" />
+    <link href="assets/css/header-colors.css" rel="stylesheet" />

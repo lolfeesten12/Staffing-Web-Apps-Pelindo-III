@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="light-theme">
 <!--begin::Head-->
 
 <head>
-    <base href="../../" />
-    <meta charset="utf-8" />
-    <title>@yield('name')</title>
-    <meta name="description" content="No subheader example" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="csrf-token" content="{{ csrf_token() }}" />
+    <title>
+        @yield('name')
+    </title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="assets/images/favicon-32x32.png" type="image/png" />
 
     {{-- style --}}
     @stack('prepend-style')
@@ -20,13 +21,17 @@
 
 <!--begin::Body-->
 
-<body id="kt_body"
-    class="quick-panel-right demo-panel-right offcanvas-right header-fixed header-mobile-fixed aside-enabled aside-static page-loading">
+<body >
+    <div class="wrapper">
+    
     @include('user-views.includes.navbar')
 
     @yield('content')
 
-    @include('user-views.includes.footer')
+    <!--Start Back To Top Button-->
+    <a href="javaScript:;" class="back-to-top"><i class='bx bxs-up-arrow-alt'></i></a>
+    <!--End Back To Top Button-->
+    </div>
 
     @stack('prepend-script')
     @include('user-views.includes.script')
