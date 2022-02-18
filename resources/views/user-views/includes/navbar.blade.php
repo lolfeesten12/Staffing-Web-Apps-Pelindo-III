@@ -114,7 +114,7 @@
             <ul>
                 <li> <a href="index.html"><i class="bi bi-circle"></i>Pegawai</a></li>
                 <li> <a href="{{ route('unit-kerja.index') }}"><i class="bi bi-circle"></i>Unit Kerja</a></li>
-                <li> <a href="index2.html"><i class="bi bi-circle"></i>Jabatan</a></li>
+                <li> <a href="{{ route('jabatan.index') }}"><i class="bi bi-circle"></i>Jabatan</a></li>
                 <li> <a href="index2.html"><i class="bi bi-circle"></i>Shift Kerja</a></li>
                 <li> <a href="index2.html"><i class="bi bi-circle"></i>Unit Kerja</a></li>
             </ul>

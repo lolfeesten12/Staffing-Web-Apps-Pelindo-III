@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\MasterData\MasterJabatanController;
+use App\Http\Controllers\MasterData\MasterPegawaiController;
 use App\Http\Controllers\MasterData\MasterUnitKerjaController;
 use App\Http\Controllers\User\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -33,4 +35,16 @@ Route::prefix('Masterdata')
     // ->middleware(['Admin_Role','verified'])
     ->group(function () {
         Route::resource('unit-kerja', MasterUnitKerjaController::class);
+    });
+
+Route::prefix('Masterdata')
+    // ->middleware(['Admin_Role','verified'])
+    ->group(function () {
+        Route::resource('jabatan', MasterJabatanController::class);
+    });
+
+Route::prefix('Masterdata')
+    // ->middleware(['Admin_Role','verified'])
+    ->group(function () {
+        Route::resource('pegawai', MasterPegawaiController::class);
     });

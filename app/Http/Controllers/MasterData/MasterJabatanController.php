@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\MasterData;
 
 use App\Http\Controllers\Controller;
-use App\Models\MasterData\MasterPegawai;
+use App\Models\MasterData\MasterJabatan;
 use Illuminate\Http\Request;
 
-class MasterPegawaiController extends Controller
+class MasterJabatanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +15,9 @@ class MasterPegawaiController extends Controller
      */
     public function index()
     {
-        $pegawai = MasterPegawai::with('Jabatan','UnitKerja')->get();
+        $jabatan = MasterJabatan::get();
 
-        return view('user-views.pages.masterdata.pegawai.index',compact('pegawai'));
+        return view('user-views.pages.masterdata.jabatan', compact('jabatan'));
     }
 
     /**
@@ -38,7 +38,11 @@ class MasterPegawaiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $jabatan = new MasterJabatan;
+        $jabatan->nama_jabatan = $request->nama_jabatan;
+        $jabatan->save();
+        
+        return redirect()->back()->with('messageberhasil','Data Jabatan Berhasil ditambahkan');
     }
 
     /**
@@ -72,7 +76,11 @@ class MasterPegawaiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $jabatan = MasterJabatan::find($id);
+        $jabatan->nama_jabatan = $request->nama_jabatan;
+        $jabatan->update();
+
+        return redirect()->back()->with('messageberhasil','Data Jabatan Berhasil diedit');
     }
 
     /**
@@ -83,6 +91,9 @@ class MasterPegawaiController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $jabatan = MasterJabatan::find($id);
+        $jabatan->delete();
+
+        return redirect()->back()->with('messagehapus','Data Jabatan Berhasil dihapus');
     }
 }

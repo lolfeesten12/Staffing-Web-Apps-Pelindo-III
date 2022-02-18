@@ -38,7 +38,11 @@ class MasterUnitKerjaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $unit = new MasterUnitKerja;
+        $unit->unit_kerja = $request->unit_kerja;
+        $unit->save();
+
+        return redirect()->back()->with('messageberhasil','Data Unit kerja Berhasil Tersimpan');
     }
 
     /**
@@ -72,7 +76,11 @@ class MasterUnitKerjaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $unit = MasterUnitKerja::find($id);
+        $unit->unit_kerja = $request->unit_kerja;
+        $unit->update();
+
+        return redirect()->back()->with('messageberhasil','Data Unit Kerja Berhasil diedit');
     }
 
     /**
@@ -83,6 +91,9 @@ class MasterUnitKerjaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $unit = MasterUnitKerja::find($id);
+        $unit->delete();
+
+        return redirect()->back()->with('messagehapus','Data Unit Kerja Berhasil dihapus');
     }
 }
