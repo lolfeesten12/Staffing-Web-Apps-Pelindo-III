@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MasterData\MasterUnitKerjaController;
 use App\Http\Controllers\User\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,3 +27,10 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 // ---------------------user------------------
 Route::resource('profile', ProfileController::class);
+
+// MASTER DATA
+Route::prefix('Masterdata')
+    // ->middleware(['Admin_Role','verified'])
+    ->group(function () {
+        Route::resource('unit-kerja', MasterUnitKerjaController::class);
+    });

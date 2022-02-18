@@ -1,7 +1,5 @@
 @extends('user-views.layouts.app')
-@push('addon-style')
 
-@endpush
 
 @section('name')
 Profile
@@ -192,6 +190,4 @@ Profile
 @endsection
 
 
-@push('addon-style')
 
-@endpush
