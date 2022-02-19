@@ -2,9 +2,12 @@
 
 use App\Http\Controllers\MasterData\MasterJabatanController;
 use App\Http\Controllers\MasterData\MasterPegawaiController;
+use App\Http\Controllers\MasterData\MasterPelanggaranController;
+use App\Http\Controllers\MasterData\MasterSanksiController;
 use App\Http\Controllers\MasterData\MasterShiftController;
 use App\Http\Controllers\MasterData\MasterUnitKerjaController;
 use App\Http\Controllers\User\ProfileController;
+use App\Models\MasterData\MasterHubunganKeluarga;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -54,4 +57,16 @@ Route::prefix('Masterdata')
     // ->middleware(['Admin_Role','verified'])
     ->group(function () {
         Route::resource('shift', MasterShiftController::class);
+    });
+
+Route::prefix('Masterdata')
+    // ->middleware(['Admin_Role','verified'])
+    ->group(function () {
+        Route::resource('sanksi', MasterSanksiController::class);
+    });
+
+Route::prefix('Masterdata')
+    // ->middleware(['Admin_Role','verified'])
+    ->group(function () {
+        Route::resource('pelanggaran', MasterPelanggaranController::class);
     });

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\MasterData;
 
 use App\Http\Controllers\Controller;
+use App\Models\MasterData\MasterPelanggaran;
+use App\Models\MasterData\MasterSanksi;
 use Illuminate\Http\Request;
 
 class MasterPelanggaranController extends Controller
@@ -14,7 +16,10 @@ class MasterPelanggaranController extends Controller
      */
     public function index()
     {
-        //
+        $pelanggaran = MasterPelanggaran::with('Sanksi')->get();
+        $sanksi = MasterSanksi::get();
+
+        return view('user-views.pages.masterdata.pelanggaran',compact('pelanggaran','sanksi'));
     }
 
     /**
@@ -35,7 +40,12 @@ class MasterPelanggaranController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $pelanggaran = new MasterPelanggaran;
+        $pelanggaran->id_sanksi = $request->id_sanksi;
+        $pelanggaran->pelanggaran = $request->pelanggaran;
+        $pelanggaran->save();
+
+        return redirect()->back()->with('messageberhasil','Data Pelanggaran Berhasil ditambahkan');
     }
 
     /**
@@ -69,7 +79,12 @@ class MasterPelanggaranController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $pelanggaran = MasterPelanggaran::find($id);
+        $pelanggaran->id_sanksi = $request->id_sanksi;
+        $pelanggaran->pelanggaran = $request->pelanggaran;
+        $pelanggaran->update();
+
+        return redirect()->back()->with('messageberhasil','Data Pelanggaran Berhasil diedit');
     }
 
     /**
@@ -80,6 +95,9 @@ class MasterPelanggaranController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $pelanggaran = MasterPelanggaran::find($id);
+        $pelanggaran->delete();
+
+        return redirect()->back()->with('messagehapus','Data Pelanggaran Berhasil dihapus');
     }
 }

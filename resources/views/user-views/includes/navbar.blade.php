@@ -132,9 +132,20 @@
                 <li> <a href="{{ route('unit-kerja.index') }}"><i class="bi bi-circle"></i>Unit Kerja</a></li>
                 <li> <a href="{{ route('jabatan.index') }}"><i class="bi bi-circle"></i>Jabatan</a></li>
                 <li> <a href="{{ route('shift.index') }}"><i class="bi bi-circle"></i>Shift Kerja</a></li>
-                <li> <a href="index2.html"><i class="bi bi-circle"></i>Pelanggaran</a></li>
-                <li> <a href="index2.html"><i class="bi bi-circle"></i>Sanksi</a></li>
-                <li> <a href="index2.html"><i class="bi bi-circle"></i>Hubungan Keluarga</a></li>
+                <li> <a href="{{ route('pelanggaran.index') }}"><i class="bi bi-circle"></i>Pelanggaran</a></li>
+                <li> <a href="{{ route('sanksi.index') }}"><i class="bi bi-circle"></i>Sanksi</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="javascript:;" class="has-arrow">
+                <div class="parent-icon"><i class="lni lni-users"></i>
+                </div>
+                <div class="menu-title">Requirement</div>
+            </a>
+            <ul>
+                <li> <a href="#"><i class="bi bi-circle"></i>Calon Pegawai</a></li>
+                <li> <a href="#"><i class="bi bi-circle"></i>Hasil Seleksi</a></li>
+                <li> <a href="#"><i class="bi bi-circle"></i>Pengumuman</a></li>
             </ul>
         </li>
         <li class="menu-label">Riwayat Pegawai</li>
@@ -209,11 +220,15 @@
         </li>
         <li class="menu-label">Logout</li>
         <li>
-            <a href="https://themeforest.net/user/codervent" target="_blank">
+            <a onclick="event.preventDefault(); document.getElementById('logout-form').submit()">
                 <div class="parent-icon"><i class="fadeIn animated bx bx-arrow-back"></i>
                 </div>
                 <div class="menu-title">Logout</div>
+                <form id="logout-form" action="{{route('logout')}}" method="post" style="display: none">
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                </form>
             </a>
+
         </li>
     </ul>
 </aside>

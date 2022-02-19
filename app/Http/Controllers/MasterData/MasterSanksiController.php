@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\MasterData;
 
 use App\Http\Controllers\Controller;
+use App\Models\MasterData\MasterSanksi;
 use Illuminate\Http\Request;
 
 class MasterSanksiController extends Controller
@@ -14,7 +15,9 @@ class MasterSanksiController extends Controller
      */
     public function index()
     {
-        //
+        $sanksi = MasterSanksi::get();
+
+        return view('user-views.pages.masterdata.sanksi', compact('sanksi'));
     }
 
     /**
@@ -35,7 +38,12 @@ class MasterSanksiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $sanksi = new MasterSanksi;
+        $sanksi->nama_sanksi = $request->nama_sanksi;
+        $sanksi->keterangan = $request->keterangan;
+        $sanksi->save();
+
+        return redirect()->back()->with('messageberhasil','Data Sanksi Berhasil ditambahkan');
     }
 
     /**
@@ -69,7 +77,12 @@ class MasterSanksiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $sanksi = MasterSanksi::find($id);
+        $sanksi->nama_sanksi = $request->nama_sanksi;
+        $sanksi->keterangan = $request->keterangan;
+        $sanksi->update();
+
+        return redirect()->back()->with('messageberhasil','Data Sanksi Berhasil diedit');
     }
 
     /**
@@ -80,6 +93,9 @@ class MasterSanksiController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $sanksi = MasterSanksi::find($id);
+        $sanksi->delete();
+
+        return redirect()->back()->with('messagehapus',' Data Sanksi Berhasil dihapus');
     }
 }

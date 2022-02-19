@@ -9,7 +9,7 @@ class MasterSanksi extends Model
 {
     protected $table = "tb_master_sanksi";
 
-    protected $primaryKey = 'id_pelanggaran';
+    protected $primaryKey = 'id_sanksi';
 
     protected $fillable = [
         'nama_sanksi',
