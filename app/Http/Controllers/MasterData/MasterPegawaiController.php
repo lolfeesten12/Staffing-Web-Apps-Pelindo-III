@@ -145,7 +145,7 @@ class MasterPegawaiController extends Controller
             $pegawai->avatar = $avatar;
             $pegawai->update();
     
-            $user = User::where('id_pegawai', '=', $pegawai->id_pegawai)->get();
+            $user = User::where('id_pegawai', '=', $pegawai->id_pegawai)->first();
             $user->name = $pegawai->nama_panggilan;
             $user->email = $request->email;
             $user->update();
@@ -166,7 +166,7 @@ class MasterPegawaiController extends Controller
             $pegawai->role = $request->role;
             $pegawai->update();
     
-            $user = User::where('id_pegawai', '=', $pegawai->id_pegawai)->get();
+            $user = User::where('id_pegawai', '=', $pegawai->id_pegawai)->first();
             $user->name = $pegawai->nama_panggilan;
             $user->email = $request->email;
             $user->update();
@@ -183,8 +183,11 @@ class MasterPegawaiController extends Controller
      */
     public function destroy($id)
     {
+        $user = User::where('id_pegawai', '=', $id)->first();
+        $user->delete();
+
         $pegawai = MasterPegawai::find($id);
-        $pegawai->delete();
+        $pegawai->delete(); 
 
         return redirect()->back()->with('messagehapus','Data Pegawai Berhasil dihapus');
     }

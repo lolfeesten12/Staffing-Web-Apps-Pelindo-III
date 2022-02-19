@@ -16,19 +16,33 @@
                 <li class="nav-item dropdown dropdown-user-setting">
                     <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="#" data-bs-toggle="dropdown">
                         <div class="user-setting d-flex align-items-center">
-                            <img src="{{ url('assets/images/avatars/avatar-1.png') }}" class="user-img" alt="">
+                            @if (!Auth::user()->pegawai->avatar)
+                            <img src="https://ui-avatars.com/api/?name=Admin" class="rounded-circle" alt="" style="border-radius: 50%">
+                        @else
+                        <img class="rounded-circle"  width="40" height="40"
+                            src="{{ asset('/profile/'.Auth::user()->pegawai['avatar']) }}" alt="">
+                        <img src="{{ url(Auth::user()->pegawai->avatar) }}" alt="">
+                        @endif
+
                         </div>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li>
                             <a class="dropdown-item" href="#">
                                 <div class="d-flex align-items-center">
-                                    <img src="{{ url('assets/images/avatars/avatar-1.png') }}" alt="" class="rounded-circle"
-                                        width="54" height="54">
+                                    @if (!Auth::user()->pegawai->avatar)
+                                        <img src="https://ui-avatars.com/api/?name=Admin" class="rounded-circle" alt="" style="border-radius: 50%">
+                                    @else
+                                    <img class="rounded-circle"  width="54" height="54"
+                                        src="{{ asset('/profile/'.Auth::user()->pegawai['avatar']) }}" alt="">
+                                    <img src="{{ url(Auth::user()->pegawai->avatar) }}" alt="">
+                                    @endif
+
+                                    {{-- <img src="{{ url('assets/images/avatars/avatar-1.png') }}" alt="" class="rounded-circle"
+                                        width="54" height="54"> --}}
                                     <div class="ms-3">
-                                        <h6 class="mb-0 dropdown-user-name">Jhon Deo</h6>
-                                        <small class="mb-0 dropdown-user-designation text-secondary text-white">HR
-                                            Manager</small>
+                                        <h6 class="mb-0 dropdown-user-name">Halo, {{ Auth::user()->Pegawai->nama_panggilan }}</h6>
+                                        <small class="mb-0 dropdown-user-designation text-secondary">{{ Auth::user()->Pegawai->Unitkerja->unit_kerja }}</small>
                                     </div>
                                 </div>
                             </a>
@@ -56,19 +70,21 @@
                             <hr class="dropdown-divider">
                         </li>
                         <li>
-                            <a class="dropdown-item" href="authentication-signup-with-header-footer.html">
+                            <a class="dropdown-item" href="authentication-signup-with-header-footer.html" onclick="event.preventDefault(); document.getElementById('logout-form').submit()">
                                 <div class="d-flex align-items-center">
                                     <div class=""><i class="bi bi-lock-fill"></i></div>
                                     <div class="ms  -3"><span>Logout</span></div>
                                 </div>
+                                <form id="logout-form" action="{{route('logout')}}" method="post" style="display: none">
+                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                </form>
                             </a>
                         </li>
                     </ul>
                 </li>
                 <li>
-                <h6 class="mb-0 dropdown-user-name text-white">Jhon Deo</h6>
-                <small class="mb-0 dropdown-user-designation text-secondary text-white">HR
-                    Manager</small>
+                    <h6 class="mb-0 dropdown-user-name text-white">Halo, {{ Auth::user()->Pegawai->nama_panggilan }}</h6>
+                    <small class="mb-0 dropdown-user-designation text-secondary text-white">{{ Auth::user()->Pegawai->Unitkerja->unit_kerja }}</small>
                 </li>
             </ul>
         </div>
@@ -115,8 +131,10 @@
                 <li> <a href="{{ route('pegawai.index') }}"><i class="bi bi-circle"></i>Pegawai</a></li>
                 <li> <a href="{{ route('unit-kerja.index') }}"><i class="bi bi-circle"></i>Unit Kerja</a></li>
                 <li> <a href="{{ route('jabatan.index') }}"><i class="bi bi-circle"></i>Jabatan</a></li>
-                <li> <a href="index2.html"><i class="bi bi-circle"></i>Shift Kerja</a></li>
-                <li> <a href="index2.html"><i class="bi bi-circle"></i>Unit Kerja</a></li>
+                <li> <a href="{{ route('shift.index') }}"><i class="bi bi-circle"></i>Shift Kerja</a></li>
+                <li> <a href="index2.html"><i class="bi bi-circle"></i>Pelanggaran</a></li>
+                <li> <a href="index2.html"><i class="bi bi-circle"></i>Sanksi</a></li>
+                <li> <a href="index2.html"><i class="bi bi-circle"></i>Hubungan Keluarga</a></li>
             </ul>
         </li>
         <li class="menu-label">Riwayat Pegawai</li>
