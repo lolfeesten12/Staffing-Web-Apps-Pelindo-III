@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\MasterData\MasterPegawai;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -17,13 +18,12 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $table= 'tb_master_pegawai';
+    protected $table= 'users';
     
-    protected $primaryKey = 'id_pegawai';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
-
-        'nama_user', 'email', 'password', 'role', 'alamat_user', 'nohp_user', 'id_desa'
+         'name','email', 'password', 'id_pegawai'
     ];
 
     /**
@@ -43,4 +43,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function Pegawai()
+    {
+        return $this->belongsTo(MasterPegawai::class, 'id_pegawai', 'id_pegawai');
+    }
 }

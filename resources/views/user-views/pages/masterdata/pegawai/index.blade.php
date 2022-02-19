@@ -22,8 +22,7 @@ Master Pegawai
                 </nav>
             </div>
             <div class="ms-auto">
-                <a href="" type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
-                    data-bs-target="#Modaltambah">Tambah Data</a>
+                <a href="{{ route('pegawai.create') }}" class="btn btn-sm btn-primary">Tambah Data</a>
             </div>
         </div>
         <hr>
@@ -82,7 +81,7 @@ Master Pegawai
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
                                                 style="width: 70px;">Jenis Kelamin</th>
-                                                <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
+                                            <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
                                                 style="width: 70px;">No.Telp</th>
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
@@ -100,13 +99,13 @@ Master Pegawai
                                             <td>{{ $item->jenis_kelamin }}</td>
                                             <td>{{ $item->no_telp }}</td>
                                             <td class="text-center">
-                                                <a href="javascript:;" class="btn btn-sm btn-primary"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#Modaledit-{{ $item->id_jabatan }}"><i
-                                                        class="bi bi-pencil-fill"></i></a>
+                                                <a href="{{ route('pegawai.show',$item->id_pegawai) }}"
+                                                    class="btn btn-sm btn-secondary"><i class="lni lni-eye"></i></a>
+                                                <a href="{{ route('pegawai.edit',$item->id_pegawai) }}"
+                                                    class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i></a>
                                                 <a href="javascript:;" class="btn btn-sm btn-danger"
                                                     data-bs-toggle="modal"
-                                                    data-bs-target="#Modalhapus-{{ $item->id_jabatan }}"><i
+                                                    data-bs-target="#Modalhapus-{{ $item->id_pegawai }}"><i
                                                         class="bi bi-trash-fill"></i></a>
                                             </td>
                                         </tr>
@@ -125,85 +124,20 @@ Master Pegawai
 </main>
 
 
-<div class="modal fade" id="Modaltambah" data-backdrop="static" tabindex="-1" role="dialog"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Tambah Data Jabatan</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form action="{{ route('jabatan.store') }}" method="POST">
-                @csrf
-                <div class="modal-body">
-                    <label class="small mb-1">Isikan Form Dibawah Ini</label>
-                    <hr>
-                    </hr>
-                    <div class="form-group">
-                        <label class="small mb-1 mr-1" for="nama_jabatan">Nama Jabatan</label><span class="mr-4 mb-3"
-                            style="color: red">*</span>
-                        <input class="form-control" name="nama_jabatan" type="text" id="nama_jabatan"
-                            placeholder="Input Nama Jabatan" value="{{ old('nama_jabatan') }}" required />
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="Submit" class="btn btn-primary">Save changes</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-@forelse ($jabatan as $item)
-<div class="modal fade" id="Modaledit-{{ $item->id_jabatan }}" data-backdrop="static" tabindex="-1" role="dialog"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Edit Data Jabatan</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form action="{{ route('jabatan.update', $item->id_jabatan) }}" method="POST">
-                @method('PUT')
-                @csrf
-                <div class="modal-body">
-                    <label class="small mb-1">Isikan Form Dibawah Ini</label>
-                    <hr>
-                    </hr>
-                    <div class="form-group">
-                        <label class="small mb-1 mr-1" for="nama_jabatan">Nama Jabatan</label><span class="mr-4 mb-3"
-                            style="color: red">*</span>
-                        <input class="form-control" name="nama_jabatan" type="text" id="nama_jabatan"
-                            value="{{ $item->nama_jabatan }}" required></input>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="Submit" class="btn btn-primary">Edit Data</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-@empty
-
-@endforelse
-
-@forelse ($jabatan as $item)
-<div class="modal fade" id="Modalhapus-{{ $item->id_jabatan }}" data-backdrop="static" tabindex="-1" role="dialog"
+@forelse ($pegawai as $item)
+<div class="modal fade" id="Modalhapus-{{ $item->id_pegawai }}" data-backdrop="static" tabindex="-1" role="dialog"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content bg-danger">
             <div class="modal-header">
-                <h5 class="modal-title text-white">Hapus Unit Kerja</h5>
+                <h5 class="modal-title text-white">Hapus Data Pegawai</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="{{ route('jabatan.destroy', $item->id_jabatan) }}" method="POST" class="d-inline">
+            <form action="{{ route('pegawai.destroy', $item->id_pegawai) }}" method="POST" class="d-inline">
                 @csrf
                 @method('delete')
                 <div class="modal-body text-white">
-                    Apakah Anda Yakin Menghapus Data Master Jabatan {{ $item->nama_jabatan }} ?</div>
+                    Apakah Anda Yakin Menghapus Data Pegawai atas nama {{ $item->nama_pegawai }} ?</div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-dark">Ya! Hapus</button>

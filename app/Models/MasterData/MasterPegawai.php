@@ -2,6 +2,7 @@
 
 namespace App\Models\MasterData;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -44,5 +45,10 @@ class MasterPegawai extends Model
     public function UnitKerja()
     {
         return $this->belongsTo(MasterUnitKerja::class, 'id_unit_kerja', 'id_unit_kerja');
+    }
+
+    public function User()
+    {
+        return $this->belongsTo(User::class, 'id_pegawai', 'id_pegawai');
     }
 }

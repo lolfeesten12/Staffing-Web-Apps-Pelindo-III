@@ -1,6 +1,6 @@
 <!--start top header-->
 <header class="top-header">
-    <nav class="navbar navbar-expand gap-3">
+    <nav class="navbar navbar-expand gap-3" style="background-color: #3361ff">
         <div class="mobile-toggle-icon fs-3">
             <i class="bi bi-list"></i>
         </div>
@@ -27,7 +27,7 @@
                                         width="54" height="54">
                                     <div class="ms-3">
                                         <h6 class="mb-0 dropdown-user-name">Jhon Deo</h6>
-                                        <small class="mb-0 dropdown-user-designation text-secondary">HR
+                                        <small class="mb-0 dropdown-user-designation text-secondary text-white">HR
                                             Manager</small>
                                     </div>
                                 </div>
@@ -66,8 +66,8 @@
                     </ul>
                 </li>
                 <li>
-                <h6 class="mb-0 dropdown-user-name">Jhon Deo</h6>
-                <small class="mb-0 dropdown-user-designation text-secondary">HR
+                <h6 class="mb-0 dropdown-user-name text-white">Jhon Deo</h6>
+                <small class="mb-0 dropdown-user-designation text-secondary text-white">HR
                     Manager</small>
                 </li>
             </ul>
@@ -112,7 +112,7 @@
                 <div class="menu-title">Master Data</div>
             </a>
             <ul>
-                <li> <a href="index.html"><i class="bi bi-circle"></i>Pegawai</a></li>
+                <li> <a href="{{ route('pegawai.index') }}"><i class="bi bi-circle"></i>Pegawai</a></li>
                 <li> <a href="{{ route('unit-kerja.index') }}"><i class="bi bi-circle"></i>Unit Kerja</a></li>
                 <li> <a href="{{ route('jabatan.index') }}"><i class="bi bi-circle"></i>Jabatan</a></li>
                 <li> <a href="index2.html"><i class="bi bi-circle"></i>Shift Kerja</a></li>
