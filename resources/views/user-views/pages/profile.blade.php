@@ -20,21 +20,7 @@ Profile
                 </ol>
             </nav>
         </div>
-        <div class="ms-auto">
-            <div class="btn-group">
-                <button type="button" class="btn btn-light">Settings</button>
-                <button type="button" class="btn btn-light split-bg-light dropdown-toggle dropdown-toggle-split"
-                    data-bs-toggle="dropdown"> <span class="visually-hidden">Toggle Dropdown</span>
-                </button>
-                <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end"> <a class="dropdown-item"
-                        href="javascript:;">Action</a>
-                    <a class="dropdown-item" href="javascript:;">Another action</a>
-                    <a class="dropdown-item" href="javascript:;">Something else here</a>
-                    <div class="dropdown-divider"></div> <a class="dropdown-item" href="javascript:;">Separated
-                        link</a>
-                </div>
-            </div>
-        </div>
+        
     </div>
     <!--end breadcrumb-->
 
@@ -55,20 +41,23 @@ Profile
                             <h6 class="mb-0">USER INFORMATION</h6>
                         </div>
                         <div class="card-body">
-                            <form class="row g-3">
+                             <form class="row g-3" action="{{ route('profile.update', Auth::user()->id) }}" method="POST">
+                                 @method('PUT')
+                                @csrf
+                            <div class="row g-3">
                                 <div class="col-12">
                                     <label class="form-label">Nama</label>
-                                    <input type="text" class="form-control" value="{{ $user->Pegawai->nama_pegawai }}">
+                                    <input type="text" class="form-control" value="{{ $user->Pegawai->nama_pegawai }} " name="nama_pegawai">
                                 </div>
 
                                 <div class="col-12">
                                     <label class="form-label">Email</label>
-                                    <input type="text" class="form-control" value="{{ $user->email }}">
+                                    <input type="text" class="form-control" value="{{ $user->email }}" name="email">
                                 </div>
 
                                 <div class="col-6">
                                     <label class="form-label">Jenis Kelamin</label>
-                                    <select class="form-select" aria-label="Jenis Kelamin">
+                                    <select class="form-select" aria-label="Jenis Kelamin" name="jenis_kelamin">
                                         @if ($user->Pegawai->jenis_kelamin == "Laki-Laki")
                                         <option selected value="Laki-Laki">Laki-Laki</option>
                                         <option value="Perempuan">Perempuan</option>
@@ -80,15 +69,15 @@ Profile
                                     </select> </div>
                                 <div class="col-6">
                                     <label class="form-label">Tanggal Lahir</label>
-                                    <input type="date" class="form-control" value="{{ $user->Pegawai->tanggal_lahir }}">
+                                    <input type="date" class="form-control" value="{{ $user->Pegawai->tanggal_lahir }}" name="tanggal_lahir">
                                 </div>
                                 <div class="col-6">
                                     <label class="form-label">Tempat Lahir</label>
-                                    <input type="text" class="form-control" value="{{ $user->Pegawai->tempat_lahir }}">
+                                    <input type="text" class="form-control" value="{{ $user->Pegawai->tempat_lahir }}" name="tempat_lahir">
                                 </div>
                                 <div class="col-6">
                                     <label class="form-label">Agama</label>
-                                    <select class="form-select" aria-label="Agama">
+                                    <select class="form-select" aria-label="Agama" name="agama">
                                         @if ($user->Pegawai->agama == "Hindu")
                                         <option selected value="Hindu">Hindu</option>
                                         <option value="Budha">Budha</option>
@@ -144,7 +133,7 @@ Profile
                                             <label class="form-label">Nomor Telepon</label>
                                             <input type="text" class="form-control" value="">
                                         </div> --}}
-                            </form>
+                            </div>
                         </div>
                     </div>
                     <div class="card shadow-none border">
@@ -152,14 +141,14 @@ Profile
                             <h6 class="mb-0">CONTACT INFORMATION</h6>
                         </div>
                         <div class="card-body">
-                            <form class="row g-3">
+                           
                                 <div class="col-12">
                                     <label class="form-label">Alamat</label>
-                                    <input type="text" class="form-control" value="{{ $user->Pegawai->alamat }}">
+                                    <input type="text" class="form-control" value="{{ $user->Pegawai->alamat }}" name="alamat">
                                 </div>
                                 <div class="col-12">
                                     <label class="form-label">Nomor Telepon</label>
-                                    <input type="text" class="form-control" value="{{ $user->Pegawai->no_telp }}">
+                                    <input type="text" class="form-control" value="{{ $user->Pegawai->no_telp }}" name="no_telp">
                                 </div>
                                 {{-- <div class="col-6">
                                             <label class="form-label">Pin Code</label>
@@ -174,12 +163,13 @@ Profile
                                             <textarea class="form-control" rows="4" cols="4"
                                                 placeholder="Describe yourself..."></textarea>
                                         </div> --}}
+                                        <div class="text-start">
+                        <button type="submit" class="btn btn-primary px-4">Save Changes</button>
+                    </div>
                             </form>
                         </div>
                     </div>
-                    <div class="text-start">
-                        <button type="button" class="btn btn-primary px-4">Save Changes</button>
-                    </div>
+                    
                 </div>
             </div>
         </div>
