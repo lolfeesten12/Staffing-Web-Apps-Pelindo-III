@@ -6,12 +6,12 @@ use App\Http\Controllers\MasterData\MasterPelanggaranController;
 use App\Http\Controllers\MasterData\MasterSanksiController;
 use App\Http\Controllers\MasterData\MasterShiftController;
 use App\Http\Controllers\MasterData\MasterUnitKerjaController;
-use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\WebRequirement\CalonPegawaiController;
 use App\Http\Controllers\WebRequirement\PengumumanController;
 use App\Http\Controllers\WebRequirement\WebRequirementController;
 use App\Models\MasterData\MasterHubunganKeluarga;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\User\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,13 +29,16 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-
+Route::get('/home', [App\Http\Controllers\User\ProfileController::class, 'index'])->name('home');
 
 
 // ---------------------user------------------
+Route::prefix('User')
+    // ->middleware(['Admin_Role','verified'])
+    ->group(function () {
 Route::resource('profile', ProfileController::class);
+    });
+
 
 // MASTER DATA
 Route::prefix('Masterdata')

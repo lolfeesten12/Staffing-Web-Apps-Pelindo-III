@@ -41,12 +41,16 @@ Profile
     <div class="profile-cover bg-dark"></div>
 
     <div class="row">
-        <div class="col-12 col-lg-8">
+        <div class="col-12 col-lg-12">
             <div class="card shadow-sm border-0">
                 <div class="card-body">
                     <h5 class="mb-0">My Account</h5>
                     <hr>
                     <div class="card shadow-none border">
+                         <div class="profile-avatar text-center">
+                        <img src="{{ asset('/profile/'.Auth::user()->pegawai['avatar']) }}" class="rounded-circle shadow" width="225"
+                            height="225" alt="">
+                    </div>
                         <div class="card-header">
                             <h6 class="mb-0">USER INFORMATION</h6>
                         </div>
@@ -54,35 +58,87 @@ Profile
                             <form class="row g-3">
                                 <div class="col-12">
                                     <label class="form-label">Nama</label>
-                                    <input type="text" class="form-control" value="jhon">
+                                    <input type="text" class="form-control" value="{{ $user->Pegawai->nama_pegawai }}">
                                 </div>
-                                <div class="col-6">
-                                    <label class="form-label">Username</label>
-                                    <input type="text" class="form-control" value="@jhon">
-                                </div>
-                                <div class="col-6">
+
+                                <div class="col-12">
                                     <label class="form-label">Email</label>
-                                    <input type="text" class="form-control" value="xyz@example.com">
+                                    <input type="text" class="form-control" value="{{ $user->email }}">
                                 </div>
 
                                 <div class="col-6">
                                     <label class="form-label">Jenis Kelamin</label>
-                                    <select class="form-select" aria-label="Default select example">
-                                        <option selected="">Jenis Kelamin</option>
-                                        <option value="1">Pria</option>
-                                        <option value="2">Wanita</option>
+                                    <select class="form-select" aria-label="Jenis Kelamin">
+                                        @if ($user->Pegawai->jenis_kelamin == "Laki-Laki")
+                                        <option selected value="Laki-Laki">Laki-Laki</option>
+                                        <option value="Perempuan">Perempuan</option>
+                                        @else
+                                        <option value="Laki-Laki">Laki-Laki</option>
+                                        <option selected value="Perempuan">Perempuan</option>
+                                        @endif
+
                                     </select> </div>
                                 <div class="col-6">
                                     <label class="form-label">Tanggal Lahir</label>
-                                    <input type="text" class="form-control" value="xyz@example.com">
+                                    <input type="date" class="form-control" value="{{ $user->Pegawai->tanggal_lahir }}">
+                                </div>
+                                <div class="col-6">
+                                    <label class="form-label">Tempat Lahir</label>
+                                    <input type="text" class="form-control" value="{{ $user->Pegawai->tempat_lahir }}">
                                 </div>
                                 <div class="col-6">
                                     <label class="form-label">Agama</label>
-                                    <input type="text" class="form-control" value="@jhon">
+                                    <select class="form-select" aria-label="Agama">
+                                        @if ($user->Pegawai->agama == "Hindu")
+                                        <option selected value="Hindu">Hindu</option>
+                                        <option value="Budha">Budha</option>
+                                        <option value="Islam">Islam</option>
+                                        <option value="Katolik">Katolik</option>
+                                        <option value="Konghucu">Konghucu</option>
+                                        <option value="Protestan">Protestan</option>
+                                        @elseif ($user->Pegawai->agama == "Budha")
+                                        <option value="Hindu">Hindu</option>
+                                        <option selected value="Budha">Budha</option>
+                                        <option value="Islam">Islam</option>
+                                        <option value="Katolik">Katolik</option>
+                                        <option value="Konghucu">Konghucu</option>
+                                        <option value="Protestan">Protestan</option>
+                                        @elseif ($user->Pegawai->agama == "Islam")
+                                        <option value="Hindu">Hindu</option>
+                                        <option value="Budha">Budha</option>
+                                        <option selected value="Islam">Islam</option>
+                                        <option value="Katolik">Katolik</option>
+                                        <option value="Konghucu">Konghucu</option>
+                                        <option value="Protestan">Protestan</option>
+                                        @elseif ($user->Pegawai->agama == "Katolik")
+                                        <option value="Hindu">Hindu</option>
+                                        <option value="Budha">Budha</option>
+                                        <option value="Islam">Islam</option>
+                                        <option selected value="Katolik">Katolik</option>
+                                        <option value="Konghucu">Konghucu</option>
+                                        <option value="Protestan">Protestan</option>
+                                        @elseif ($user->Pegawai->agama == "Konghucu")
+                                        <option value="Hindu">Hindu</option>
+                                        <option value="Budha">Budha</option>
+                                        <option value="Islam">Islam</option>
+                                        <option value="Katolik">Katolik</option>
+                                        <option selected value="Konghucu">Konghucu</option>
+                                        <option value="Protestan">Protestan</option>
+                                        @elseif ($user->Pegawai->agama == "Protestan")
+                                        <option value="Hindu">Hindu</option>
+                                        <option value="Budha">Budha</option>
+                                        <option value="Islam">Islam</option>
+                                        <option value="Katolik">Katolik</option>
+                                        <option value="Konghucu">Konghucu</option>
+                                        <option selected value="Protestan">Protestan</option>
+                                        @endif
+                                    </select>
                                 </div>
+
+
                                 <div class="col-6">
                                     <label class="form-label">Nomor SK Penempatan</label>
-                                    <input type="text" class="form-control" value="xyz@example.com">
+                                    <input disabled type="text" class="form-control" value="belom">
                                 </div>
                                 {{-- <div class="col-6">
                                             <label class="form-label">Nomor Telepon</label>
@@ -99,15 +155,11 @@ Profile
                             <form class="row g-3">
                                 <div class="col-12">
                                     <label class="form-label">Alamat</label>
-                                    <input type="text" class="form-control" value="47-A, city name, United States">
+                                    <input type="text" class="form-control" value="{{ $user->Pegawai->alamat }}">
                                 </div>
-                                <div class="col-6">
-                                    <label class="form-label">Kota Asal</label>
-                                    <input type="text" class="form-control" value="buleleng">
-                                </div>
-                                <div class="col-6">
+                                <div class="col-12">
                                     <label class="form-label">Nomor Telepon</label>
-                                    <input type="text" class="form-control" value="0999123">
+                                    <input type="text" class="form-control" value="{{ $user->Pegawai->no_telp }}">
                                 </div>
                                 {{-- <div class="col-6">
                                             <label class="form-label">Pin Code</label>
@@ -131,7 +183,7 @@ Profile
                 </div>
             </div>
         </div>
-        <div class="col-12 col-lg-4">
+        {{-- <div class="col-12 col-lg-4">
             <div class="card shadow-sm border-0 overflow-hidden">
                 <div class="card-body">
                     <div class="profile-avatar text-center">
@@ -182,12 +234,9 @@ Profile
                     </li>
                 </ul>
             </div>
-        </div>
+        </div> --}}
     </div>
     <!--end row-->
 
 </main>
 @endsection
-
-
-
