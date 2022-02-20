@@ -25,6 +25,7 @@
     <link href="{{ url('assets/css/light-theme.css') }}" rel="stylesheet" />
     <link href="{{ url('assets/css/semi-dark.css') }}" rel="stylesheet" />
     <link href="{{ url('assets/css/header-colors.css') }}" rel="stylesheet" />
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     @include('sweetalert::alert')
     
     {{-- @stack('prepend-style')
@@ -53,12 +54,13 @@
     @stack('addon-script')
     
   <!-- Bootstrap bundle JS -->
+  
   <script src="{{ url('assets/js/bootstrap.bundle.min.js') }}"></script>
   <!--plugins-->
   <script src="{{ url('assets/js/jquery.min.js') }}"></script>
+  
   <script src="{{ url('assets/plugins/simplebar/js/simplebar.min.js') }}"></script>
   <script src="{{ url('assets/plugins/metismenu/js/metisMenu.min.js') }}"></script>
-  <script src="{{ url('assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js') }}"></script>
   <script src="{{ url('assets/js/pace.min.js') }}"></script>
   <script src="{{ url('assets/plugins/datatable/js/jquery.dataTables.min.js') }}"></script>
   <script src="{{ url('assets/plugins/datatable/js/dataTables.bootstrap5.min.js') }}"></script>

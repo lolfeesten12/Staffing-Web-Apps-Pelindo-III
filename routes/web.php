@@ -7,6 +7,8 @@ use App\Http\Controllers\MasterData\MasterSanksiController;
 use App\Http\Controllers\MasterData\MasterShiftController;
 use App\Http\Controllers\MasterData\MasterUnitKerjaController;
 use App\Http\Controllers\User\ProfileController;
+use App\Http\Controllers\WebRequirement\PengumumanController;
+use App\Http\Controllers\WebRequirement\WebRequirementController;
 use App\Models\MasterData\MasterHubunganKeluarga;
 use Illuminate\Support\Facades\Route;
 
@@ -69,4 +71,18 @@ Route::prefix('Masterdata')
     // ->middleware(['Admin_Role','verified'])
     ->group(function () {
         Route::resource('pelanggaran', MasterPelanggaranController::class);
+    });
+
+
+// REQUIREMENT
+Route::prefix('Requirement')
+    // ->middleware(['Admin_Role','verified'])
+    ->group(function () {
+        Route::resource('pengumuman', PengumumanController::class);
+    });
+
+Route::prefix('WebRequirement')
+    // ->middleware(['Admin_Role','verified'])
+    ->group(function () {
+        Route::resource('web-requirement', WebRequirementController::class);
     });
