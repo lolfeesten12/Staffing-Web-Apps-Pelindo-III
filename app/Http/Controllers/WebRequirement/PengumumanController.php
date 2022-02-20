@@ -30,7 +30,7 @@ class PengumumanController extends Controller
     {
         $jabatan = MasterJabatan::get();
 
-        return view('user-views.pages.requirement.pengumuman.create',compact('unit','jabatan'));
+        return view('user-views.pages.requirement.pengumuman.create',compact('jabatan'));
     }
 
     /**

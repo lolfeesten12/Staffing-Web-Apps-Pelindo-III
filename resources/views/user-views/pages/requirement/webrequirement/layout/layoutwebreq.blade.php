@@ -47,7 +47,7 @@
 
 
     <footer class="bg-white border-top p-3 text-center fixed-bottom">
-        <p class="mb-0">Copyright © 2022. PT. Pelabuan Indonesia.</p>
+        <p class="mb-0">Copyright © 2022. PT. Pelabuhan Indonesia.</p>
     </footer>
 
     </div>

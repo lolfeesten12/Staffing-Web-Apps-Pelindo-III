@@ -144,7 +144,7 @@
             </a>
             <ul>
                 <li> <a href="{{ route('pengumuman.index') }}"><i class="bi bi-circle"></i>Pengumuman</a></li>
-                <li> <a href="#"><i class="bi bi-circle"></i>Calon Pegawai</a></li>
+                <li> <a href="{{ route('calon-pegawai.index') }}"><i class="bi bi-circle"></i>Calon Pegawai</a></li>
                 <li> <a href="#"><i class="bi bi-circle"></i>Hasil Seleksi</a></li>
                 <li> <a href="{{ route('web-requirement.index') }}"><i class="bi bi-circle"></i>Menuju Web Recrut</a></li>
             </ul>

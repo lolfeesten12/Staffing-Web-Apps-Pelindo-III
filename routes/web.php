@@ -7,6 +7,7 @@ use App\Http\Controllers\MasterData\MasterSanksiController;
 use App\Http\Controllers\MasterData\MasterShiftController;
 use App\Http\Controllers\MasterData\MasterUnitKerjaController;
 use App\Http\Controllers\User\ProfileController;
+use App\Http\Controllers\WebRequirement\CalonPegawaiController;
 use App\Http\Controllers\WebRequirement\PengumumanController;
 use App\Http\Controllers\WebRequirement\WebRequirementController;
 use App\Models\MasterData\MasterHubunganKeluarga;
@@ -79,6 +80,14 @@ Route::prefix('Requirement')
     // ->middleware(['Admin_Role','verified'])
     ->group(function () {
         Route::resource('pengumuman', PengumumanController::class);
+    });
+
+Route::prefix('Requirement')
+    // ->middleware(['Admin_Role','verified'])
+    ->group(function () {
+        Route::get('/download_cv/{file_cv}', [App\Http\Controllers\WebRequirement\CalonPegawaiController::class, 'getFile'])->name('calon-pegawai-cv');
+        Route::get('/download_pendukung/{file_pendukung}', [App\Http\Controllers\WebRequirement\CalonPegawaiController::class, 'getFilePendukung'])->name('calon-pegawai-pendukung');
+        Route::resource('calon-pegawai', CalonPegawaiController::class);
     });
 
 Route::prefix('WebRequirement')
