@@ -157,12 +157,12 @@
                 <div class="menu-title">Data Riwayat</div>
             </a>
             <ul>
-                <li> <a href="app-emailbox.html"><i class="bi bi-circle"></i>Riwayat Keluarga</a></li>
-                <li> <a href="app-emailbox.html"><i class="bi bi-circle"></i>Riwayat Pendidikan</a></li>
-                <li> <a href="app-emailbox.html"><i class="bi bi-circle"></i>Riwayat Prestasi</a></li>
-                <li> <a href="app-emailbox.html"><i class="bi bi-circle"></i>Riwayat Cuti</a></li>
-                <li> <a href="app-emailbox.html"><i class="bi bi-circle"></i>Riwayat Pelanggaran</a></li>
-                <li> <a href="app-emailbox.html"><i class="bi bi-circle"></i>Riwayat Sanksi</a></li>
+                <li> <a href="{{ route('riwayat-keluarga.index') }}"><i class="bi bi-circle"></i>Riwayat Keluarga</a></li>
+                <li> <a href="{{ route('riwayat-pendidikan.index') }}"><i class="bi bi-circle"></i>Riwayat Pendidikan</a></li>
+                <li> <a href="{{ route('riwayat-prestasi.index') }}"><i class="bi bi-circle"></i>Riwayat Prestasi</a></li>
+                <li> <a href="{{ route('riwayat-cuti.index') }}"><i class="bi bi-circle"></i>Riwayat Cuti</a></li>
+                <li> <a href="{{ route('riwayat-pelanggaran.index') }}"><i class="bi bi-circle"></i>Riwayat Pelanggaran</a></li>
+                <li> <a href="{{ route('riwayat-sanksi.index') }}"><i class="bi bi-circle"></i>Riwayat Sanksi</a></li>
             </ul>
         </li>
         <li class="menu-label">Jadwal dan Absen</li>

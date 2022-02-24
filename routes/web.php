@@ -12,6 +12,7 @@ use App\Http\Controllers\WebRequirement\WebRequirementController;
 use App\Models\MasterData\MasterHubunganKeluarga;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\ProfileController;
+use App\Http\Controllers\User\RiwayatKeluargaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,7 +37,15 @@ Route::get('/home', [App\Http\Controllers\User\ProfileController::class, 'index'
 Route::prefix('User')
     // ->middleware(['Admin_Role','verified'])
     ->group(function () {
-Route::resource('profile', ProfileController::class);
+        Route::resource('profile', ProfileController::class);
+        Route::resource('riwayat-keluarga', RiwayatKeluargaController::class);
+        Route::resource('riwayat-pendidikan', RiwayatKeluargaController::class);
+        Route::resource('riwayat-prestasi', RiwayatKeluargaController::class);
+        Route::resource('riwayat-cuti', RiwayatKeluargaController::class);
+        Route::resource('riwayat-pelanggaran', RiwayatKeluargaController::class);
+        Route::resource('riwayat-sanksi', RiwayatKeluargaController::class);
+
+
     });
 
 
