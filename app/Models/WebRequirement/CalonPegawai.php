@@ -21,6 +21,12 @@ class CalonPegawai extends Model
         'file_cv',
         'file_pendukung',
         'status_calon',
+        'status_nilai',
+        'nilai_psikotes',
+        'nilai_keahlian',
+        'nilai_wawancara',
+        'nilai_total',
+        'rata_rata'
     ];
 
     protected $hidden = [

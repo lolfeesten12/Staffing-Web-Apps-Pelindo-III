@@ -74,16 +74,22 @@ Calon Pegawai
                                                 style="width: 80px;">Job yang dituju</th>
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
-                                                style="width: 80px;">Email</th>
+                                                style="width: 60px;">Email</th>
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
                                                 style="width: 70px;">Nomor Telephone</th>
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
+                                                style="width: 50px;">Tanggal Apply</th>
+                                            <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
+                                                colspan="1" aria-label="Position: activate to sort column ascending"
                                                 style="width: 70px;">File CV</th>
-                                                <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
+                                            <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
                                                 style="width: 70px;">File Pendukung</th>
+                                            <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
+                                                colspan="1" aria-label="Position: activate to sort column ascending"
+                                                style="width: 70px;">Status Penilaian</th>
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Salary: activate to sort column ascending"
                                                 style="width: 70px;">Action</th>
@@ -97,42 +103,48 @@ Calon Pegawai
                                             <td>{{ $item->Pengumuman->nama_pengumuman }}</td>
                                             <td>{{ $item->email }}</td>
                                             <td>{{ $item->no_telp }}</td>
+                                            <td>{{ $item->created_at }}</td>
                                             @if ($item->file_cv != null)
                                             <td class="text-center">
-                                                <div class="fs-3 text-success">
-                                                    <i class="bi bi-check-circle-fill"></i>
-                                                </div>
+                                                <a href="{{ route('calon-pegawai-cv',$item->file_cv) }}"
+                                                    class="btn btn-sm btn-info mr-2"><i
+                                                        class="lni lni-download"></i></a>
                                             </td>
                                             @else
                                             <td class="text-center">
                                                 <div class="fs-3 text-success">
-                                                <i class="bi bi-x-circle-fill"></i>
+                                                    <i class="bi bi-x-circle-fill"></i>
                                                 </div>
                                             </td>
                                             @endif
                                             @if ($item->file_pendukung != null)
                                             <td class="text-center">
-                                                <div class="fs-3 text-success">
-                                                    <i class="bi bi-check-circle-fill"></i>
-                                                </div>
+                                                <a href="{{ route('calon-pegawai-pendukung',$item->file_pendukung) }}"
+                                                    class="btn btn-sm btn-info mr-2"><i
+                                                        class="lni lni-download"></i></a>
                                             </td>
                                             @else
                                             <td class="text-center">
                                                 <div class="fs-3 text-danger">
-                                                <i class="bi bi-x-circle-fill"></i>
+                                                    <i class="bi bi-x-circle-fill"></i>
                                                 </div>
                                             </td>
                                             @endif
-
+                                            <td class="text-center"><span
+                                                    class="badge bg-secondary">{{ $item->status_nilai }}</span></td>
                                             <td class="text-center">
                                                 <a href="{{ route('calon-pegawai.show',$item->id_calon_pegawai) }}"
                                                     class="btn btn-sm btn-secondary"><i class="lni lni-eye"></i></a>
-                                                <a href="{{ route('calon-pegawai.edit',$item->id_calon_pegawai) }}"
-                                                    class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i></a>
-                                                <a href="javascript:;" class="btn btn-sm btn-danger"
+                                                @if($item->status_nilai == 'Belum dinilai')
+                                                <a href="" class="btn btn-sm btn-primary" type="button"
                                                     data-bs-toggle="modal"
-                                                    data-bs-target="#Modalhapus-{{ $item->id_calon_pegawai }}"><i
-                                                        class="bi bi-trash-fill"></i></a>
+                                                    data-bs-target="#Modalnilai-{{ $item->id_calon_pegawai }}">
+                                                    <i class="lni lni-calculator"></i>
+                                                </a>
+                                                @else
+                                                <span>
+                                                    @endif
+                                                </span>
                                             </td>
                                         </tr>
                                         @empty
@@ -149,6 +161,118 @@ Calon Pegawai
     </div>
 </main>
 
+@forelse ($calon as $item)
+<div class="modal fade" id="Modalnilai-{{ $item->id_calon_pegawai }}" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-success-soft">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Penilaian Calon Pegawai</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{ route('calon-pegawai-status', $item->id_calon_pegawai) }}" id="form1-{{ $item->id_calon_pegawai }}" method="POST"
+                class="d-inline">
+                @csrf
+                <div class="modal-body">
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <label class="form-label mr-1" for="nama_pegawai">Nama Pelamar</label><span
+                                class="mr-4 mb-3" style="color: red">*</span>
+                            <input type="text" class="form-control" placeholder="Nama Lengkap Pegawai"
+                                name="nama_pegawai" value="{{ $item->nama_lengkap }}" readonly>
+                        </div>
+                        <div class="mt-2">
+                            <hr>
+                        </div>
+                        <div class="col-4">
+                            <label class="form-label mr-1" for="nilai_psikotes">Nilai Psikotes</label><span
+                                class="mr-4 mb-3" style="color: red">*</span>
+                            <input type="number" class="form-control" placeholder="Input Nilai Psikotes" min="1"
+                                max="100" id="nilai_psikotes-{{ $item->id_calon_pegawai }}" name="nilai_psikotes" value="{{ old('nilai_psikotes') }}"
+                                required>
+                        </div>
+                        <div class="col-4">
+                            <label class="form-label mr-1" for="nilai_keahlian">Nilai Keahlian</label><span
+                                class="mr-4 mb-3" style="color: red">*</span>
+                            <input type="number" class="form-control" placeholder="Input Nilai Keahlian" min="1"
+                                max="100" id="nilai_keahlian-{{ $item->id_calon_pegawai }}" name="nilai_keahlian" value="{{ old('nilai_keahlian') }}"
+                                required>
+                        </div>
+                        <div class="col-4">
+                            <label class="form-label mr-1" for="nilai_wawancara">Nilai Wawancara</label><span
+                                class="mr-4 mb-3" style="color: red">*</span>
+                            <input type="number" class="form-control" placeholder="Input Nilai Wawancara" min="1"
+                                max="100" id="nilai_wawancara-{{ $item->id_calon_pegawai }}" name="nilai_wawancara"
+                                value="{{ old('nilai_wawancara') }}" required>
+                        </div>
+                        <div class="col-4">
+                            <label class="form-label mr-1" for="nilai_total">Nilai Total</label>
+                            <div class="input-group mb-3">
+                                <button class="btn btn-outline-secondary" type="button" id="button_total"
+                                    onclick="hitung(event, {{ $item->id_calon_pegawai }})">Hitung</button>
+                                <input type="number" class="form-control" placeholder="Klik Hitung" id="nilai_total-{{ $item->id_calon_pegawai }}"
+                                    name="nilai_total" value="{{ old('nilai_total') }}" readonly>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <label class="form-label mr-1" for="rata_rata">Rata-Rata Nilai</label>
+                            <input type="number" class="form-control" placeholder="Klik Hitung" id="rata_rata-{{ $item->id_calon_pegawai }}"
+                                name="rata_rata" value="{{ old('rata_rata') }}" readonly>
+                        </div>
+                        <div class="col-4">
+                            <label class="mb-1 mr-1" for="status_calon">Status Pelamar</label><span class="mr-4 mb-3"
+                                style="color: red">*</span>
+                            <select name="status_calon" id="status_calon" class="form-select"
+                                value="{{ old('status_calon') }}" required>
+                                <option value="{{ old('status_calon')}}">Pilih Status Calon</option>
+                                <option value="Diterima">Lulus</option>
+                                <option value="Ditolak">Gagal</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
+                    <button class="btn btn-success" type="submit">Simpan Data</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@empty
+
+@endforelse
+
+
+<script>
+    function hitung(event, id_calon_pegawai) {
+        event.preventDefault()
+        var form1 = $(`#form1-${id_calon_pegawai}`)
+        var nilai_psikotes = $(`#nilai_psikotes-${id_calon_pegawai}`).val()
+        var nilai_keahlian = $(`#nilai_keahlian-${id_calon_pegawai}`).val()
+        var nilai_wawancara = $(`#nilai_wawancara-${id_calon_pegawai}`).val()
+      
+
+        if (nilai_psikotes == null | nilai_psikotes == 0 | nilai_keahlian == null | nilai_keahlian == 0 |
+            nilai_wawancara == null | nilai_wawancara == 0) {
+                Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Terdapat Field Nilai Kosong',
+            })
+        } else {
+            var nilai_total = parseInt(nilai_psikotes) + parseInt(nilai_keahlian) + parseInt(nilai_wawancara)
+                $(`#nilai_total-${id_calon_pegawai}`).val(nilai_total);
+
+                var rata = nilai_total / 3;
+                var fix = rata.toFixed(2)
+                $(`#rata_rata-${id_calon_pegawai}`).val(fix);
+           
+          
+        }
+    }
+
+</script>
 
 
 

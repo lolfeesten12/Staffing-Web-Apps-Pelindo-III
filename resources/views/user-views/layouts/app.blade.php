@@ -26,6 +26,8 @@
     <link href="{{ url('assets/css/semi-dark.css') }}" rel="stylesheet" />
     <link href="{{ url('assets/css/header-colors.css') }}" rel="stylesheet" />
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    {{-- <script src="{{ url('/node_modules/sweetalert2/dist/sweetalert2.all.min.js') }}"></script> --}}
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @include('sweetalert::alert')
     
     {{-- @stack('prepend-style')
