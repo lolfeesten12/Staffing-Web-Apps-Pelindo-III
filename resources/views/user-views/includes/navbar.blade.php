@@ -49,7 +49,7 @@
                             <hr class="dropdown-divider">
                         </li>
                         <li>
-                            <a class="dropdown-item" href="pages-user-profile.html">
+                            <a class="dropdown-item" href="{{ route('profile.index') }}">
                                 <div class="d-flex align-items-center">
                                     <div class=""><i class="bi bi-person-fill"></i></div>
                                     <div class="ms-3"><span>Profile</span></div>
@@ -105,7 +105,7 @@
     
     <ul class="metismenu" id="menu">
         <li>
-            <a href="https://codervent.com/skodash/documentation/index.html" target="_blank">
+            <a href="{{ route('profile.index') }}" target="_blank">
                 <div class="parent-icon"><i class="lni lni-user"></i>
                 </div>
                 <div class="menu-title">Profile</div>

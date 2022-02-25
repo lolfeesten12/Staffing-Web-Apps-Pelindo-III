@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\MasterData\MasterPegawai;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
@@ -14,7 +17,9 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        return view('user-views.pages.profile');
+        $user = User::with('Pegawai')->where('id', Auth::user()->id)->first();
+        // return $user;
+        return view('user-views.pages.profile', compact('user'));
     }
 
     /**
@@ -35,7 +40,7 @@ class ProfileController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return $request;
     }
 
     /**
@@ -69,7 +74,23 @@ class ProfileController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // return "aa";
+        $user = User::find(Auth::user()->id);
+        $user->email = $request->email;
+        $user->update();
+
+        $pegawai = MasterPegawai::find($user->id_pegawai);
+        $pegawai->nama_pegawai = $request->nama_pegawai;
+        $pegawai->jenis_kelamin = $request->jenis_kelamin;
+        $pegawai->tanggal_lahir = $request->tanggal_lahir;
+        $pegawai->tempat_lahir = $request->tempat_lahir;
+        $pegawai->agama = $request->agama;
+        $pegawai->alamat = $request->alamat;
+        $pegawai->no_telp = $request->no_telp;
+        $pegawai->update();
+
+        return redirect()->back()->with('messageberhasil','Profile Berhasil Diperbahrui');
+
     }
 
     /**
