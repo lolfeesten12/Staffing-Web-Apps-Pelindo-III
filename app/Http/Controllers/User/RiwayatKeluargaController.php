@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\MasterData\MasterHubunganKeluarga;
 use App\Models\MasterData\MasterPegawai;
 use App\Models\RiwayatKeluarga;
 use App\Models\User;
@@ -20,8 +21,9 @@ class RiwayatKeluargaController extends Controller
     {
         $pegawai = User::with('Pegawai')->where('id', Auth::user()->id)->first();
         $riwayat = RiwayatKeluarga::with('Hubungan')->where('id_pegawai', $pegawai->id_pegawai)->get();
+        $hubungan = MasterHubunganKeluarga::get();
         // return $riwayat;
-                return view('user-views.pages.riwayat-keluarga', compact('riwayat'));
+                return view('user-views.pages.riwayat-keluarga', compact('riwayat', 'hubungan'));
 
         // $user = User::with('Pegawai')->where('id', Auth::user()->id)->first();
         // // return $user;
@@ -46,7 +48,18 @@ class RiwayatKeluargaController extends Controller
      */
     public function store(Request $request)
     {
-        return $request;
+        // return $request;
+        $riwayat = new RiwayatKeluarga();
+        $riwayat->id_hub_keluarga = $request->id_hub_keluarga;
+        $riwayat->id_pegawai = Auth::user()->id_pegawai;
+        $riwayat->kel_nama = $request->kel_nama;
+        $riwayat->kel_tempat_lahir = $request->kel_tempat_lahir;
+        $riwayat->kel_tanggal_lahir = $request->kel_tanggal_lahir;
+        $riwayat->kel_alamat = $request->kel_alamat;
+       
+        $riwayat->save();
+
+        return redirect()->route('riwayat-keluarga.index')->with('messageberhasil','Data Keluarga Berhasil ditambahkan');
     }
 
     /**
@@ -107,6 +120,11 @@ class RiwayatKeluargaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
+        $riwayat = RiwayatKeluarga::where('id_riwayat_keluarga', '=', $id)->first();
+        $riwayat->delete();
+
+
+        return redirect()->back()->with('messagehapus','Data Keluarga Berhasil dihapus');
     }
 }
