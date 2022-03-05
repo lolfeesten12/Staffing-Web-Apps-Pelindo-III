@@ -2,7 +2,7 @@
 
 
 @section('name')
-Calon Pegawai
+Detail Calon Pegawai
 @endsection
 
 @section('content')
@@ -148,7 +148,6 @@ Calon Pegawai
                                         <a href="{{ route('calon-pegawai-cv',$calon->file_cv) }}" class="btn btn-primary px-5 mr-2"><i class="bi bi-cloud-arrow-down-fill"></i>Downloads File CV</a>
                                     </div>
                                     @endif
-
                                     @if ($calon->file_pendukung != null)
                                     <div class="col-4">
                                         <a href="{{ route('calon-pegawai-pendukung',$calon->file_pendukung) }}" class="btn btn-primary px-5 mr-2"><i class="bi bi-cloud-arrow-down-fill"></i>Downloads File CV</a>

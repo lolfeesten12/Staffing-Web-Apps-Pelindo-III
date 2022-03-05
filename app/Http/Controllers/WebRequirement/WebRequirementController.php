@@ -97,6 +97,7 @@ class WebRequirementController extends Controller
             $calon->status_calon = 'Pending';
             $calon->file_pendukung = $file_pendukung;
             $calon->file_cv = $file_cv;
+            $calon->status_nilai = 'Belum dinilai';
             $calon->save();
 
         }else{
@@ -114,6 +115,7 @@ class WebRequirementController extends Controller
             $calon->alamat_lengkap = $request->alamat_lengkap;
             $calon->status_calon = 'Pending';
             $calon->file_cv = $file_cv;
+            $calon->status_nilai = 'Belum dinilai';
             $calon->save();
         }
 

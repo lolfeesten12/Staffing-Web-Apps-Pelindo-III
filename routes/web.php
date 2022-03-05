@@ -7,6 +7,7 @@ use App\Http\Controllers\MasterData\MasterSanksiController;
 use App\Http\Controllers\MasterData\MasterShiftController;
 use App\Http\Controllers\MasterData\MasterUnitKerjaController;
 use App\Http\Controllers\WebRequirement\CalonPegawaiController;
+use App\Http\Controllers\WebRequirement\HasilSeleksiController;
 use App\Http\Controllers\WebRequirement\PengumumanController;
 use App\Http\Controllers\WebRequirement\WebRequirementController;
 use App\Models\MasterData\MasterHubunganKeluarga;
@@ -97,8 +98,10 @@ Route::prefix('Requirement')
 Route::prefix('Requirement')
     // ->middleware(['Admin_Role','verified'])
     ->group(function () {
+        Route::get('/hasil_seleksi', [App\Http\Controllers\WebRequirement\CalonPegawaiController::class, 'HasilSeleksi'])->name('calon-pegawai-hasil');
         Route::get('/download_cv/{file_cv}', [App\Http\Controllers\WebRequirement\CalonPegawaiController::class, 'getFile'])->name('calon-pegawai-cv');
         Route::get('/download_pendukung/{file_pendukung}', [App\Http\Controllers\WebRequirement\CalonPegawaiController::class, 'getFilePendukung'])->name('calon-pegawai-pendukung');
+        Route::post('Calon/{id_calon_pegawai}/Status', [App\Http\Controllers\WebRequirement\CalonPegawaiController::class, 'setStatus'])->name('calon-pegawai-status');
         Route::resource('calon-pegawai', CalonPegawaiController::class);
     });
 
