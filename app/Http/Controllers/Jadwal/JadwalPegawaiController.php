@@ -34,12 +34,12 @@ class JadwalPegawaiController extends Controller
         ->whereIn('tb_master_pegawai.id_pegawai', $id)
         ->whereDate('tanggal_masuk', $request->date);
         
-        $shiftlibur = MasterShift::leftjoin('tb_jadwal_pegawai', function($join) use($request){
+        $shiftlibur = MasterPegawai::leftjoin('tb_jadwal_pegawai', function($join) use($request){
             $join->on('tanggal_masuk', '=', DB::raw("'".$request->date."'"))->on('tb_jadwal_pegawai.id_shift_kerja','tb_master_shift_kerja.id_shift_kerja');
         })
-
+        ->join('tb_jadwal_pegawai', 'tb_master_pegawai.id_pegawai','tb_jadwal_pegawai.id_pegawai')
         ->select('tb_master_shift_kerja.id_shift_kerja', 'jenis_shift','jam_masuk','jam_selesai')
-        ->whereIn('tb_master_pegawai.id_pegawai', $id)
+        ->where('tb_master_pegawai.id_pegawai', $id)
         ->get();
 
 
