@@ -7,6 +7,11 @@ use App\Http\Controllers\MasterData\MasterPelanggaranController;
 use App\Http\Controllers\MasterData\MasterSanksiController;
 use App\Http\Controllers\MasterData\MasterShiftController;
 use App\Http\Controllers\MasterData\MasterUnitKerjaController;
+use App\Http\Controllers\Riwayat\RiwayatCutiController;
+use App\Http\Controllers\Riwayat\RiwayatPelanggaranController;
+use App\Http\Controllers\Riwayat\RiwayatPendidikanController;
+use App\Http\Controllers\Riwayat\RiwayatPrestasiController;
+use App\Http\Controllers\Riwayat\RiwayatSanskiController;
 use App\Http\Controllers\WebRequirement\CalonPegawaiController;
 use App\Http\Controllers\WebRequirement\HasilSeleksiController;
 use App\Http\Controllers\WebRequirement\PengumumanController;
@@ -15,6 +20,7 @@ use App\Models\MasterData\MasterHubunganKeluarga;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\User\RiwayatKeluargaController;
+use App\Models\Riwayat\RiwayatPendidikan;
 
 /*
 |--------------------------------------------------------------------------
@@ -91,4 +97,16 @@ Route::prefix('Jadwal')
         Route::get('jadwal-pegawai/{id_pegawai}/tanggal', [App\Http\Controllers\Jadwal\JadwalpegawaiController::class, 'JadwalPegawai']);
         Route::post('jadwal-pegawai/{id_pegawai}/masuk', [App\Http\Controllers\Jadwal\JadwalpegawaiController::class, 'JadwalMasuk']);
         Route::post('jadwal-pegawai/{id_pegawai}/libur', [App\Http\Controllers\Jadwal\JadwalpegawaiController::class, 'JadwalLibur']);
+    });
+    Route::prefix('Riwayat')
+    // ->middleware(['Admin_Role','verified'])
+    ->group(function () {
+            Route::resource('keluarga', RiwayatKeluargaController::class);
+            Route::resource('pendidikan', RiwayatPendidikanController::class);
+            Route::resource('riwayatpelanggaran', RiwayatPelanggaranController::class);
+            Route::resource('cuti', RiwayatCutiController::class);
+            Route::resource('prestasi', RiwayatPrestasiController::class);
+            Route::resource('riwayatsanksi', RiwayatSanskiController::class);
+
+
     });
