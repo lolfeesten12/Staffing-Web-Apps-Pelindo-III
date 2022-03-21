@@ -92,13 +92,12 @@ Atur Jadwal {{ $pegawai->nama_pegawai }}
                     <span id="id_pegawai" style="display: none">{{ $pegawai->id_pegawai }}</span>
                     <input type="text" class="form-control" name="id_pegawai"
                                         value="{{ $pegawai->id_pegawai }}" style="display: none" readonly>
-                    <div class="datatable">
-                        <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                    <div class="table-responsive">
+                        <div id="example_wrapper" class="dataTables_wrapper dt-bootstrap5">
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <table class="table table-bordered table-hover dataTable" id="dataTablePegawai"
-                                        width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info"
-                                        style="width: 100%;">
+                                    <table id="dataTablePegawai" class="table table-striped table-bordered dataTable"
+                                        style="width: 100%;" role="grid" aria-describedby="example_info">
                                         <thead>
                                             <tr role="row">
                                                 <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1"
@@ -164,35 +163,27 @@ Atur Jadwal {{ $pegawai->nama_pegawai }}
                             date: date.dateStr,
                             _token: _token
                         },
+                       
                         'dataSrc': ""
                     },
-                    "columns": [{
-                            "data": null,
-                            render: function (data, type, row, meta) {
-                                return meta.row + meta.settings._iDisplayStart + 1;
-                            }
-                        },
-                        {
-                            "data": "jenis_shift"
-                        },
-                        {
-                            "data": "jam_masuk"
-                        },
-                        {
-                            "data": "jam_selesai"
-                        },
-                        {
-                            "data": "tanggal_masuk",
-                            render: function (data, type, row, meta) {
-                                console.log(row)
-                                if (data == null) {
-                                    return `<button class="btn btn-secondary btn-xs" onclick="masuk(event,${row.id_pegawai},'${date.dateStr}')">Masuk</button>`
-                                } else {
-                                    return `<button class="btn btn-danger btn-xs" onclick="libur(event, ${row.id_pegawai},'${date.dateStr}')"><i class="fas fa-trash"></i></button>`
-                                }
-                            }
-                        },
-
+                   
+                    "columns":[
+                        {"data": null, render:function(data, type, row, meta){
+                            return meta.row + meta.settings._iDisplayStart+1;
+                            console.log("data")
+                        }},
+                        {"data": "jenis_shift"},
+                        {"data": "jam_masuk"},
+                        {"data": "jam_selesai"},
+                        {"data": "tanggal_masuk",render:function(data, type, row, meta){
+                            console.log(row)
+                            if (data == null){
+                                return `<button class="btn btn-secondary btn-xs" onclick="masuk(event,${row.id_pegawai},'${date.dateStr}')">Masuk</button>`
+                            }else{
+                                return `<button class="btn btn-danger btn-xs" onclick="libur(event, ${row.id_pegawai},'${date.dateStr}')"><i class="fas fa-trash"></i></button>`
+                            } 
+                        }},
+                        
                     ]
                 })
             }
@@ -208,8 +199,6 @@ Atur Jadwal {{ $pegawai->nama_pegawai }}
         console.log(id_pegawai)
 
         $.ajax({
-
-          
             method: 'get',
             url: '/Jadwal/jadwal-pegawai/' + id_pegawai + '/tanggal',
             success: function (response) {
@@ -218,8 +207,8 @@ Atur Jadwal {{ $pegawai->nama_pegawai }}
 
                     event.push({
                         title: 'Dijadwalkan', // a property!
-                        start: element.tanggal_jadwal, // a property!
-                        end: element.tanggal_jadwal
+                        start: element.tanggal_masuk, // a property!
+                        end: element.tanggal_masuk
                     })
                 });
                 var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -248,34 +237,22 @@ Atur Jadwal {{ $pegawai->nama_pegawai }}
                                 },
                                 'dataSrc': ""
                             },
-                            "columns": [{
-                                    "data": null,
-                                    render: function (data, type, row, meta) {
-                                        return meta.row + meta.settings
-                                            ._iDisplayStart + 1;
-                                    }
-                                },
-                                {
-                                    "data": "jenis_shift"
-                                },
-                                {
-                                    "data": "jam_masuk"
-                                },
-                                {
-                                    "data": "jam_selesai"
-                                },
-                                {
-                                    "data": "tanggal_masuk",
-                                    render: function (data, type, row, meta) {
-                                        console.log(row)
-                                        if (data == null) {
-                                            return `<button class="btn btn-secondary btn-xs" onclick="masuk(event,${row.id_pegawai},'${date.dateStr}')">Masuk</button>`
-                                        } else {
-                                            return `<button class="btn btn-danger btn-xs" onclick="libur(event, ${row.id_pegawai},'${date.dateStr}')"><i class="fas fa-trash"></i></button>`
-                                        }
-                                    }
-                                },
-
+                            "columns":[
+                                {"data": null, render:function(data, type, row, meta){
+                                    return meta.row + meta.settings._iDisplayStart+1;
+                                }},
+                                {"data": "jenis_shift"},
+                                {"data": "jam_masuk"},
+                                {"data": "jam_selesai"},
+                                {"data": "tanggal_masuk",render:function(data, type, row, meta){
+                                    console.log(row)
+                                    if (data == null){
+                                        return `<button class="btn btn-secondary btn-xs" onclick="masuk(event,${row.id_pegawai},'${date.dateStr}')">Masuk</button>`
+                                    }else{
+                                        return `<button class="btn btn-danger btn-xs" onclick="libur(event, ${row.id_pegawai},'${date.dateStr}')"><i class="fas fa-trash"></i></button>`
+                                    } 
+                                }},
+                                
                             ]
                         })
                     }

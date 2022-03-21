@@ -23,24 +23,25 @@ class JadwalPegawaiController extends Controller
         return view('user-views.pages.aktivitas.jadwal.index', compact('pegawai'));
     }
 
-    public function getJadwal(Request $request, $nama_pegawai){
-
-        $id_pegawai = MasterPegawai::where('nama_pegawai', $nama_pegawai)->pluck('id_pegawai')->toArray();
-        
-        $shift = MasterShift::leftjoin('tb_jadwal_pegawai','tb_master_shift_kerja.id_shift_kerja','tb_jadwal_pegawai.id_shift_kerja')
-        ->select('tb_shift_kerja.id_shift_kerja', 'jenis_shift','jam_masuk','jam_selesai')
-        ->whereIn('tb_master_pegawai.id_pegawai', $id_pegawai)
-        ->whereDate('tanggal_masuk', $request->date);
-        return $shift->get();
+    public function getJadwal(Request $request, $id_pegawai)
+    {
       
-
+        $id = MasterPegawai::where('id_pegawai', $id_pegawai)->pluck('id_pegawai')->toArray();
+   
+        $shift = MasterShift::leftjoin('tb_jadwal_pegawai','tb_master_shift_kerja.id_shift_kerja','tb_jadwal_pegawai.id_shift_kerja')
+        ->join('tb_jadwal_pegawai','tb_master_pegawai.id_pegawai','tb_jadwal_pegawai.id_pegawai')
+        ->select('tb_shift_kerja.id_shift_kerja', 'jenis_shift','jam_masuk','jam_selesai')
+        ->whereIn('tb_master_pegawai.id_pegawai', $id)
+        ->whereDate('tanggal_masuk', $request->date);
+        
         $shiftlibur = MasterShift::leftjoin('tb_jadwal_pegawai', function($join) use($request){
             $join->on('tanggal_masuk', '=', DB::raw("'".$request->date."'"))->on('tb_jadwal_pegawai.id_shift_kerja','tb_master_shift_kerja.id_shift_kerja');
         })
 
-        ->select('tb_shift_kerja.id_shift_kerja', 'jenis_shift','jam_masuk','jam_selesai')
-        ->whereIn('tb_master_pegawai.id_pegawai', $id_pegawai)
+        ->select('tb_master_shift_kerja.id_shift_kerja', 'jenis_shift','jam_masuk','jam_selesai')
+        ->whereIn('tb_master_pegawai.id_pegawai', $id)
         ->get();
+
 
         return $shiftlibur;
         // $id_pegawai = MasterPegawai::join('tb_master_jabatan', 'tb_master_pegawai.id_jabatan', 'tb_master_jabatan.id_jabatan')
@@ -58,6 +59,8 @@ class JadwalPegawaiController extends Controller
         $jadwal = JadwalPegawai::select('tanggal_masuk')->groupBy('tanggal_masuk')->get();
         return $jadwal;
     }
+
+  
 
     /**
      * Show the form for creating a new resource.
