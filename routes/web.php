@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Jadwal\JadwalPegawaiController;
 use App\Http\Controllers\MasterData\MasterJabatanController;
 use App\Http\Controllers\MasterData\MasterPegawaiController;
 use App\Http\Controllers\MasterData\MasterPelanggaranController;
@@ -55,48 +56,20 @@ Route::prefix('Masterdata')
     // ->middleware(['Admin_Role','verified'])
     ->group(function () {
         Route::resource('unit-kerja', MasterUnitKerjaController::class);
-    });
-
-Route::prefix('Masterdata')
-    // ->middleware(['Admin_Role','verified'])
-    ->group(function () {
         Route::resource('jabatan', MasterJabatanController::class);
-    });
-
-Route::prefix('Masterdata')
-    // ->middleware(['Admin_Role','verified'])
-    ->group(function () {
         Route::resource('pegawai', MasterPegawaiController::class);
-    });
-
-Route::prefix('Masterdata')
-    // ->middleware(['Admin_Role','verified'])
-    ->group(function () {
         Route::resource('shift', MasterShiftController::class);
-    });
-
-Route::prefix('Masterdata')
-    // ->middleware(['Admin_Role','verified'])
-    ->group(function () {
         Route::resource('sanksi', MasterSanksiController::class);
-    });
-
-Route::prefix('Masterdata')
-    // ->middleware(['Admin_Role','verified'])
-    ->group(function () {
         Route::resource('pelanggaran', MasterPelanggaranController::class);
     });
 
-
 // REQUIREMENT
 Route::prefix('Requirement')
-    // ->middleware(['Admin_Role','verified'])
     ->group(function () {
         Route::resource('pengumuman', PengumumanController::class);
     });
 
 Route::prefix('Requirement')
-    // ->middleware(['Admin_Role','verified'])
     ->group(function () {
         Route::get('/hasil_seleksi', [App\Http\Controllers\WebRequirement\CalonPegawaiController::class, 'HasilSeleksi'])->name('calon-pegawai-hasil');
         Route::get('/download_cv/{file_cv}', [App\Http\Controllers\WebRequirement\CalonPegawaiController::class, 'getFile'])->name('calon-pegawai-cv');
@@ -106,7 +79,14 @@ Route::prefix('Requirement')
     });
 
 Route::prefix('WebRequirement')
-    // ->middleware(['Admin_Role','verified'])
     ->group(function () {
         Route::resource('web-requirement', WebRequirementController::class);
+    });
+
+
+Route::prefix('Jadwal')
+    ->group(function () {
+        Route::resource('jadwal-pegawai', JadwalPegawaiController::class);
+        Route::post('jadwal-pegawai/{id_pegawai}/tanggal', [App\Http\Controllers\Jadwal\JadwalpegawaiController::class, 'getJadwal']);
+        Route::get('jadwal-pegawai/{id_pegawai}/tanggal', [App\Http\Controllers\Jadwal\JadwalpegawaiController::class, 'JadwalPegawai']);
     });

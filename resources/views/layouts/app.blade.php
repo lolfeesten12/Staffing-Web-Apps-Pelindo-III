@@ -16,6 +16,7 @@
 
     <!-- loader-->
     <link href="assets/css/pace.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/main.min.js"></script>
 
     <title>Snacked - Bootstrap 5 Admin Template</title>
 </head>

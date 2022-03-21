@@ -171,7 +171,7 @@
                 <div class="menu-title">Penjadwalan</div>
             </a>
             <ul>
-                <li> <a href="widgets-static-widgets.html"><i class="bi bi-circle"></i>Jadwal Pegawai</a></li>
+                <li> <a href="{{ route('jadwal-pegawai.index') }}"><i class="bi bi-circle"></i>Jadwal Pegawai</a></li>
             </ul>
         </li>
         <li>
