@@ -53,10 +53,8 @@ Atur Jadwal {{ $pegawai->nama_pegawai }}
                                     <input type="text" class="form-control" name="nama_pegawai"
                                         value="{{ $pegawai->Jabatan->nama_jabatan }}" readonly>
                                 </div>
-                                <button id="ButtonTambah" class="btn btn-sm btn-primary" type="button"
-                                    data-toggle="modal" data-target="#Modaltambah" style="display: none">
-                                    Tambah
-                                </button>
+                                <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" id="ButtonTambah"
+                                data-bs-target="#Modaltambah" style="display: none">Tambah Data</button>
                             </div>
                         </div>
                     </div>
@@ -77,14 +75,13 @@ Atur Jadwal {{ $pegawai->nama_pegawai }}
     </div>
 </main>
 
-<div class="modal fade" id="Modaltambah" tabindex="-1" role="dialog" data-backdrop="static"
-    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+<div class="modal fade" id="Modaltambah" data-backdrop="static" tabindex="-1" role="dialog"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
-            <div class="modal-header bg-light">
-                <h5 class="modal-title" id="exampleModalCenterTitle">Atur Jadwal Pegawai</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">×</span></button>
+            <div class="modal-header">
+                <h5 class="modal-title">Atur Jadwal</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form id="form1" class="d-inline">
                 @csrf
@@ -170,7 +167,6 @@ Atur Jadwal {{ $pegawai->nama_pegawai }}
                     "columns":[
                         {"data": null, render:function(data, type, row, meta){
                             return meta.row + meta.settings._iDisplayStart+1;
-                            console.log("data")
                         }},
                         {"data": "jenis_shift"},
                         {"data": "jam_masuk"},
