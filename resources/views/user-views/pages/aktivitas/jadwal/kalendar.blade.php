@@ -174,9 +174,9 @@ Atur Jadwal {{ $pegawai->nama_pegawai }}
                         {"data": "tanggal_masuk",render:function(data, type, row, meta){
                             console.log(row, data)
                             if (data == null){
-                                return `<button class="btn btn-secondary btn-xs" onclick="masuk(event,${row.id_shift_kerja},'${date.dateStr}')">Masuk</button>`
+                                return `<button class="btn btn-secondary btn-xs" onclick="masuk(event,${row.id_shift_kerja},'${date.dateStr}', '${id_pegawai}')">Masuk</button>`
                             }else{
-                                return `<button class="btn btn-danger btn-xs" onclick="libur(event, ${row.id_shift_kerja},'${date.dateStr}')"><i class="fas fa-trash"></i></button>`
+                                return `<button class="btn btn-danger btn-xs" onclick="libur(event,${row.id_shift_kerja},'${date.dateStr}', '${id_pegawai}')"><i class="fas fa-trash"></i></button>`
                             } 
                         }},
                         
@@ -260,7 +260,8 @@ Atur Jadwal {{ $pegawai->nama_pegawai }}
     }
 
 
-    function masuk(event, id_pegawai, id_shift_kerja, date){
+    function masuk(event, id_shift_kerja, date, id_pegawai){
+        console.log(id_shift_kerja)
         event.preventDefault()
         var form1 = $('#form1')
         var _token = form1.find('input[name="_token"]').val()

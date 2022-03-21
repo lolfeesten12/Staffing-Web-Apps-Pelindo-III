@@ -29,7 +29,7 @@ class JadwalPegawai extends Model
 
     public function ShifKerja()
     {
-        return $this->belongsTo(MasterShift::class, 'id_shif_kerja', 'id_shif_kerja');
+        return $this->belongsTo(MasterShift::class, 'id_shift_kerja', 'id_shift_kerja');
     }
 
     public function Pegawai()
@@ -39,6 +39,6 @@ class JadwalPegawai extends Model
 
     public function id_atasan()
     {
-        return $this->belongsTo(MasterPegawai::class, 'id_atasan', 'id_pegawai');
+        return $this->belongsTo(MasterPegawai::class, 'id_pegawai', 'id_atasan');
     }
 }

@@ -7,6 +7,7 @@ use App\Models\Jadwal\JadwalPegawai;
 use App\Models\MasterData\MasterPegawai;
 use App\Models\MasterData\MasterShift;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class JadwalPegawaiController extends Controller
@@ -40,6 +41,7 @@ class JadwalPegawaiController extends Controller
 
     public function JadwalMasuk(Request $request)
     {
+     
         $jadwal = new JadwalPegawai;
         $jadwal->id_pegawai = $request->id_pegawai;
         $jadwal->id_shift_kerja = $request->id_shift_kerja;
