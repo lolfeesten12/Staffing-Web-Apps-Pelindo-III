@@ -102,7 +102,7 @@
         <div class="toggle-icon ms-auto"> <i class="bi bi-list"></i>
         </div>
     </div>
-    
+
     <ul class="metismenu" id="menu">
         <li>
             <a href="{{ route('profile.index') }}" target="_blank">
@@ -146,7 +146,7 @@
                 <li> <a href="{{ route('calon-pegawai-hasil') }}"><i class="bi bi-circle"></i>Hasil Seleksi</a></li>
                 <li> <a href="{{ route('web-requirement.index') }}"><i class="bi bi-circle"></i>Menuju Web Recrut</a></li>
             </ul>
-        </li>   
+        </li>
         <li class="menu-label">Riwayat Pegawai</li>
         <li>
             <a href="javascript:;" class="has-arrow">
@@ -155,12 +155,12 @@
                 <div class="menu-title">Data Riwayat</div>
             </a>
             <ul>
-                <li> <a href="{{ route('riwayat-keluarga.index') }}"><i class="bi bi-circle"></i>Riwayat Keluarga</a></li>
-                <li> <a href="{{ route('riwayat-pendidikan.index') }}"><i class="bi bi-circle"></i>Riwayat Pendidikan</a></li>
-                <li> <a href="{{ route('riwayat-prestasi.index') }}"><i class="bi bi-circle"></i>Riwayat Prestasi</a></li>
-                <li> <a href="{{ route('riwayat-cuti.index') }}"><i class="bi bi-circle"></i>Riwayat Cuti</a></li>
-                <li> <a href="{{ route('riwayat-pelanggaran.index') }}"><i class="bi bi-circle"></i>Riwayat Pelanggaran</a></li>
-                <li> <a href="{{ route('riwayat-sanksi.index') }}"><i class="bi bi-circle"></i>Riwayat Sanksi</a></li>
+                <li> <a href="{{ route('keluarga.index') }}"><i class="bi bi-circle"></i>Riwayat Keluarga</a></li>
+                <li> <a href="{{ route('pendidikan.index') }}"><i class="bi bi-circle"></i>Riwayat Pendidikan</a></li>
+                <li> <a href="{{ route('prestasi.index') }}"><i class="bi bi-circle"></i>Riwayat Prestasi</a></li>
+                <li> <a href="{{ route('cuti.index') }}"><i class="bi bi-circle"></i>Riwayat Cuti</a></li>
+                <li> <a href="{{ route('riwayatpelanggaran.index') }}"><i class="bi bi-circle"></i>Riwayat Pelanggaran</a></li>
+                <li> <a href="{{ route('riwayatsanksi.index') }}"><i class="bi bi-circle"></i>Riwayat Sanksi</a></li>
             </ul>
         </li>
         <li class="menu-label">Jadwal dan Absen</li>
