@@ -17,7 +17,7 @@ Atur Jadwal {{ $pegawai->nama_pegawai }}
                     <ol class="breadcrumb mb-0 p-0">
                         <li class="breadcrumb-item"><a href="javascript:;"><i class="lni lni-database"></i></a>
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">Jadwal Pegawai
+                        <li class="breadcrumb-item active" aria-current="page">Atur Jadwal Pegawai
                             {{ $pegawai->nama_pegawai }}</li>
                     </ol>
                 </nav>
@@ -172,11 +172,11 @@ Atur Jadwal {{ $pegawai->nama_pegawai }}
                         {"data": "jam_masuk"},
                         {"data": "jam_selesai"},
                         {"data": "tanggal_masuk",render:function(data, type, row, meta){
-                            console.log(row)
+                            console.log(row, data)
                             if (data == null){
-                                return `<button class="btn btn-secondary btn-xs" onclick="masuk(event,${row.id_pegawai},'${date.dateStr}')">Masuk</button>`
+                                return `<button class="btn btn-secondary btn-xs" onclick="masuk(event,${row.id_shift_kerja},'${date.dateStr}')">Masuk</button>`
                             }else{
-                                return `<button class="btn btn-danger btn-xs" onclick="libur(event, ${row.id_pegawai},'${date.dateStr}')"><i class="fas fa-trash"></i></button>`
+                                return `<button class="btn btn-danger btn-xs" onclick="libur(event, ${row.id_shift_kerja},'${date.dateStr}')"><i class="fas fa-trash"></i></button>`
                             } 
                         }},
                         
@@ -225,10 +225,10 @@ Atur Jadwal {{ $pegawai->nama_pegawai }}
                             ],
                             "ajax": {
                                 'type': 'POST',
-                                'url': '/Jadwal/jadwal-pegawai/' + id_pegawai +
-                                    '/tanggal',
+                                'url': '/Jadwal/jadwal-pegawai/' + id_pegawai + '/tanggal',
                                 'data': {
                                     date: date.dateStr,
+                                    id_pegawai: id_pegawai,
                                     _token: _token
                                 },
                                 'dataSrc': ""
@@ -241,11 +241,11 @@ Atur Jadwal {{ $pegawai->nama_pegawai }}
                                 {"data": "jam_masuk"},
                                 {"data": "jam_selesai"},
                                 {"data": "tanggal_masuk",render:function(data, type, row, meta){
-                                    console.log(row)
+                                    console.log(row, data)
                                     if (data == null){
-                                        return `<button class="btn btn-secondary btn-xs" onclick="masuk(event,${row.id_pegawai},'${date.dateStr}')">Masuk</button>`
+                                        return `<button class="btn btn-secondary btn-xs" onclick="masuk(event,${row.id_shift_kerja},'${date.dateStr}', '${id_pegawai}')">Masuk</button>`
                                     }else{
-                                        return `<button class="btn btn-danger btn-xs" onclick="libur(event, ${row.id_pegawai},'${date.dateStr}')"><i class="fas fa-trash"></i></button>`
+                                        return `<button class="btn btn-danger btn-xs" onclick="libur(event, ${row.id_shift_kerja},'${date.dateStr}', '${id_pegawai}')"><i class="fas fa-trash"></i></button>`
                                     } 
                                 }},
                                 
@@ -257,6 +257,86 @@ Atur Jadwal {{ $pegawai->nama_pegawai }}
 
             }
         })
+    }
+
+
+    function masuk(event, id_pegawai, id_shift_kerja, date){
+        event.preventDefault()
+        var form1 = $('#form1')
+        var _token = form1.find('input[name="_token"]').val()
+        $.ajax({
+                method: 'POST',
+                url: '/Jadwal/jadwal-pegawai/'+ id_pegawai +'/masuk',
+                data: {
+                    _token: _token,
+                    id_pegawai: id_pegawai,
+                    id_shift_kerja: id_shift_kerja,
+                    date: date,
+                },
+                success: function (response) {
+                    
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                    })
+
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'Berhasil Menambahkan Data Jadwal Pegawai'
+                    })
+
+                    var form1 = $('#form1')
+                    var id_pegawai = form1.find('input[name="id_pegawai"]').val()
+                    var _token = form1.find('input[name="_token"]').val()
+                    var table = $('#dataTablePegawai').DataTable().destroy()
+                    var table = $('#dataTablePegawai').DataTable({
+                        "pageLength": 5,
+                        "lengthMenu": [
+                            [5, 10, 20, -1],
+                            [5, 10, 20, ]
+                        ],
+                        "ajax":{
+                            'type': 'POST',
+                            'url': '/Jadwal/jadwal-pegawai/' + id_pegawai + '/tanggal',
+                            'data':{
+                                    date: date,
+                                    _token: _token,
+                                    id_pegawai: id_pegawai
+                                    },
+                            'dataSrc': ""
+                        },
+                        "columns":[
+                            {"data": null, render:function(data, type, row, meta){
+                                return meta.row + meta.settings._iDisplayStart+1;
+                            }},
+                            {"data": "jenis_shift"},
+                            {"data": "jam_masuk"},
+                            {"data": "jam_selesai"},
+                            {"data": "tanggal_masuk",render:function(data, type, row, meta){
+                                console.log(row, data)
+                                if (data == null){
+                                    return `<button class="btn btn-secondary btn-xs" onclick="masuk(event,${row.id_shift_kerja},'${date.dateStr}', '${id_pegawai}')">Masuk</button>`
+                                }else{
+                                    return `<button class="btn btn-danger btn-xs" onclick="libur(event, ${row.id_shift_kerja},'${date.dateStr}', '${id_pegawai}')"><i class="fas fa-trash"></i></button>`
+                                } 
+                            }},
+                        ]
+                    })
+
+                    makecalendar()
+                   
+                },
+                error: function (response) {
+                    console.log(response)
+                }
+            });
     }
 
 </script>

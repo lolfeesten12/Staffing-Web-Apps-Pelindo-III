@@ -27,7 +27,6 @@ class JadwalPegawaiController extends Controller
     {
       
         $id = MasterPegawai::where('id_pegawai', $id_pegawai)->pluck('id_pegawai')->toArray();
-   
         
         $shiftlibur = MasterShift::leftjoin('tb_jadwal_pegawai', function($join) use($request){
             $join->on('tanggal_masuk', '=', DB::raw("'".$request->date."'"))->on('tb_jadwal_pegawai.id_shift_kerja','tb_master_shift_kerja.id_shift_kerja');
@@ -37,7 +36,22 @@ class JadwalPegawaiController extends Controller
 
 
         return $shiftlibur;
-      
+    }
+
+    public function JadwalMasuk(Request $request)
+    {
+        $jadwal = new JadwalPegawai;
+        $jadwal->id_pegawai = $request->id_pegawai;
+        $jadwal->id_shift_kerja = $request->id_shift_kerja;
+        $jadwal->tanggal_masuk = $request->date;
+        $jadwal->id_atasan = Auth::user()->id;
+        $jadwal->save();
+    }
+
+    public function JadwalLibur(Request $request)
+    {
+        $jadwal = JadwalPegawai::where('id_pegawai', $request->id_pegawai)->where('id_shift_keja', $request->id_shift_kerja)->whereDate('tanggal_jadwal', $request->date)->first();
+        $jadwal->delete();
     }
 
     public function JadwalPegawai()
