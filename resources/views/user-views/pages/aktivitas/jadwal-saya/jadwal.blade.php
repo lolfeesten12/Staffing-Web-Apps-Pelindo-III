@@ -36,7 +36,32 @@ Jadwal {{ $pegawai->nama_pegawai }}
         <div class="row">
             <div class="col-lg-12 mx-auto">
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-3">
+                        <div class="card">
+                            <div class="card-header py-3 bg-transparent">
+                                <h5 class="mb-0">Jadwal Pegawai</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="col-12 mb-2">
+                                    <label class="form-label mr-1">Nama Lengkap
+                                        Pegawai</label>
+                                    <input type="text" class="form-control" name="nama_pegawai"
+                                        value="{{ $pegawai->nama_pegawai }}" readonly>
+                                </div>
+                                <div class="col-12 mb-2">
+                                    <label class="form-label mr-1">Unit Kerja</label>
+                                    <input type="text" class="form-control" name="nama_pegawai"
+                                        value="{{ $pegawai->UnitKerja->unit_kerja }}" readonly>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label mr-1">Jabatan</label>
+                                    <input type="text" class="form-control" name="nama_pegawai"
+                                        value="{{ $pegawai->Jabatan->nama_jabatan }}" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-9">
                         <div class="card">
                             <div class="card-header py-3 bg-transparent">
                                 <h5 class="mb-0">Jadwal Saya</h5>

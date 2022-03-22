@@ -208,7 +208,7 @@
             <ul>
                 <li> <a href="ecommerce-products-list.html"><i class="bi bi-circle"></i>Pengajuan Cuti</a>
                 @if (Auth::user()->Pegawai->role == 'HRD')
-                <li> <a href="ecommerce-products-list.html"><i class="bi bi-circle"></i>Approval Cuti</a>
+                <li> <a href="{{ route('approval-cuti.index') }}"><i class="bi bi-circle"></i>Approval Cuti</a>
                 @endif
             </ul>
         </li>

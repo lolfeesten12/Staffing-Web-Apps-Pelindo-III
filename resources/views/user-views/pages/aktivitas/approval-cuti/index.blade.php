@@ -2,7 +2,7 @@
 
 
 @section('name')
-Master Pegawai
+Approval Pengajuan Cuti
 @endsection
 
 @section('content')
@@ -11,18 +11,15 @@ Master Pegawai
 <main class="page-content">
     <div class="container-fluid">
         <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-            <div class="breadcrumb-title pe-3">Master Data</div>
+            <div class="breadcrumb-title pe-3">Cuti</div>
             <div class="ps-3">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb mb-0 p-0">
                         <li class="breadcrumb-item"><a href="javascript:;"><i class="lni lni-database"></i></a>
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">Pegawai</li>
+                        <li class="breadcrumb-item active" aria-current="page">Approval Cuti Pegawai</li>
                     </ol>
                 </nav>
-            </div>
-            <div class="ms-auto">
-                <a href="{{ route('pegawai.create') }}" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Tambah Data Pegawai" class="btn btn-sm btn-primary">Tambah Data</a>
             </div>
         </div>
         <hr>
@@ -74,46 +71,57 @@ Master Pegawai
                                                 style="width: 170px;">Nama Pegawai</th>
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
-                                                style="width: 80px;">Jabatan</th>
+                                                style="width: 80px;">Jenis Cuti</th>
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
-                                                style="width: 80px;">Unit Kerja</th>
+                                                style="width: 80px;">Cuti Lama</th>
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
-                                                style="width: 70px;">Jenis Kelamin</th>
+                                                style="width: 80px;">Tanggal Mulai</th>
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
-                                                style="width: 70px;">No.Telp</th>
+                                                style="width: 80px;">Tanggal Selesai</th>
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
-                                                style="width: 70px;">Riwayat Pegawai</th>
+                                                style="width: 80px;">Status Proses</th>
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Salary: activate to sort column ascending"
                                                 style="width: 70px;">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @forelse ($pegawai as $item)
+                                        @forelse ($cuti as $item)
                                         <tr role="row" class="odd">
                                             <th scope="row" class="small" class="sorting_1">{{ $loop->iteration}}.</th>
-                                            <td>{{ $item->nama_pegawai }}</td>
-                                            <td>{{ $item->Jabatan->nama_jabatan }}</td>
-                                            <td>{{ $item->UnitKerja->unit_kerja }}</td>
-                                            <td>{{ $item->jenis_kelamin }}</td>
-                                            <td>{{ $item->no_telp }}</td>
-                                            <td class="text-center">
-                                                <a href="{{ route('pegawai-riwayat',$item->id_pegawai) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Riwayat Data Pegawai"
-                                                    class="btn btn-sm btn-primary"><i class="lni lni-eye"></i></a>
+                                            <td>{{ $item->Pegawai->nama_pegawai }}</td>
+                                            <td>{{ $item->jenis_cuti }}</td>
+                                            <td>{{ $item->cuti_lama }}</td>
+                                            <td>{{ $item->tanggal_mulai }}</td>
+                                            <td>{{ $item->tanggal_selesai }}</td>
+                                            <td>
+                                                @if ($item->status_acc == 'Terima')
+                                                <span class="badge bg-light-success text-success w-100">Diterima</span>
+                                                @elseif ($item->status_acc == 'Tolak')
+                                                <span class="badge bg-light-danger text-danger w-100">Ditolak</span>
+                                                @else
+                                                <span class="badge bg-light-info text-info w-100">Diproses</span>
+                                                @endif
                                             </td>
                                             <td class="text-center">
-                                                <a href="{{ route('pegawai.show',$item->id_pegawai) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Detail Data Pegawai"
-                                                    class="btn btn-sm btn-secondary"><i class="lni lni-eye"></i></a>
-                                                <a href="{{ route('pegawai.edit',$item->id_pegawai) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Edit Data Pegawai"
-                                                    class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i></a>
+                                                @if ($item->status_acc == 'Terima' || $item->status_acc == 'Tolak')
+                                                <a href="{{ route('approval-cuti.show',$item->id_riwayat_cuti) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Detail Data Cuti"
+                                                    class="btn btn-sm btn-primary"><i class="lni lni-eye"></i></a>
+                                                @else
+                                                <a href="{{ route('approval-cuti.show',$item->id_riwayat_cuti) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Detail Data Cuti"
+                                                    class="btn btn-sm btn-primary"><i class="lni lni-eye"></i></a>
+                                                <a href="javascript:;" class="btn btn-sm btn-success"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#ModalTerima-{{ $item->id_riwayat_cuti }}"><i class="lni lni-checkmark"></i></a>
                                                 <a href="javascript:;" class="btn btn-sm btn-danger"
                                                     data-bs-toggle="modal"
-                                                    data-bs-target="#Modalhapus-{{ $item->id_pegawai }}"><i
-                                                        class="bi bi-trash-fill"></i></a>
+                                                    data-bs-target="#ModalTolak-{{ $item->id_riwayat_cuti }}"><i class="lni lni-close"></i></a>
+                                                @endif
+                                              
                                             </td>
                                         </tr>
                                         @empty
@@ -130,31 +138,57 @@ Master Pegawai
     </div>
 </main>
 
-
-@forelse ($pegawai as $item)
-<div class="modal fade" id="Modalhapus-{{ $item->id_pegawai }}" data-backdrop="static" tabindex="-1" role="dialog"
+@forelse ($cuti as $item)
+<div class="modal fade" id="ModalTerima-{{ $item->id_riwayat_cuti }}" data-backdrop="static" tabindex="-1" role="dialog"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content bg-danger">
-            <div class="modal-header">
-                <h5 class="modal-title text-white">Hapus Data Pegawai</h5>
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-light-success text-success">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Konfirmasi Setujui Cuti</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="{{ route('pegawai.destroy', $item->id_pegawai) }}" method="POST" class="d-inline">
+            <form action="{{ route('approval-cuti-status', $item->id_riwayat_cuti) }}?status_acc=Terima" method="POST" class="d-inline">
                 @csrf
-                @method('delete')
-                <div class="modal-body text-white">
-                    Apakah Anda Yakin Menghapus Data Pegawai atas nama {{ $item->nama_pegawai }} ?</div>
+                <div class="modal-body">
+                    <div class="form-group">Apakah Anda Yakin Menyetujui Pengajuan Cuti dari Pegawai atas nama {{ $item->Pegawai->nama_pegawai }}?</div>
+                </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-dark">Ya! Hapus</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button class="btn btn-success" type="submit">Ya! Approve</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 @empty
-
 @endforelse
+
+@forelse ($cuti as $item)
+<div class="modal fade" id="ModalTolak-{{ $item->id_riwayat_cuti }}" data-backdrop="static" tabindex="-1" role="dialog"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-light-danger text-danger">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Konfirmasi Tolak Data Cuti</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{ route('approval-cuti-status', $item->id_riwayat_cuti) }}?status_acc=Tolak" method="POST" class="d-inline">
+                @csrf
+                <div class="modal-body">
+                    <div class="form-group">Apakah Anda Yakin Menolak Pengajuan Cuti dari Pegawai atas nama {{ $item->Pegawai->nama_pegawai }}?</div>
+                </div>
+
+                <div class="modal-footer ">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button class="btn btn-danger" type="submit">Ya! Tolak</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@empty
+@endforelse
+
+
 
 @endsection

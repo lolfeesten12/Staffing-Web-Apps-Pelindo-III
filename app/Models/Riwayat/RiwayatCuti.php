@@ -19,7 +19,9 @@ class RiwayatCuti extends Model
         'tanggal_mulai',
         'tanggal_selesai',
         'alasan',
-        'status_acc'
+        'status_acc',
+        'jenis_cuti',
+        'status_dilaksanakan'
     ];
 
     protected $hidden = [

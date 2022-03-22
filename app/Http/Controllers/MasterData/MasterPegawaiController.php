@@ -22,7 +22,6 @@ class MasterPegawaiController extends Controller
     public function index()
     {
         $pegawai = MasterPegawai::with('Jabatan','UnitKerja')->get();
-    
 
         return view('user-views.pages.masterdata.pegawai.index',compact('pegawai'));
     }
@@ -94,8 +93,13 @@ class MasterPegawaiController extends Controller
     public function show($id)
     {
         $pegawai = MasterPegawai::with('Jabatan','Unitkerja','User')->find($id);
-
         return view('user-views.pages.masterdata.pegawai.detail',compact('pegawai'));
+    }
+
+    public function GetRiwayat($id_pegawai)
+    {
+        $pegawai = MasterPegawai::with('Jabatan','Unitkerja','User','RiwayatKeluarga','RiwayatPendidikan','RiwayatPrestasi','RiwayatCuti','RiwayatPelanggaran')->find($id_pegawai);
+        return view('user-views.pages.masterdata.pegawai.getriwayat',compact('pegawai'));
     }
 
     /**
