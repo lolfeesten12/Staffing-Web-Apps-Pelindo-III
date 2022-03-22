@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Jadwal\JadwalPegawaiController;
+use App\Http\Controllers\Jadwal\JadwalSayaController;
 use App\Http\Controllers\MasterData\MasterJabatanController;
 use App\Http\Controllers\MasterData\MasterPegawaiController;
 use App\Http\Controllers\MasterData\MasterPelanggaranController;
@@ -97,6 +98,12 @@ Route::prefix('Jadwal')
         Route::get('jadwal-pegawai/{id_pegawai}/tanggal', [App\Http\Controllers\Jadwal\JadwalpegawaiController::class, 'JadwalPegawai']);
         Route::post('jadwal-pegawai/{id_pegawai}/masuk', [App\Http\Controllers\Jadwal\JadwalpegawaiController::class, 'JadwalMasuk']);
         Route::post('jadwal-pegawai/{id_pegawai}/libur', [App\Http\Controllers\Jadwal\JadwalpegawaiController::class, 'JadwalLibur']);
+    });
+
+Route::prefix('Jadwal')
+    ->group(function () {
+        Route::resource('jadwal-saya', JadwalSayaController::class);
+        Route::get('jadwal-saya/{id_pegawai}/tanggal', [App\Http\Controllers\Jadwal\JadwalSayaController::class, 'JadwalPegawai']);
     });
     
     Route::prefix('Riwayat')

@@ -19,7 +19,18 @@ class JadwalPegawaiController extends Controller
      */
     public function index()
     {
-        $pegawai = MasterPegawai::where('role','=','Pegawai')->get();
+        if(Auth::user()->Pegawai->role == 'HRD'){
+            $pegawai = MasterPegawai::join('tb_master_jabatan','tb_master_pegawai.id_jabatan','tb_master_jabatan.id_jabatan')
+            ->where('nama_jabatan','!=','HRD')
+            ->where('role','=','Kepala Unit')
+            ->get();
+        }else{
+            $pegawai = MasterPegawai::join('tb_master_jabatan','tb_master_pegawai.id_jabatan','tb_master_jabatan.id_jabatan')
+            ->where('nama_jabatan', '!=' ,'Kepala Unit')
+            ->where('id_unit_kerja','=', Auth::user()->Pegawai->id_unit_kerja)
+            ->get();
+        }
+    
 
         return view('user-views.pages.aktivitas.jadwal.index', compact('pegawai'));
     }
@@ -28,11 +39,12 @@ class JadwalPegawaiController extends Controller
     {
       
         $id = MasterPegawai::where('id_pegawai', $id_pegawai)->pluck('id_pegawai')->toArray();
+        $id_shift = MasterShift::pluck('id_shift_kerja')->toArray();
         
         $shiftlibur = MasterShift::leftjoin('tb_jadwal_pegawai', function($join) use($request){
             $join->on('tanggal_masuk', '=', DB::raw("'".$request->date."'"))->on('tb_jadwal_pegawai.id_shift_kerja','tb_master_shift_kerja.id_shift_kerja');
         })
-        ->select('tb_master_shift_kerja.id_shift_kerja', 'jenis_shift','jam_masuk','jam_selesai')
+        ->select('tb_master_shift_kerja.id_shift_kerja', 'jenis_shift','jam_masuk','jam_selesai','tanggal_masuk')
         ->get();
 
 
@@ -52,13 +64,14 @@ class JadwalPegawaiController extends Controller
 
     public function JadwalLibur(Request $request)
     {
-        $jadwal = JadwalPegawai::where('id_pegawai', $request->id_pegawai)->where('id_shift_keja', $request->id_shift_kerja)->whereDate('tanggal_jadwal', $request->date)->first();
+        $jadwal = JadwalPegawai::where('id_pegawai', $request->id_pegawai)->where('id_shift_kerja', $request->id_shift_kerja)->whereDate('tanggal_masuk', $request->date)->first();
         $jadwal->delete();
     }
 
-    public function JadwalPegawai()
+    public function JadwalPegawai($id_pegawai)
     {
-        $jadwal = JadwalPegawai::select('tanggal_masuk')->groupBy('tanggal_masuk')->get();
+        $jadwal = JadwalPegawai::where('id_pegawai', $id_pegawai)->leftjoin('tb_master_shift_kerja','tb_jadwal_pegawai.id_shift_kerja','tb_master_shift_kerja.id_shift_kerja')
+       ->get();
         return $jadwal;
     }
 
