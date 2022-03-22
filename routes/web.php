@@ -98,6 +98,7 @@ Route::prefix('Jadwal')
         Route::post('jadwal-pegawai/{id_pegawai}/masuk', [App\Http\Controllers\Jadwal\JadwalpegawaiController::class, 'JadwalMasuk']);
         Route::post('jadwal-pegawai/{id_pegawai}/libur', [App\Http\Controllers\Jadwal\JadwalpegawaiController::class, 'JadwalLibur']);
     });
+    
     Route::prefix('Riwayat')
     // ->middleware(['Admin_Role','verified'])
     ->group(function () {

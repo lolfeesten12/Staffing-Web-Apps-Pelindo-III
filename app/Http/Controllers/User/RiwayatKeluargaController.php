@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\MasterData\MasterHubunganKeluarga;
 use App\Models\MasterData\MasterPegawai;
+use App\Models\Riwayat\RiwayatKeluarga as RiwayatRiwayatKeluarga;
 use App\Models\RiwayatKeluarga;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -20,7 +21,7 @@ class RiwayatKeluargaController extends Controller
     public function index()
     {
         $pegawai = User::with('Pegawai')->where('id', Auth::user()->id)->first();
-        $riwayat = RiwayatKeluarga::with('Hubungan')->where('id_pegawai', $pegawai->id_pegawai)->get();
+        $riwayat = RiwayatRiwayatKeluarga::with('Hubungan')->where('id_pegawai', $pegawai->id_pegawai)->get();
         $hubungan = MasterHubunganKeluarga::get();
         // return $riwayat;
                 return view('user-views.pages.riwayat-keluarga', compact('riwayat', 'hubungan'));

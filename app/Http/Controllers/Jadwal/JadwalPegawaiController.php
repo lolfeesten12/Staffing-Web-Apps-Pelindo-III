@@ -19,7 +19,7 @@ class JadwalPegawaiController extends Controller
      */
     public function index()
     {
-        $pegawai = MasterPegawai::get();
+        $pegawai = MasterPegawai::where('role','=','Pegawai')->get();
 
         return view('user-views.pages.aktivitas.jadwal.index', compact('pegawai'));
     }
@@ -46,7 +46,7 @@ class JadwalPegawaiController extends Controller
         $jadwal->id_pegawai = $request->id_pegawai;
         $jadwal->id_shift_kerja = $request->id_shift_kerja;
         $jadwal->tanggal_masuk = $request->date;
-        $jadwal->id_atasan = Auth::user()->id;
+        $jadwal->id_atasan = Auth::user()->Pegawai->id_pegawai;
         $jadwal->save();
     }
 

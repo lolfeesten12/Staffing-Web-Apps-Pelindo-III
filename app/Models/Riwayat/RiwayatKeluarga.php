@@ -3,6 +3,7 @@
 namespace App\Models\Riwayat;
 
 use App\Models\MasterData\MasterHubungan;
+use App\Models\MasterData\MasterHubunganKeluarga;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\MasterData\MasterPegawai;
@@ -32,6 +33,6 @@ class RiwayatKeluarga extends Model
     }
     public function Hubungan()
     {
-        return $this->belongsTo(MasterHubungan::class, 'id_hub_keluarga', 'id_hub_keluarga');
+        return $this->belongsTo(MasterHubunganKeluarga::class, 'id_hub_keluarga', 'id_hub_keluarga');
     }
 }
