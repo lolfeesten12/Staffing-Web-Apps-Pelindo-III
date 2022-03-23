@@ -52,7 +52,8 @@ class RiwayatPendidikanController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    { 
+        
         $riwayat = new RiwayatPendidikan();
         $riwayat->id_pegawai = Auth::user()->id_pegawai;
         $riwayat->tipe_pendidikan = $request->tipe_pendidikan;

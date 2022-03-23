@@ -18,7 +18,8 @@ class RiwayatPendidikan extends Model
         'nama_sekolah',
         'jurusan',
         'no_ijasah',
-        'tanggal_ijasah'
+        'tanggal_ijasah',
+        'file_ijasah'
     ];
 
     protected $hidden = [

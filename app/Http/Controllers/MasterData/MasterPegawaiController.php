@@ -53,7 +53,7 @@ class MasterPegawaiController extends Controller
            
             $imagePath->move(public_path().'/profile/', $avatar); 
             $data[] = $avatar;
-          }
+        }
 
         $pegawai = new MasterPegawai;
         $pegawai->id_jabatan = $request->id_jabatan;

@@ -27,7 +27,7 @@ class JadwalPegawai extends Model
 
     public $timestamps = true;
 
-    public function ShifKerja()
+    public function ShiftKerja()
     {
         return $this->belongsTo(MasterShift::class, 'id_shift_kerja', 'id_shift_kerja');
     }

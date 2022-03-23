@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Absensi\LaporanAbsensiController;
 use App\Http\Controllers\Cuti\ApprovalCutiController;
 use App\Http\Controllers\Jadwal\JadwalPegawaiController;
 use App\Http\Controllers\Jadwal\JadwalSayaController;
@@ -51,14 +52,6 @@ Route::prefix('User')
     // ->middleware(['Admin_Role','verified'])
     ->group(function () {
         Route::resource('profile', ProfileController::class);
-        Route::resource('riwayat-keluarga', RiwayatKeluargaController::class);
-        Route::resource('riwayat-pendidikan', RiwayatKeluargaController::class);
-        Route::resource('riwayat-prestasi', RiwayatKeluargaController::class);
-        Route::resource('riwayat-cuti', RiwayatKeluargaController::class);
-        Route::resource('riwayat-pelanggaran', RiwayatKeluargaController::class);
-        Route::resource('riwayat-sanksi', RiwayatKeluargaController::class);
-
-
     });
 
 
@@ -130,5 +123,10 @@ Route::prefix('Approval')
 ->group(function () {
     Route::resource('approval-cuti', ApprovalCutiController::class);
     Route::post('approval-cuti/{id_riwayat_cuti}/set-status', [App\Http\Controllers\Cuti\ApprovalCutiController::class, 'Status'])->name('approval-cuti-status');
+});
+
+Route::prefix('Laporan')
+->group(function () {
+    Route::resource('laporan-absensi', LaporanAbsensiController::class);
 });
 
