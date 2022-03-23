@@ -4,6 +4,7 @@ use App\Http\Controllers\Cuti\ApprovalCutiController;
 use App\Http\Controllers\Jadwal\JadwalPegawaiController;
 use App\Http\Controllers\Jadwal\JadwalSayaController;
 use App\Http\Controllers\MasterData\MasterJabatanController;
+use App\Http\Controllers\MasterData\MasterOrientasiController;
 use App\Http\Controllers\MasterData\MasterPegawaiController;
 use App\Http\Controllers\MasterData\MasterPelanggaranController;
 use App\Http\Controllers\MasterData\MasterSanksiController;
@@ -22,6 +23,8 @@ use App\Models\MasterData\MasterHubunganKeluarga;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\User\RiwayatKeluargaController;
+use App\Http\Controllers\WebRequirement\OrientasiCalonController;
+use App\Models\MasterData\MasterOrientasi;
 use App\Models\Riwayat\RiwayatPendidikan;
 
 /*
@@ -36,7 +39,7 @@ use App\Models\Riwayat\RiwayatPendidikan;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return route('login');
 });
 
 Auth::routes();
@@ -70,6 +73,7 @@ Route::prefix('Masterdata')
         Route::resource('shift', MasterShiftController::class);
         Route::resource('sanksi', MasterSanksiController::class);
         Route::resource('pelanggaran', MasterPelanggaranController::class);
+        Route::resource('orientasi', MasterOrientasiController::class);
     });
 
 // REQUIREMENT
@@ -85,6 +89,8 @@ Route::prefix('Requirement')
         Route::get('/download_pendukung/{file_pendukung}', [App\Http\Controllers\WebRequirement\CalonPegawaiController::class, 'getFilePendukung'])->name('calon-pegawai-pendukung');
         Route::post('Calon/{id_calon_pegawai}/Status', [App\Http\Controllers\WebRequirement\CalonPegawaiController::class, 'setStatus'])->name('calon-pegawai-status');
         Route::resource('calon-pegawai', CalonPegawaiController::class);
+        Route::resource('peserta-orientasi', OrientasiCalonController::class);
+        Route::post('peserta-orientasi/{id_calon_pegawai}/sertifikat', [App\Http\Controllers\WebRequirement\OrientasiCalonController::class, 'Sertifikat'])->name('perserta-orientasi-seritifikat');
     });
 
 Route::prefix('WebRequirement')

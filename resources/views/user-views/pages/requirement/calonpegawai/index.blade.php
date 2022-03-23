@@ -77,7 +77,10 @@ Calon Pegawai
                                                 style="width: 60px;">Email</th>
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
-                                                style="width: 70px;">Nomor Telephone</th>
+                                                style="width: 70px;">Pendidikan Terakhir</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
+                                                colspan="1" aria-label="Position: activate to sort column ascending"
+                                                style="width: 70px;">Jurusan</th>
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
                                                 style="width: 50px;">Tanggal Apply</th>
@@ -102,7 +105,8 @@ Calon Pegawai
                                             <td>{{ $item->nama_lengkap }}</td>
                                             <td>{{ $item->Pengumuman->nama_pengumuman }}</td>
                                             <td>{{ $item->email }}</td>
-                                            <td>{{ $item->no_telp }}</td>
+                                            <td class="text-center">{{ $item->pendidikan_terakhir }}</td>
+                                            <td>{{ $item->jurusan }}</td>
                                             <td>{{ $item->created_at }}</td>
                                             @if ($item->file_cv != null)
                                             <td class="text-center">
@@ -130,13 +134,20 @@ Calon Pegawai
                                                 </div>
                                             </td>
                                             @endif
-                                            <td class="text-center"><span
-                                                    class="badge bg-secondary">{{ $item->status_nilai }}</span></td>
                                             <td class="text-center">
-                                                <a href="{{ route('calon-pegawai.show',$item->id_calon_pegawai) }}"
+                                                @if ($item->status_nilai == 'Sudah dinilai')
+                                                    <span class="badge bg-light-success text-success w-100">{{ $item->status_nilai }}</span>
+                                                @else
+                                                <span class="badge bg-light-danger text-danger w-100">{{ $item->status_nilai }}</span>
+                                                @endif
+                                            </td>
+                                                
+                                                
+                                            <td class="text-center">
+                                                <a href="{{ route('calon-pegawai.show',$item->id_calon_pegawai) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Detail Calon Pegawai"
                                                     class="btn btn-sm btn-secondary"><i class="lni lni-eye"></i></a>
                                                 @if($item->status_nilai == 'Belum dinilai')
-                                                <a href="" class="btn btn-sm btn-primary" type="button"
+                                                <a href="" class="btn btn-sm btn-primary" type="button" 
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#Modalnilai-{{ $item->id_calon_pegawai }}">
                                                     <i class="lni lni-calculator"></i>
@@ -176,8 +187,7 @@ Calon Pegawai
                 <div class="modal-body">
                     <div class="row g-3">
                         <div class="col-12">
-                            <label class="form-label mr-1" for="nama_pegawai">Nama Pelamar</label><span
-                                class="mr-4 mb-3" style="color: red">*</span>
+                            <label class="form-label mr-1" for="nama_pegawai">Nama Pelamar</label>
                             <input type="text" class="form-control" placeholder="Nama Lengkap Pegawai"
                                 name="nama_pegawai" value="{{ $item->nama_lengkap }}" readonly>
                         </div>
@@ -232,7 +242,7 @@ Calon Pegawai
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
+                    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
                     <button class="btn btn-success" type="submit">Simpan Data</button>
                 </div>
             </form>

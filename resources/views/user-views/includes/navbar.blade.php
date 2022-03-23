@@ -133,6 +133,7 @@
                 <li> <a href="{{ route('shift.index') }}"><i class="bi bi-circle"></i>Shift Kerja</a></li>
                 <li> <a href="{{ route('pelanggaran.index') }}"><i class="bi bi-circle"></i>Pelanggaran</a></li>
                 <li> <a href="{{ route('sanksi.index') }}"><i class="bi bi-circle"></i>Sanksi</a></li>
+                <li> <a href="{{ route('orientasi.index') }}"><i class="bi bi-circle"></i>Orientasi</a></li>
             </ul>
         </li>
         <li>
@@ -145,6 +146,7 @@
                 <li> <a href="{{ route('pengumuman.index') }}"><i class="bi bi-circle"></i>Pengumuman</a></li>
                 <li> <a href="{{ route('calon-pegawai.index') }}"><i class="bi bi-circle"></i>Calon Pegawai</a></li>
                 <li> <a href="{{ route('calon-pegawai-hasil') }}"><i class="bi bi-circle"></i>Hasil Seleksi</a></li>
+                <li> <a href="{{ route('peserta-orientasi.index') }}"><i class="bi bi-circle"></i>Orientasi</a></li>
                 <li> <a href="{{ route('web-requirement.index') }}"><i class="bi bi-circle"></i>Menuju Web Recrut</a></li>
             </ul>
         </li>

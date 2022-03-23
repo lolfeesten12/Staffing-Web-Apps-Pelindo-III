@@ -103,14 +103,18 @@ Hasil Seleksi Pelamar
                                             <td class="text-center">{{ $item->nilai_total }}</td>
                                             <td class="text-center">{{ $item->rata_rata }}</td>
                                             @if ($item->status_calon == 'Diterima')
-                                                <td class="text-center"><span class="badge bg-success">{{ $item->status_calon }}</span></td>
+                                            <td class="text-center"><span
+                                                    class="badge bg-success">{{ $item->status_calon }}</span></td>
                                             @else
-                                                <td class="text-center"><span class="badge bg-danger">{{ $item->status_calon }}</span></td>
+                                            <td class="text-center"><span
+                                                    class="badge bg-danger">{{ $item->status_calon }}</span></td>
                                             @endif
                                             <td class="text-center">
-                                                <a href="{{ route('calon-pegawai.edit',$item->id_calon_pegawai) }}"
-                                                    class="btn btn-sm btn-secondary"><i class="lni lni-eye"></i></a>
-                                               
+                                                <a href="javascript:;" class="btn btn-sm btn-primary"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#Modaldetail-{{ $item->id_calon_pegawai }}"><i
+                                                        class="lni lni-eye"></i></a>
+
                                             </td>
                                         </tr>
                                         @empty
@@ -127,7 +131,168 @@ Hasil Seleksi Pelamar
     </div>
 </main>
 
+@forelse ($calon as $item)
+<div class="modal fade" id="Modaldetail-{{ $item->id_calon_pegawai }}" data-backdrop="static" tabindex="-1"
+    role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Detail Orientasi Pegawai</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="border p-3 rounded">
+                            <div class="row mb-2">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label class="small mb-1 mr-1" for="nama_lengkap">Nama Lengkap Peserta</label>
+                                        <input class="form-control" name="nama_lengkap" type="text" id="nama_lengkap"
+                                            value="{{ $item->nama_lengkap }}" readonly></input>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label class="small mb-1 mr-1" for="nama_panggilan">Nama Panggilan</label>
+                                        <input class="form-control" name="nama_panggilan" type="text"
+                                            id="nama_panggilan" value="{{ $item->nama_panggilan }}" readonly></input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label class="small mb-1 mr-1" for="pendidikan_terakhir">Pendidikan
+                                            Terakhir</label>
+                                        <input class="form-control" name="pendidikan_terakhir" type="text"
+                                            id="pendidikan_terakhir" value="{{ $item->pendidikan_terakhir }}"
+                                            readonly></input>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label class="small mb-1 mr-1" for="jurusan">Jurusan</label>
+                                        <input class="form-control" name="jurusan" type="text" id="jurusan"
+                                            value="{{ $item->jurusan }}" readonly></input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label class="small mb-1 mr-1" for="email">Email</label>
+                                        <input class="form-control" name="email" type="text" id="email"
+                                            value="{{ $item->email }}" readonly></input>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label class="small mb-1 mr-1">Nomor Telephone</label>
+                                        <input class="form-control" type="text" id="tanggal_orientasi"
+                                            value="{{ $item->no_telp }}" readonly></input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label class="small mb-1 mr-1" for="email">Status Penerimaan</label>
+                                        <input class="form-control" name="email" type="text" id="email"
+                                            value="{{ $item->status_calon }}" readonly></input>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label class="small mb-1 mr-1">Pendidikan Terakhir</label>
+                                        <input class="form-control" type="text" id="tanggal_orientasi"
+                                            value="{{ $item->pendidikan_terakhir }}" readonly></input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label class="small mb-1 mr-1" for="email">Jurusan</label>
+                                        <input class="form-control" name="email" type="text" id="email"
+                                            value="{{ $item->jurusan }}" readonly></input>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label class="small mb-1 mr-1">Status Nilai</label>
+                                        <input class="form-control" type="text" id="tanggal_orientasi"
+                                            value="{{ $item->status_nilai }}" readonly></input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="small mb-1 mr-1">Alamat Lengkap</label>
+                                <textarea class="form-control" type="text" id="tanggal_orientasi"
+                                    value="{{ $item->alamat_lengkap }}" readonly>{{ $item->alamat_lengkap }}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <h5> Nilai Final Seleksi Peserta</h5>
+                        <div class="border p-3 rounded">
+                            <div class="row mb-2">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label class="small mb-1 mr-1" for="nama_lengkap">Nilai Psikotes</label>
+                                        <input class="form-control" name="nama_lengkap" type="text" id="nama_lengkap"
+                                            value="{{ $item->nilai_psikotes }}" readonly></input>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label class="small mb-1 mr-1" for="nama_panggilan">Nilai Keahlian</label>
+                                        <input class="form-control" name="nama_panggilan" type="text"
+                                            id="nama_panggilan" value="{{ $item->nilai_keahlian }}" readonly></input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label class="small mb-1 mr-1" for="pendidikan_terakhir">Nilai Wawancara</label>
+                                        <input class="form-control" name="pendidikan_terakhir" type="text"
+                                            id="pendidikan_terakhir" value="{{ $item->nilai_wawancara }}"
+                                            readonly></input>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label class="small mb-1 mr-1" for="jurusan">Nilai Total</label>
+                                        <input class="form-control" name="jurusan" type="text" id="jurusan"
+                                            value="{{ $item->nilai_total }}" readonly></input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label class="small mb-1 mr-1" for="email">Rata-Rata</label>
+                                        <input class="form-control" name="email" type="text" id="email"
+                                            value="{{ $item->rata_rata }}" readonly></input>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+        
+    </div>
+</div>
+@empty
+
+@endforelse
 
 
 @endsection
