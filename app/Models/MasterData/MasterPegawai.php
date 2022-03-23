@@ -2,9 +2,15 @@
 
 namespace App\Models\MasterData;
 
+use App\Models\Riwayat\RiwayatCuti;
+use App\Models\Riwayat\RiwayatKeluarga;
+use App\Models\Riwayat\RiwayatPelanggaran;
+use App\Models\Riwayat\RiwayatPendidikan;
+use App\Models\Riwayat\RiwayatPrestasi;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class MasterPegawai extends Model
 {
@@ -51,4 +57,40 @@ class MasterPegawai extends Model
     {
         return $this->belongsTo(User::class, 'id_pegawai', 'id_pegawai');
     }
+
+    public function RiwayatKeluarga()
+    {
+        return $this->hasMany(RiwayatKeluarga::class, 'id_pegawai', 'id_pegawai');
+    }
+
+    public function RiwayatPendidikan()
+    {
+        return $this->hasMany(RiwayatPendidikan::class, 'id_pegawai', 'id_pegawai');
+    }
+
+    public function RiwayatPrestasi()
+    {
+        return $this->hasMany(RiwayatPrestasi::class, 'id_pegawai', 'id_pegawai');
+    }
+
+    public function RiwayatCuti()
+    {
+        return $this->hasMany(RiwayatCuti::class, 'id_pegawai', 'id_pegawai');
+    }
+
+    public function RiwayatPelanggaran()
+    {
+        return $this->hasMany(RiwayatPelanggaran::class, 'id_pegawai', 'id_pegawai');
+    }
+
+    // public static function getId()
+    // {
+    //     $getId = DB::table('tb_master_pegawai')->orderBy('id_pegawai', 'DESC')->take(1)->get();
+    //     if (count($getId) > 0) return $getId;
+    //     return (object)[
+    //         (object)[
+    //             'id_pegawai' => 0
+    //         ]
+    //     ];
+    // }
 }

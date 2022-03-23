@@ -3,7 +3,13 @@
 namespace App\Http\Controllers\WebRequirement;
 
 use App\Http\Controllers\Controller;
+use App\Models\MasterData\MasterJabatan;
+use App\Models\MasterData\MasterPegawai;
+use App\Models\MasterData\MasterUnitKerja;
+use App\Models\User;
 use App\Models\WebRequirement\CalonPegawai;
+use Carbon\Carbon;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 
 class CalonPegawaiController extends Controller
@@ -16,7 +22,9 @@ class CalonPegawaiController extends Controller
     public function index()
     {
         $calon = CalonPegawai::with('Pengumuman')->get();
-        return view('user-views.pages.requirement.calonpegawai.index',compact('calon'));
+        $jabatan = MasterJabatan::get();
+        $unit_kerja = MasterUnitKerja::get();
+        return view('user-views.pages.requirement.calonpegawai.index',compact('calon','jabatan','unit_kerja'));
     }
 
     public function HasilSeleksi()
@@ -106,16 +114,52 @@ class CalonPegawaiController extends Controller
 
     public function setStatus(Request $request, $id_calon_pegawai)
     {
+        if($request->status_calon == 'Diterima'){
+            $item = CalonPegawai::find($id_calon_pegawai);
+            $item->nilai_psikotes = $request->nilai_psikotes;
+            $item->nilai_keahlian = $request->nilai_keahlian;
+            $item->nilai_wawancara = $request->nilai_wawancara;
+            $item->nilai_total = $request->nilai_total;
+            $item->rata_rata = $request->rata_rata;
+            $item->status_calon = $request->status_calon;
+            $item->status_nilai = 'Sudah dinilai';
+            $item->save();
+
+            $tes = new MasterPegawai;
+            $tes->nama_pegawai = $item->nama_lengkap;
+            $tes->nama_panggilan = $item->nama_panggilan;
+            $tes->no_telp = $item->no_telp;
+            $tes->alamat = $item->alamat_lengkap;
+            $tes->role = $request->role;
+            $tes->id_jabatan = $request->id_jabatan;
+            $tes->id_unit_kerja = $request->id_unit_kerja;
+            $tes->save();
+
+            $pass = $item->nama_panggilan . '1234';
+
+            $user = new User;
+            $user->email = $item->email;
+            $user->id_pegawai = $tes->id_pegawai;
+            $user->name = $item->nama_panggilan;
+            $user->password = bcrypt($pass);
+            $user->email_verified_at = Carbon::now();
+            $user->save();
+
+            event(new Registered($user));
+            
+        }else{
+            $item = CalonPegawai::find($id_calon_pegawai);
+            $item->nilai_psikotes = $request->nilai_psikotes;
+            $item->nilai_keahlian = $request->nilai_keahlian;
+            $item->nilai_wawancara = $request->nilai_wawancara;
+            $item->nilai_total = $request->nilai_total;
+            $item->rata_rata = $request->rata_rata;
+            $item->status_calon = $request->status_calon;
+            $item->status_nilai = 'Sudah dinilai';
+            $item->save();
+        }
     
-        $item = CalonPegawai::find($id_calon_pegawai);
-        $item->nilai_psikotes = $request->nilai_psikotes;
-        $item->nilai_keahlian = $request->nilai_keahlian;
-        $item->nilai_wawancara = $request->nilai_wawancara;
-        $item->nilai_total = $request->nilai_total;
-        $item->rata_rata = $request->rata_rata;
-        $item->status_calon = $request->status_calon;
-        $item->status_nilai = 'Sudah dinilai';
-        $item->save();
+       
 
         return redirect()->route('calon-pegawai.index')->with('messageberhasil','Data Calon Pegawai berhasil dinilai, Lihat pada hasil seleksi');
     }

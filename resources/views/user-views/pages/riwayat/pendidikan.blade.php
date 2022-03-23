@@ -125,7 +125,6 @@ Riwayat Pendidikan
     </div>
 </main>
 
-
 <div class="modal fade" id="Modaltambah" data-backdrop="static" tabindex="-1" role="dialog"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -159,22 +158,29 @@ Riwayat Pendidikan
                                 <option value="D4">D4</option>
                         </select>
 
-                        <label class="small mb-1 mr-1" for="nama_sekolah">Nama Sekolah</label><span class="mr-4 mb-3"
+                        <label class="small mb-2 mr-1" for="nama_sekolah">Nama Sekolah</label><span class="mr-4 mb-3"
                             style="color: red">*</span>
                         <input class="form-control" name="nama_sekolah" type="text" id="nama_sekolah"
                             value="{{ old('nama_sekolah') }}" placeholder="Nama Sekolah" required />
-                        <label class="small mb-1 mr-1" for="jurusan">Jurusan</label><span class="mr-4 mb-3"
+                        <label class="small mb-2 mr-1" for="jurusan">Jurusan</label><span class="mr-4 mb-3"
                             style="color: red">*</span>
                         <input class="form-control" name="jurusan" type="text" id="jurusan"
                              value="{{ old('jurusan') }}" placeholder="Jurusan" required />
-                        <label class="small mb-1 mr-1" for="no_ijasah">No Ijasah</label><span class="mr-4 mb-3"
+                        <label class="small mb-2 mr-1" for="no_ijasah">No Ijasah</label><span class="mr-4 mb-3"
                             style="color: red">*</span>
                         <input class="form-control" name="no_ijasah" type="text" id="no_ijasah"
                             placeholder="No Ijasah" value="{{ old('no_ijasah') }}" required />
-                        <label class="small mb-1 mr-1" for="tanggal_ijasah">Tanggal Ijasah</label><span class="mr-4 mb-3"
+                        <label class="small mb-2 mr-1" for="tanggal_ijasah">Tanggal Ijasah</label><span class="mr-4 mb-3"
                             style="color: red">*</span>
                         <input class="form-control" name="tanggal_ijasah" type="date" id="tanggal_ijasah"
                             placeholder="Tanggal Ijasah" value="{{ old('tanggal_ijasah') }}" required />
+
+                        {{-- <label class="small mb-2" for="file_ijasah">File Ijasah</label>
+                        <input class="form-control" id="file_ijasah" type="file" name="file_ijasah"
+                            value="{{ old('file_ijasah') }}" accept="application/pdf" multiple="multiple">
+                        <div class="small">
+                            <span class="text-muted">Accept File in PDF Format </span>
+                        </div> --}}
                     </div>
                 </div>
                 <div class="modal-footer">

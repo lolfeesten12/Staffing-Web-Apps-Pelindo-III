@@ -88,9 +88,34 @@ Apply Lamaran {{ $pengumuman->nama_pengumuman }}
                                         <input type="email" class="form-control" placeholder="Input Email Pelamar"
                                             name="email" value="{{ old('email') }}" required>
                                     </div>
-
+                                    <div class="col-6">
+                                        <label class="form-label mr-1" for="pendidikan_terakhir">Pendidikan Terakhir</label><span class="mr-4 mb-3"
+                                            style="color: red">*</span>
+                                        <select name="pendidikan_terakhir" id="pendidikan_terakhir" class="form-select" value="{{ old('pendidikan_terakhir') }}"
+                                            class="form-control @error('pendidikan_terakhir') is-invalid @enderror">
+                                            <option value="{{ old('pendidikan_terakhir')}}">Pilih Pendidikan Terakhir</option>
+                                            <option value="SMP">SMP</option>
+                                            <option value="SMA">SMA</option>
+                                            <option value="D1">D1</option>
+                                            <option value="D2">D2</option>
+                                            <option value="D3">D3</option>
+                                            <option value="D4">D4</option>
+                                            <option value="S1">S1</option>
+                                            <option value="S2">S2</option>
+                                            <option value="S3">S3</option>
+                                            <option value="Spesialis">Spesialis</option>
+                                        </select>
+                                        @error('pendidikan_terakhir')<div class="text-danger small mb-1">{{ $message }}
+                                        </div> @enderror
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="form-label mr-1" for="jurusan">Jurusan</label><span class="mr-4 mb-3"
+                                            style="color: red">*</span>
+                                        <input type="jurusan" class="form-control" placeholder="Input Jurusan Pendidikan"
+                                            name="jurusan" value="{{ old('jurusan') }}" required>
+                                    </div>
                                     <div class="col-12">
-                                        <label class="small mb-1 mr-1" for="alamat_lengkap">AlamatLengkap</label><span
+                                        <label class="small mb-1 mr-1" for="alamat_lengkap">Alamat Lengkap</label><span
                                             class="mr-4 mb-3" style="color: red">*</span>
                                         <textarea class="form-control" id="alamat_lengkap" type="text" rows="3" cols="4"
                                             name="alamat_lengkap" placeholder="Input Alamat Pelamar"

@@ -77,7 +77,10 @@ Calon Pegawai
                                                 style="width: 60px;">Email</th>
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
-                                                style="width: 70px;">Nomor Telephone</th>
+                                                style="width: 70px;">Pendidikan Terakhir</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
+                                                colspan="1" aria-label="Position: activate to sort column ascending"
+                                                style="width: 70px;">Jurusan</th>
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
                                                 style="width: 50px;">Tanggal Apply</th>
@@ -102,7 +105,8 @@ Calon Pegawai
                                             <td>{{ $item->nama_lengkap }}</td>
                                             <td>{{ $item->Pengumuman->nama_pengumuman }}</td>
                                             <td>{{ $item->email }}</td>
-                                            <td>{{ $item->no_telp }}</td>
+                                            <td class="text-center">{{ $item->pendidikan_terakhir }}</td>
+                                            <td>{{ $item->jurusan }}</td>
                                             <td>{{ $item->created_at }}</td>
                                             @if ($item->file_cv != null)
                                             <td class="text-center">
@@ -130,13 +134,20 @@ Calon Pegawai
                                                 </div>
                                             </td>
                                             @endif
-                                            <td class="text-center"><span
-                                                    class="badge bg-secondary">{{ $item->status_nilai }}</span></td>
                                             <td class="text-center">
-                                                <a href="{{ route('calon-pegawai.show',$item->id_calon_pegawai) }}"
+                                                @if ($item->status_nilai == 'Sudah dinilai')
+                                                    <span class="badge bg-light-success text-success w-100">{{ $item->status_nilai }}</span>
+                                                @else
+                                                <span class="badge bg-light-danger text-danger w-100">{{ $item->status_nilai }}</span>
+                                                @endif
+                                            </td>
+                                                
+                                                
+                                            <td class="text-center">
+                                                <a href="{{ route('calon-pegawai.show',$item->id_calon_pegawai) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Detail Calon Pegawai"
                                                     class="btn btn-sm btn-secondary"><i class="lni lni-eye"></i></a>
                                                 @if($item->status_nilai == 'Belum dinilai')
-                                                <a href="" class="btn btn-sm btn-primary" type="button"
+                                                <a href="" class="btn btn-sm btn-primary" type="button" 
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#Modalnilai-{{ $item->id_calon_pegawai }}">
                                                     <i class="lni lni-calculator"></i>
@@ -176,8 +187,7 @@ Calon Pegawai
                 <div class="modal-body">
                     <div class="row g-3">
                         <div class="col-12">
-                            <label class="form-label mr-1" for="nama_pegawai">Nama Pelamar</label><span
-                                class="mr-4 mb-3" style="color: red">*</span>
+                            <label class="form-label mr-1" for="nama_pegawai">Nama Pelamar</label>
                             <input type="text" class="form-control" placeholder="Nama Lengkap Pegawai"
                                 name="nama_pegawai" value="{{ $item->nama_lengkap }}" readonly>
                         </div>
@@ -222,17 +232,61 @@ Calon Pegawai
                         <div class="col-4">
                             <label class="mb-1 mr-1" for="status_calon">Status Pelamar</label><span class="mr-4 mb-3"
                                 style="color: red">*</span>
-                            <select name="status_calon" id="status_calon" class="form-select"
+                            <select name="status_calon" id="status_calon-{{ $item->id_calon_pegawai }}" class="form-select"
                                 value="{{ old('status_calon') }}" required>
                                 <option value="{{ old('status_calon')}}">Pilih Status Calon</option>
                                 <option value="Diterima">Lulus</option>
                                 <option value="Ditolak">Gagal</option>
                             </select>
                         </div>
+                        <h6 style="display: none" id="pengaturan-{{ $item->id_calon_pegawai }}">Pengaturan Jabatan dan Unit Kerja Pegawai</h6>
+                        <div class="col-4" style="display: none" id="role-{{ $item->id_calon_pegawai }}">
+                            <label class="mb-1 mr-1" for="role">Role</label><span class="mr-4 mb-3"
+                                style="color: red">*</span>
+                            <select name="role" id="role" class="form-select"
+                                value="{{ old('role') }}" required>
+                                <option value="{{ old('role')}}">Pilih Role Calon</option>
+                                <option value="Pegawai">Pegawai</option>
+                                <option value="Kepala Unit">Kepala Unit</option>
+                                <option value="HRD">HRD</option>
+                            </select>
+                        </div>
+                        <div class="col-4" style="display: none" id="jabatan-{{ $item->id_calon_pegawai }}">
+                            <label class="small mb-1 mr-1" for="id_jabatan">Jabatan</label><span
+                                class="mr-4 mb-3" style="color: red">*</span>
+                            <select class="form-select" name="id_jabatan" id="id_jabatan"
+                                value="{{ old('id_jabatan') }}"
+                                class="form-control @error('id_jabatan') is-invalid @enderror">
+                                <option>Pilih Jabatan Calon Pegawai</option>
+                                @foreach ($jabatan as $items)
+                                <option value="{{ $items->id_jabatan }}">{{ $items->nama_jabatan }}
+                                </option>
+                                @endforeach
+                            </select>
+                            @error('id_jabatan')<div class="text-danger small mb-1">{{ $message }}
+                            </div> @enderror
+                        </div>
+                        <div class="col-4" style="display: none" id="unitkerja-{{ $item->id_calon_pegawai }}">
+                            <label class="small mb-1 mr-1" for="id_unit_kerja">Unit Kerja</label><span
+                                class="mr-4 mb-3" style="color: red">*</span>
+                            <select class="form-select" name="id_unit_kerja" id="id_unit_kerja"
+                                value="{{ old('id_unit_kerja') }}"
+                                class="form-control @error('id_unit_kerja') is-invalid @enderror">
+                                <option>Pilih Unit Kerja Calon Pegawai</option>
+                                @foreach ($unit_kerja as $items)
+                                <option value="{{ $items->id_unit_kerja }}">{{ $items->unit_kerja }}
+                                </option>
+                                @endforeach
+                            </select>
+                            @error('id_unit_kerja')<div class="text-danger small mb-1">{{ $message }}
+                            </div> @enderror
+                        </div>
+                        <button class="btn btn-outline-secondary" type="button" id="button_lulus"
+                        onclick="lulus(event, {{ $item->id_calon_pegawai }})">Klik Disini Jika Lulus</button>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
+                    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
                     <button class="btn btn-success" type="submit">Simpan Data</button>
                 </div>
             </form>
@@ -245,6 +299,13 @@ Calon Pegawai
 
 
 <script>
+     function lulus(event, id_calon_pegawai) {
+        $(`#pengaturan-${id_calon_pegawai}`).show()
+        $(`#role-${id_calon_pegawai}`).show()
+        $(`#jabatan-${id_calon_pegawai}`).show()
+        $(`#unitkerja-${id_calon_pegawai}`).show()
+     }
+
     function hitung(event, id_calon_pegawai) {
         event.preventDefault()
         var form1 = $(`#form1-${id_calon_pegawai}`)
@@ -267,10 +328,9 @@ Calon Pegawai
                 var rata = nilai_total / 3;
                 var fix = rata.toFixed(2)
                 $(`#rata_rata-${id_calon_pegawai}`).val(fix);
-           
-          
         }
     }
+
 
 </script>
 

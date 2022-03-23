@@ -26,7 +26,9 @@ class CalonPegawai extends Model
         'nilai_keahlian',
         'nilai_wawancara',
         'nilai_total',
-        'rata_rata'
+        'rata_rata',
+        'pendidikan_terakhir',
+        'jurusan'
     ];
 
     protected $hidden = [
@@ -39,5 +41,10 @@ class CalonPegawai extends Model
     public function Pengumuman()
     {
         return $this->belongsTo(Pengumuman::class, 'id_pengumuman', 'id_pengumuman');
+    }
+
+    public function PesertaOrientasi()
+    {
+        return $this->belongsTo(Orientasi::class, 'id_calon_pegawai', 'id_calon_pegawai');
     }
 }
