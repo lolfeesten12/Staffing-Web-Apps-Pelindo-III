@@ -15,6 +15,8 @@ use App\Http\Controllers\Riwayat\RiwayatCutiController;
 use App\Http\Controllers\Riwayat\RiwayatPelanggaranController;
 use App\Http\Controllers\Riwayat\RiwayatPendidikanController;
 use App\Http\Controllers\Riwayat\RiwayatPrestasiController;
+use App\Http\Controllers\Riwayat\RiwayatKeluargaController;
+
 use App\Http\Controllers\Riwayat\RiwayatSanskiController;
 use App\Http\Controllers\WebRequirement\CalonPegawaiController;
 use App\Http\Controllers\WebRequirement\HasilSeleksiController;
@@ -23,7 +25,6 @@ use App\Http\Controllers\WebRequirement\WebRequirementController;
 use App\Models\MasterData\MasterHubunganKeluarga;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\ProfileController;
-use App\Http\Controllers\User\RiwayatKeluargaController;
 use App\Http\Controllers\WebRequirement\OrientasiCalonController;
 use App\Models\MasterData\MasterOrientasi;
 use App\Models\Riwayat\RiwayatPendidikan;
@@ -41,23 +42,20 @@ use App\Models\Riwayat\RiwayatPendidikan;
 Auth::routes();
 
 
-Route::get('/', function () {
-    return route('login');
-});
 
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('/', [App\Http\Controllers\User\ProfileController::class, 'index']);
 
+    // ---------------------user------------------
+    Route::prefix('User')
+        // ->middleware(['Admin_Role','verified'])
+        ->group(function () {
+            Route::resource('profile', ProfileController::class);
+        });
 
-// ---------------------user------------------
-Route::prefix('User')
-    // ->middleware(['Admin_Role','verified'])
-    ->group(function () {
-        Route::resource('profile', ProfileController::class);
-    });
-
-
-// MASTER DATA
-Route::prefix('Masterdata')
-    // ->middleware(['Admin_Role','verified'])
+    // MASTER DATA
+    Route::prefix('Masterdata')
+    ->middleware(['hrd'])
     ->group(function () {
         Route::resource('unit-kerja', MasterUnitKerjaController::class);
         Route::resource('jabatan', MasterJabatanController::class);
@@ -68,6 +66,50 @@ Route::prefix('Masterdata')
         Route::resource('pelanggaran', MasterPelanggaranController::class);
         Route::resource('orientasi', MasterOrientasiController::class);
     });
+
+    // RIWAYAT PEGAWAI
+    Route::prefix('Riwayat')
+    // ->middleware(['Admin_Role','verified'])
+    ->group(function () {
+            Route::resource('keluarga', RiwayatKeluargaController::class);
+            Route::resource('pendidikan', RiwayatPendidikanController::class);
+            Route::resource('riwayatpelanggaran', RiwayatPelanggaranController::class);
+            Route::resource('cuti', RiwayatCutiController::class);
+            Route::resource('prestasi', RiwayatPrestasiController::class);
+            Route::resource('riwayatsanksi', RiwayatSanskiController::class);
+    });
+
+        // AKTIVITAS PEGAWAI
+    Route::prefix('Jadwal')
+    ->middleware('kepala_unit')
+    ->group(function () {
+        Route::resource('jadwal-pegawai', JadwalPegawaiController::class);
+        Route::post('jadwal-pegawai/{id_pegawai}/tanggal', [App\Http\Controllers\Jadwal\JadwalpegawaiController::class, 'getJadwal']);
+        Route::get('jadwal-pegawai/{id_pegawai}/tanggal', [App\Http\Controllers\Jadwal\JadwalpegawaiController::class, 'JadwalPegawai']);
+        Route::post('jadwal-pegawai/{id_pegawai}/masuk', [App\Http\Controllers\Jadwal\JadwalpegawaiController::class, 'JadwalMasuk']);
+        Route::post('jadwal-pegawai/{id_pegawai}/libur', [App\Http\Controllers\Jadwal\JadwalpegawaiController::class, 'JadwalLibur']);
+    });
+
+    Route::prefix('Jadwal')
+    ->group(function () {
+        Route::resource('jadwal-saya', JadwalSayaController::class);
+        Route::get('jadwal-saya/{id_pegawai}/tanggal', [App\Http\Controllers\Jadwal\JadwalSayaController::class, 'JadwalPegawai']);
+    });
+
+    Route::prefix('Approval')
+    ->group(function () {
+    Route::resource('approval-cuti', ApprovalCutiController::class);
+    Route::post('approval-cuti/{id_riwayat_cuti}/set-status', [App\Http\Controllers\Cuti\ApprovalCutiController::class, 'Status'])->name('approval-cuti-status');
+    });
+
+    Route::prefix('Laporan')
+    ->group(function () {
+    Route::resource('laporan-absensi', LaporanAbsensiController::class);
+    });
+
+
+});
+
 
 // REQUIREMENT
 Route::prefix('Requirement')
@@ -91,42 +133,4 @@ Route::prefix('WebRequirement')
         Route::resource('web-requirement', WebRequirementController::class);
     });
 
-// RIWAYAT PEGAWAI
-Route::prefix('Riwayat')
-// ->middleware(['Admin_Role','verified'])
-->group(function () {
-        Route::resource('keluarga', RiwayatKeluargaController::class);
-        Route::resource('pendidikan', RiwayatPendidikanController::class);
-        Route::resource('riwayatpelanggaran', RiwayatPelanggaranController::class);
-        Route::resource('cuti', RiwayatCutiController::class);
-        Route::resource('prestasi', RiwayatPrestasiController::class);
-        Route::resource('riwayatsanksi', RiwayatSanskiController::class);
-});
-
-// AKTIVITAS PEGAWAI
-Route::prefix('Jadwal')
-    ->group(function () {
-        Route::resource('jadwal-pegawai', JadwalPegawaiController::class);
-        Route::post('jadwal-pegawai/{id_pegawai}/tanggal', [App\Http\Controllers\Jadwal\JadwalpegawaiController::class, 'getJadwal']);
-        Route::get('jadwal-pegawai/{id_pegawai}/tanggal', [App\Http\Controllers\Jadwal\JadwalpegawaiController::class, 'JadwalPegawai']);
-        Route::post('jadwal-pegawai/{id_pegawai}/masuk', [App\Http\Controllers\Jadwal\JadwalpegawaiController::class, 'JadwalMasuk']);
-        Route::post('jadwal-pegawai/{id_pegawai}/libur', [App\Http\Controllers\Jadwal\JadwalpegawaiController::class, 'JadwalLibur']);
-    });
-
-Route::prefix('Jadwal')
-    ->group(function () {
-        Route::resource('jadwal-saya', JadwalSayaController::class);
-        Route::get('jadwal-saya/{id_pegawai}/tanggal', [App\Http\Controllers\Jadwal\JadwalSayaController::class, 'JadwalPegawai']);
-    });
-
-Route::prefix('Approval')
-->group(function () {
-    Route::resource('approval-cuti', ApprovalCutiController::class);
-    Route::post('approval-cuti/{id_riwayat_cuti}/set-status', [App\Http\Controllers\Cuti\ApprovalCutiController::class, 'Status'])->name('approval-cuti-status');
-});
-
-Route::prefix('Laporan')
-->group(function () {
-    Route::resource('laporan-absensi', LaporanAbsensiController::class);
-});
 

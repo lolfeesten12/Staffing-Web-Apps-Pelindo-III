@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Riwayat;
 
 use App\Http\Controllers\Controller;
 use App\Models\MasterData\MasterHubungan;
+use App\Models\MasterData\MasterHubunganKeluarga;
 use App\Models\MasterData\MasterJabatan;
 use App\Models\MasterData\MasterPegawai;
 use App\Models\MasterData\MasterUnitKerja;
@@ -26,7 +27,7 @@ class RiwayatKeluargaController extends Controller
         // $pegawai = MasterPegawai::where('id', Auth::user()->id)->get();
         $riwayat = RiwayatKeluarga::with('Pegawai', 'hubungan')->where('id_pegawai',Auth::user()->id_pegawai )->get();
         // return $riwayat;
-        $hubungan = MasterHubungan::get();
+        $hubungan = MasterHubunganKeluarga::get();
 
         return view('user-views.pages.riwayat.keluarga',compact('riwayat', 'hubungan'));
     }
