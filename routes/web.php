@@ -11,6 +11,7 @@ use App\Http\Controllers\MasterData\MasterPelanggaranController;
 use App\Http\Controllers\MasterData\MasterSanksiController;
 use App\Http\Controllers\MasterData\MasterShiftController;
 use App\Http\Controllers\MasterData\MasterUnitKerjaController;
+use App\Http\Controllers\Penilaian\PenilaianPegawaiController;
 use App\Http\Controllers\Riwayat\RiwayatCutiController;
 use App\Http\Controllers\Riwayat\RiwayatPelanggaranController;
 use App\Http\Controllers\Riwayat\RiwayatPendidikanController;
@@ -132,5 +133,11 @@ Route::prefix('WebRequirement')
     ->group(function () {
         Route::resource('web-requirement', WebRequirementController::class);
     });
+
+Route::prefix('Penilaian')
+    ->group(function () {
+        Route::resource('penilaian-pegawai', PenilaianPegawaiController::class);
+});
+
 
 

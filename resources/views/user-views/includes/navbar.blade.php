@@ -111,13 +111,6 @@
                 <div class="menu-title">Profile</div>
             </a>
         </li>
-        <li>
-            <a href="https://codervent.com/skodash/documentation/index.html">
-                <div class="parent-icon"> <i class="lni lni-home"></i>
-                </div>
-                <div class="menu-title">Dashboard</div>
-            </a>
-        </li>
         @if (Auth::user()->Pegawai->role == 'HRD')
         <li class="menu-label">Data Master</li>
         <li>
@@ -209,9 +202,6 @@
             </a>
             <ul>
                 <li> <a href="ecommerce-products-list.html"><i class="bi bi-circle"></i>Pengajuan Cuti</a>
-                @if (Auth::user()->Pegawai->role == 'HRD')
-                <li> <a href="{{ route('approval-cuti.index') }}"><i class="bi bi-circle"></i>Approval Cuti</a>
-                @endif
             </ul>
         </li>
         @if (Auth::user()->Pegawai->role == 'Pegawai')
@@ -224,11 +214,11 @@
             <a class="has-arrow" href="javascript:;">
                 <div class="parent-icon"><i class="lni lni-certificate"></i>
                 </div>
-                <div class="menu-title">Penilaian Pegawai</div>
+            <div class="menu-title">Penilaian Pegawai</div>
             </a>
             <ul>
             @if (Auth::user()->Pegawai->role == 'HRD' || Auth::user()->Pegawai->role == 'Kepala Unit')
-            <li> <a href="form-elements.html"><i class="bi bi-circle"></i>Penilaian</a></li>
+                <li> <a href="{{ route('penilaian-pegawai.index') }}"><i class="bi bi-circle"></i>Penilaian</a></li>
             @endif
                 <li> <a href="form-elements.html"><i class="bi bi-circle"></i>Nilai Saya</a></li>
             </ul>
@@ -246,6 +236,25 @@
             </ul>
         </li>
         @endif
+        @if (Auth::user()->Pegawai->role == 'HRD')
+            <li class="menu-label">Menu Approval</li>
+            <li>
+                <a class="has-arrow" href="javascript:;">
+                    <div class="parent-icon"><i class="lni lni-checkmark"></i></i>
+                    </div>
+                <div class="menu-title">Approval</div>
+                </a>
+                <ul>
+                    <li> <a href="{{ route('approval-cuti.index') }}"><i class="bi bi-circle"></i>Approval Cuti</a>
+                    <li> <a href="table-basic-table.html"><i class="bi bi-circle"></i>Approval Penilaian</a></li>
+                 
+                </ul>
+            </li>
+        @endif
+      
+
+
+       
         <li class="menu-label">Logout</li>
         <li>
             <a onclick="event.preventDefault(); document.getElementById('logout-form').submit()">
