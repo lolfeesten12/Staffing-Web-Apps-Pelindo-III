@@ -220,7 +220,7 @@
             @if (Auth::user()->Pegawai->role == 'HRD' || Auth::user()->Pegawai->role == 'Kepala Unit')
                 <li> <a href="{{ route('penilaian-pegawai.index') }}"><i class="bi bi-circle"></i>Penilaian</a></li>
             @endif
-                <li> <a href="form-elements.html"><i class="bi bi-circle"></i>Nilai Saya</a></li>
+                <li> <a href="{{ route('nilai-saya.index') }}"><i class="bi bi-circle"></i>Nilai Saya</a></li>
             </ul>
         </li>
         @if (Auth::user()->Pegawai->role == 'HRD' || Auth::user()->Pegawai->role == 'Kepala Unit')
@@ -246,7 +246,7 @@
                 </a>
                 <ul>
                     <li> <a href="{{ route('approval-cuti.index') }}"><i class="bi bi-circle"></i>Approval Cuti</a>
-                    <li> <a href="table-basic-table.html"><i class="bi bi-circle"></i>Approval Penilaian</a></li>
+                    <li> <a href="{{ route('approval-penilaian.index') }}"><i class="bi bi-circle"></i>Approval Penilaian</a></li>
                  
                 </ul>
             </li>

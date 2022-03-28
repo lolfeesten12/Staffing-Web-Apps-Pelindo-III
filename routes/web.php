@@ -11,6 +11,8 @@ use App\Http\Controllers\MasterData\MasterPelanggaranController;
 use App\Http\Controllers\MasterData\MasterSanksiController;
 use App\Http\Controllers\MasterData\MasterShiftController;
 use App\Http\Controllers\MasterData\MasterUnitKerjaController;
+use App\Http\Controllers\Penilaian\ApprovalPenilaianController;
+use App\Http\Controllers\Penilaian\NilaiSayaController;
 use App\Http\Controllers\Penilaian\PenilaianPegawaiController;
 use App\Http\Controllers\Riwayat\RiwayatCutiController;
 use App\Http\Controllers\Riwayat\RiwayatPelanggaranController;
@@ -82,8 +84,8 @@ Route::group(['middleware' => 'auth'], function() {
 
         // AKTIVITAS PEGAWAI
     Route::prefix('Jadwal')
-    ->middleware('kepala_unit')
-    ->group(function () {
+        ->middleware(['gabungan', 'verified'])
+        ->group(function () {
         Route::resource('jadwal-pegawai', JadwalPegawaiController::class);
         Route::post('jadwal-pegawai/{id_pegawai}/tanggal', [App\Http\Controllers\Jadwal\JadwalpegawaiController::class, 'getJadwal']);
         Route::get('jadwal-pegawai/{id_pegawai}/tanggal', [App\Http\Controllers\Jadwal\JadwalpegawaiController::class, 'JadwalPegawai']);
@@ -101,6 +103,8 @@ Route::group(['middleware' => 'auth'], function() {
     ->group(function () {
     Route::resource('approval-cuti', ApprovalCutiController::class);
     Route::post('approval-cuti/{id_riwayat_cuti}/set-status', [App\Http\Controllers\Cuti\ApprovalCutiController::class, 'Status'])->name('approval-cuti-status');
+    Route::resource('approval-penilaian', ApprovalPenilaianController::class);
+    Route::post('approval-penilaian/{id_penilaian}/set-status', [App\Http\Controllers\Penilaian\ApprovalPenilaianController::class, 'Status'])->name('approval-penilaian-status');
     });
 
     Route::prefix('Laporan')
@@ -137,6 +141,10 @@ Route::prefix('WebRequirement')
 Route::prefix('Penilaian')
     ->group(function () {
         Route::resource('penilaian-pegawai', PenilaianPegawaiController::class);
+        Route::get('list-penilaian/{id_pegawai}', [App\Http\Controllers\Penilaian\PenilaianPegawaiController::class, 'DetailNilai'])->name('penilaian-list');
+        Route::resource('nilai-saya', NilaiSayaController::class);
+        Route::put('Nilai/{id_penilaian}/Tanggapan', [App\Http\Controllers\Penilaian\NilaiSayaController::class, 'Tanggapan'])->name('nilai-tanggapan');
+        Route::put('Nilai/{id_penilaian}/Sesuai', [App\Http\Controllers\Penilaian\NilaiSayaController::class, 'Sesuai'])->name('nilai-sesuai');
 });
 
 

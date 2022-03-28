@@ -2,7 +2,7 @@
 
 
 @section('name')
-Penilaian Pegawai
+Approval Penilaian Pegawai
 @endsection
 
 @section('content')
@@ -11,17 +11,17 @@ Penilaian Pegawai
 <main class="page-content">
     <div class="container-fluid">
         <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-            <div class="breadcrumb-title pe-3">Penilaian Pegawai</div>
+            <div class="breadcrumb-title pe-3">Approval</div>
             <div class="ps-3">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb mb-0 p-0">
                         <li class="breadcrumb-item"><a href="javascript:;"><i class="lni lni-database"></i></a>
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">Penilaian</li>
+                        <li class="breadcrumb-item active" aria-current="page">Penilaian Pegawai
+                        </li>
                     </ol>
                 </nav>
             </div>
-            
         </div>
         <hr>
         @if(session('messageberhasil'))
@@ -69,28 +69,28 @@ Penilaian Pegawai
                                                 style="width: 100px;">No.</th>
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
-                                                style="width: 170px;">Nama Pegawai</th>
+                                                style="width: 80px;">Periode Mulai</th>
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
-                                                style="width: 80px;">Jabatan</th>
+                                                style="width: 80px;">Periode Akhir</th>
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
-                                                style="width: 80px;">Unit Kerja</th>
+                                                style="width: 70px;">Jumlah Pegawai</th>
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Salary: activate to sort column ascending"
                                                 style="width: 70px;">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @forelse ($pegawai as $item)
+                                        @forelse ($nilai as $item)
                                         <tr role="row" class="odd">
                                             <th scope="row" class="small" class="sorting_1">{{ $loop->iteration}}.</th>
-                                            <td>{{ $item->nama_pegawai }}</td>
-                                            <td>{{ $item->Jabatan->nama_jabatan }}</td>
-                                            <td>{{ $item->UnitKerja->unit_kerja }}</td>
+                                            <td>{{ $item->periode_mulai }}</td>
+                                            <td>{{ $item->periode_akhir }}</td>
+                                            <td>{{ $item->jumlah_pegawai }}</td>
                                             <td class="text-center">
-                                                <a href="{{ route('penilaian-list',$item->id_pegawai) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Penilaian Pegawai"
-                                                    class="btn btn-sm btn-primary">Mulai Penilaian</a>
+                                                <a href="{{ route('approval-penilaian.show',$item->periode_mulai) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Lihat Detail"
+                                                    class="btn btn-sm btn-primary"><i class="lni lni-eye"></i></a>
                                             </td>
                                         </tr>
                                         @empty
@@ -106,6 +106,7 @@ Penilaian Pegawai
         </div>
     </div>
 </main>
+
 
 
 @endsection

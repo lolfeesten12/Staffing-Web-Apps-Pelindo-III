@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('name')
+Login Sistem
+@endsection
+
 @section('content')
 <!--start content-->
 <div class="container-fluid">

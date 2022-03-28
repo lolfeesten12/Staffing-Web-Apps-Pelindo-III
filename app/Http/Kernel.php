@@ -65,6 +65,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'hrd' => \App\Http\Middleware\IsHRD::class,
         'kepala_unit' => \App\Http\Middleware\IsKepalaUnit::class,
+        'gabungan' => \App\Http\Middleware\IsGabungan::class,
 
 
     ];
