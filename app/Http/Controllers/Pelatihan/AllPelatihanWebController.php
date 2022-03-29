@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Sanksi;
+namespace App\Http\Controllers\Pelatihan;
 
 use App\Http\Controllers\Controller;
+use App\Models\Pelatihan\ProgramPelatihan;
 use Illuminate\Http\Request;
 
-class SanksiController extends Controller
+class AllPelatihanWebController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +15,9 @@ class SanksiController extends Controller
      */
     public function index()
     {
-        //
+        $pelatihan = ProgramPelatihan::get();
+
+        return view('user-views.pages.requirement.webrequirement.pelatihan.index', compact('pelatihan'));
     }
 
     /**

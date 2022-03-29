@@ -13,10 +13,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mb-2 mb-lg-0 align-items-center">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('web-requirement.index') }}">Requirement</a>
+                    <a class="nav-link" href="{{ route('web-requirement.index') }}">Lowongan Pekerjaan</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="javascript:;">Tentang Perusahaan</a>
+                    <a class="nav-link" href="{{ route('web-pelatihan.index') }}">Program Pelatihan</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="javascript:;">Contact Us</a>
@@ -30,13 +30,15 @@
                         English
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="javascript:;">Support</a>
-                </li>
             </ul>
             <div class="d-flex ms-3 gap-3">
-                <a href="{{ route('login') }}" class="btn btn-primary btn-sm px-4 radius-30">Login Sistem
-                    Admin</a>
+                @if (Auth::check() == true)
+                    Hallo {{ Auth::user()->Pegawai->nama_panggilan }}
+                    @else
+                    <a href="{{ route('login') }}" class="btn btn-primary btn-sm px-4 radius-30">Login Sistem
+                        Admin</a>
+                @endif
+              
             </div>
         </div>
     </div>

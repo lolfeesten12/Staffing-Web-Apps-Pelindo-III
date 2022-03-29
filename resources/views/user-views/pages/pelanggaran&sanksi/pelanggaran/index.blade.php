@@ -85,6 +85,9 @@ Pelanggaran Pegawai
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
                                                 style="width: 70px;">Pelanggaran</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
+                                                colspan="1" aria-label="Position: activate to sort column ascending"
+                                                style="width: 70px;">Sanksi</th>
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Salary: activate to sort column ascending"
                                                 style="width: 70px;">Action</th>
@@ -99,6 +102,7 @@ Pelanggaran Pegawai
                                             <td>{{ $item->Pegawai->nama_pegawai }}</td>
                                             <td>{{ $item->Pegawai->Jabatan->nama_jabatan }}</td>
                                             <td>{{ $item->Pelanggaran->pelanggaran }}</td>
+                                            <td>{{ $item->Pelanggaran->Sanksi->nama_sanksi }}</td>
                                             <td class="text-center">
                                                 <a href="javascript:;" class="btn btn-sm btn-secondary"
                                                     data-bs-toggle="modal"
@@ -226,11 +230,23 @@ Pelanggaran Pegawai
                                 value="{{ $item->Pegawai->nama_pegawai }}" readonly />
                         </div>
                     </div>
-                    <div class="form-group mt-2 mb-2">
-                        <label class="small mb-1 mr-1" for="id_pelanggaran">Pelanggaran</label>
-                        <input class="form-control" id="no_surat" type="text" name="no_surat"
-                            value="{{ $item->Pelanggaran->pelanggaran }}" readonly />
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group mt-2 mb-2">
+                                <label class="small mb-1 mr-1" for="id_pelanggaran">Pelanggaran</label>
+                                <input class="form-control" id="no_surat" type="text" name="no_surat"
+                                    value="{{ $item->Pelanggaran->pelanggaran }}" readonly />
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group mt-2 mb-2">
+                                <label class="small mb-1 mr-1" for="id_pelanggaran">Sanksi</label>
+                                <input class="form-control" id="no_surat" type="text" name="no_surat"
+                                    value="{{ $item->Pelanggaran->Sanksi->nama_sanksi }}" readonly />
+                            </div>
+                        </div>
                     </div>
+                   
                     <div class="form-group mt-2 mb-2">
                         <label class="small mb-1 mr-1" for="keterangan">Keterangan</label>
                         <textarea class="form-control" id="no_surat" type="text" name="no_surat"

@@ -12,6 +12,8 @@ use App\Http\Controllers\MasterData\MasterSanksiController;
 use App\Http\Controllers\MasterData\MasterShiftController;
 use App\Http\Controllers\MasterData\MasterUnitKerjaController;
 use App\Http\Controllers\Pelanggaran\PelanggaranController;
+use App\Http\Controllers\Pelatihan\AllPelatihanWebController;
+use App\Http\Controllers\Pelatihan\ProgramPelatihanController;
 use App\Http\Controllers\Penilaian\ApprovalPenilaianController;
 use App\Http\Controllers\Penilaian\NilaiSayaController;
 use App\Http\Controllers\Penilaian\PenilaianPegawaiController;
@@ -32,6 +34,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\WebRequirement\OrientasiCalonController;
 use App\Models\MasterData\MasterOrientasi;
+use App\Models\Pelatihan\ProgramPelatihan;
 use App\Models\Riwayat\RiwayatPendidikan;
 
 /*
@@ -114,47 +117,58 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('laporan-absensi', LaporanAbsensiController::class);
     });
 
-
-});
-
-
-// REQUIREMENT
-Route::prefix('Requirement')
-->group(function () {
-    Route::resource('pengumuman', PengumumanController::class);
-});
-
-Route::prefix('Requirement')
-    ->group(function () {
-        Route::get('/hasil_seleksi', [App\Http\Controllers\WebRequirement\CalonPegawaiController::class, 'HasilSeleksi'])->name('calon-pegawai-hasil');
-        Route::get('/download_cv/{file_cv}', [App\Http\Controllers\WebRequirement\CalonPegawaiController::class, 'getFile'])->name('calon-pegawai-cv');
-        Route::get('/download_pendukung/{file_pendukung}', [App\Http\Controllers\WebRequirement\CalonPegawaiController::class, 'getFilePendukung'])->name('calon-pegawai-pendukung');
-        Route::post('Calon/{id_calon_pegawai}/Status', [App\Http\Controllers\WebRequirement\CalonPegawaiController::class, 'setStatus'])->name('calon-pegawai-status');
-        Route::resource('calon-pegawai', CalonPegawaiController::class);
-        Route::resource('peserta-orientasi', OrientasiCalonController::class);
-        Route::post('peserta-orientasi/{id_calon_pegawai}/sertifikat', [App\Http\Controllers\WebRequirement\OrientasiCalonController::class, 'Sertifikat'])->name('perserta-orientasi-seritifikat');
-    });
-
-Route::prefix('WebRequirement')
-    ->group(function () {
-        Route::resource('web-requirement', WebRequirementController::class);
-    });
-
-Route::prefix('Penilaian')
+    Route::prefix('Penilaian')
     ->group(function () {
         Route::resource('penilaian-pegawai', PenilaianPegawaiController::class);
         Route::get('list-penilaian/{id_pegawai}', [App\Http\Controllers\Penilaian\PenilaianPegawaiController::class, 'DetailNilai'])->name('penilaian-list');
         Route::resource('nilai-saya', NilaiSayaController::class);
         Route::put('Nilai/{id_penilaian}/Tanggapan', [App\Http\Controllers\Penilaian\NilaiSayaController::class, 'Tanggapan'])->name('nilai-tanggapan');
         Route::put('Nilai/{id_penilaian}/Sesuai', [App\Http\Controllers\Penilaian\NilaiSayaController::class, 'Sesuai'])->name('nilai-sesuai');
-});
-
-Route::prefix('Pelanggaran')
-    ->group(function () {
-        Route::resource('pelanggaran-pegawai', PelanggaranController::class);
     });
 
-    Route::prefix('Sanksi')
+       // REQUIREMENT
+       Route::prefix('Requirement')
+       ->middleware(['hrd'])
+       ->group(function () {
+           Route::resource('pengumuman', PengumumanController::class);
+       });
+   
+       Route::prefix('Requirement')
+       ->middleware(['hrd'])
+           ->group(function () {
+               Route::get('/hasil_seleksi', [App\Http\Controllers\WebRequirement\CalonPegawaiController::class, 'HasilSeleksi'])->name('calon-pegawai-hasil');
+               Route::get('/download_cv/{file_cv}', [App\Http\Controllers\WebRequirement\CalonPegawaiController::class, 'getFile'])->name('calon-pegawai-cv');
+               Route::get('/download_pendukung/{file_pendukung}', [App\Http\Controllers\WebRequirement\CalonPegawaiController::class, 'getFilePendukung'])->name('calon-pegawai-pendukung');
+               Route::post('Calon/{id_calon_pegawai}/Status', [App\Http\Controllers\WebRequirement\CalonPegawaiController::class, 'setStatus'])->name('calon-pegawai-status');
+               Route::resource('calon-pegawai', CalonPegawaiController::class);
+               Route::resource('peserta-orientasi', OrientasiCalonController::class);
+               Route::post('peserta-orientasi/{id_calon_pegawai}/sertifikat', [App\Http\Controllers\WebRequirement\OrientasiCalonController::class, 'Sertifikat'])->name('perserta-orientasi-seritifikat');
+       });
+
+    Route::prefix('Pelanggaran')
+        ->group(function () {
+            Route::resource('pelanggaran-pegawai', PelanggaranController::class);
+        });
+
+    Route::prefix('Pelatihan')
+        ->middleware(['hrd'])
+        ->group(function () {
+            Route::resource('program-pelatihan', ProgramPelatihanController::class);
+        });
+
+    Route::prefix('WebPelatihan')
+        ->group(function () {
+            Route::resource('web-pelatihan', AllPelatihanWebController::class);
+        });
+
+     
+
+});
+
+
+
+// WEB
+Route::prefix('WebRequirement')
     ->group(function () {
-        Route::resource('sanksi-pegawai', SanksiController::class);
+        Route::resource('web-requirement', WebRequirementController::class);
     });

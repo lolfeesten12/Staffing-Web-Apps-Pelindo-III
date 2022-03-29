@@ -143,6 +143,16 @@
                 <li> <a href="{{ route('web-requirement.index') }}"><i class="bi bi-circle"></i>Menuju Web Recrut</a></li>
             </ul>
         </li>
+        <li>
+            <a href="javascript:;" class="has-arrow">
+                <div class="parent-icon"><i class="lni lni-blackboard"></i>
+                </div>
+                <div class="menu-title">Pelatihan</div>
+            </a>
+            <ul>
+                <li> <a href="{{ route('program-pelatihan.index') }}"><i class="bi bi-circle"></i>Program Pelatihan</a></li>
+            </ul>
+        </li>
         @endif
       
         <li class="menu-label">Riwayat Pegawai</li>
@@ -159,8 +169,25 @@
                 <li> <a href="{{ route('cuti.index') }}"><i class="bi bi-circle"></i>Riwayat Cuti</a></li>
                 <li> <a href="{{ route('riwayatpelanggaran.index') }}"><i class="bi bi-circle"></i>Riwayat Pelanggaran</a></li>
                 <li> <a href="{{ route('riwayatsanksi.index') }}"><i class="bi bi-circle"></i>Riwayat Sanksi</a></li>
+                <li> <a href="{{ route('riwayatsanksi.index') }}"><i class="bi bi-circle"></i>Riwayat Seminar</a></li>
             </ul>
         </li>
+
+        @if (Auth::user()->Pegawai->role != 'HRD')
+        <li class="menu-label">Pelatihan</li>
+        <li>
+            <a href="javascript:;" class="has-arrow">
+                <div class="parent-icon"><i class="lni lni-blackboard"></i>
+                </div>
+                <div class="menu-title">Pelatihan</div>
+            </a>
+            <ul>
+                 <li> <a href="{{ route('web-pelatihan.index') }}"><i class="bi bi-circle"></i>Program Pelatihan</a></li>
+            </ul>
+        </li>
+        @endif
+        
+
         <li class="menu-label">Jadwal dan Absen</li>
         <li>
             <a href="javascript:;" class="has-arrow">
@@ -232,7 +259,6 @@
             </a>
             <ul>
                 <li> <a href="{{ route('pelanggaran-pegawai.index') }}"><i class="bi bi-circle"></i>Pelanggaran</a></li>
-                <li> <a href="{{ route('sanksi-pegawai.index') }}"><i class="bi bi-circle"></i>Sanksi</a></li>
             </ul>
         </li>
         @endif
