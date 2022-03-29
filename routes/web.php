@@ -11,6 +11,7 @@ use App\Http\Controllers\MasterData\MasterPelanggaranController;
 use App\Http\Controllers\MasterData\MasterSanksiController;
 use App\Http\Controllers\MasterData\MasterShiftController;
 use App\Http\Controllers\MasterData\MasterUnitKerjaController;
+use App\Http\Controllers\Pelanggaran\PelanggaranController;
 use App\Http\Controllers\Penilaian\ApprovalPenilaianController;
 use App\Http\Controllers\Penilaian\NilaiSayaController;
 use App\Http\Controllers\Penilaian\PenilaianPegawaiController;
@@ -21,6 +22,7 @@ use App\Http\Controllers\Riwayat\RiwayatPrestasiController;
 use App\Http\Controllers\Riwayat\RiwayatKeluargaController;
 
 use App\Http\Controllers\Riwayat\RiwayatSanskiController;
+use App\Http\Controllers\Sanksi\SanksiController;
 use App\Http\Controllers\WebRequirement\CalonPegawaiController;
 use App\Http\Controllers\WebRequirement\HasilSeleksiController;
 use App\Http\Controllers\WebRequirement\PengumumanController;
@@ -147,5 +149,12 @@ Route::prefix('Penilaian')
         Route::put('Nilai/{id_penilaian}/Sesuai', [App\Http\Controllers\Penilaian\NilaiSayaController::class, 'Sesuai'])->name('nilai-sesuai');
 });
 
+Route::prefix('Pelanggaran')
+    ->group(function () {
+        Route::resource('pelanggaran-pegawai', PelanggaranController::class);
+    });
 
-
+    Route::prefix('Sanksi')
+    ->group(function () {
+        Route::resource('sanksi-pegawai', SanksiController::class);
+    });

@@ -6,6 +6,7 @@ use App\Models\MasterData\MasterPegawai;
 use App\Models\MasterData\MasterPelanggaran;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class RiwayatPelanggaran extends Model
 {
@@ -18,7 +19,8 @@ class RiwayatPelanggaran extends Model
         'id_pelanggaran',
         'no_surat',
         'id_pejabat',
-        'keterangan'
+        'keterangan',
+        'tanggal'
     ];
 
     protected $hidden = [
@@ -39,5 +41,16 @@ class RiwayatPelanggaran extends Model
     public function Pejabat()
     {
         return $this->belongsTo(MasterPegawai::class, 'id_pejabat', 'id_pegawai');
+    }
+
+    public static function getId()
+    {
+        $getId = DB::table('tb_riwayat_pelanggaran')->orderBy('id_riwayat_pelanggaran', 'DESC')->take(1)->get();
+        if (count($getId) > 0) return $getId;
+        return (object)[
+            (object)[
+                'id_riwayat_pelanggaran' => 0
+            ]
+        ];
     }
 }

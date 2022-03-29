@@ -231,8 +231,8 @@
                 <div class="menu-title">Pelanggaran</div>
             </a>
             <ul>
-                <li> <a href="table-basic-table.html"><i class="bi bi-circle"></i>Pelanggaran</a></li>
-                <li> <a href="table-advance-tables.html"><i class="bi bi-circle"></i>Sanksi</a></li>
+                <li> <a href="{{ route('pelanggaran-pegawai.index') }}"><i class="bi bi-circle"></i>Pelanggaran</a></li>
+                <li> <a href="{{ route('sanksi-pegawai.index') }}"><i class="bi bi-circle"></i>Sanksi</a></li>
             </ul>
         </li>
         @endif
