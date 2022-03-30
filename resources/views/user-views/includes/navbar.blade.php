@@ -4,8 +4,14 @@
         <div class="mobile-toggle-icon fs-3">
             <i class="bi bi-list"></i>
         </div>
+
+
+
+
         <div class="top-navbar-right ms-auto">
+
             <ul class="navbar-nav align-items-center">
+
                 <li class="nav-item search-toggle-icon">
                     <a class="nav-link" href="#">
                         <div class="">
@@ -18,10 +24,9 @@
                         <div class="user-setting d-flex align-items-center">
                             @if (!Auth::user()->pegawai->avatar)
                             <img src="https://ui-avatars.com/api/?name=Admin" class="rounded-circle" alt="" style="border-radius: 50%">
-                        @else
-                        <img class="rounded-circle"  width="40" height="40"
-                            src="{{ asset('/profile/'.Auth::user()->pegawai['avatar']) }}" alt="">
-                        @endif
+                            @else
+                            <img class="rounded-circle" width="40" height="40" src="{{ asset('/profile/'.Auth::user()->pegawai['avatar']) }}" alt="">
+                            @endif
 
                         </div>
                     </a>
@@ -30,14 +35,13 @@
                             <a class="dropdown-item" href="#">
                                 <div class="d-flex align-items-center">
                                     @if (!Auth::user()->pegawai->avatar)
-                                        <img src="https://ui-avatars.com/api/?name=Admin" class="rounded-circle" alt="" style="border-radius: 50%">
+                                    <img src="https://ui-avatars.com/api/?name=Admin" class="rounded-circle" alt="" style="border-radius: 50%">
                                     @else
-                                    <img class="rounded-circle"  width="54" height="54"
-                                        src="{{ asset('/profile/'.Auth::user()->pegawai['avatar']) }}" alt="">
+                                    <img class="rounded-circle" width="54" height="54" src="{{ asset('/profile/'.Auth::user()->pegawai['avatar']) }}" alt="">
                                     @endif
 
                                     {{-- <img src="{{ url('assets/images/avatars/avatar-1.png') }}" alt="" class="rounded-circle"
-                                        width="54" height="54"> --}}
+                                    width="54" height="54"> --}}
                                     <div class="ms-3">
                                         <h6 class="mb-0 dropdown-user-name">Halo, {{ Auth::user()->Pegawai->nama_panggilan }}</h6>
                                         <small class="mb-0 dropdown-user-designation text-secondary">{{ Auth::user()->Pegawai->Unitkerja->unit_kerja }}</small>
@@ -154,7 +158,7 @@
             </ul>
         </li>
         @endif
-      
+
         <li class="menu-label">Riwayat Pegawai</li>
         <li>
             <a href="javascript:;" class="has-arrow">
@@ -198,7 +202,7 @@
                 @else
                 <div class="menu-title">Penjadwalan</div>
                 @endif
-               
+
             </a>
             <ul>
                 @if (Auth::user()->Pegawai->role == 'HRD' || Auth::user()->Pegawai->role == 'Kepala Unit')
@@ -215,10 +219,12 @@
             </a>
             <ul>
                 <li> <a href="ecommerce-products-list.html"><i class="bi bi-circle"></i>Absensi</a>
-                @if (Auth::user()->Pegawai->role == 'HRD')
+                    @if (Auth::user()->Pegawai->role == 'HRD')
                 <li> <a href="{{ route('laporan-absensi.index') }}"><i class="bi bi-circle"></i>Laporan Absensi</a>
-                @endif
-                
+                <li> <a href="{{ route('Qr-absensi.index') }}"><i class="bi bi-circle"></i>QR Code Absen</a>
+
+                    @endif
+
             </ul>
         </li>
         <li>
@@ -229,6 +235,12 @@
             </a>
             <ul>
                 <li> <a href="ecommerce-products-list.html"><i class="bi bi-circle"></i>Pengajuan Cuti</a>
+<<<<<<< Updated upstream
+=======
+                    @if (Auth::user()->Pegawai->role == 'HRD')
+                <li> <a href="{{ route('approval-cuti.index') }}"><i class="bi bi-circle"></i>Approval Cuti</a>
+                    @endif
+>>>>>>> Stashed changes
             </ul>
         </li>
         @if (Auth::user()->Pegawai->role == 'Pegawai')
@@ -236,7 +248,7 @@
         @else
         <li class="menu-label">Penilaian dan Pelanggaran</li>
         @endif
-       
+
         <li>
             <a class="has-arrow" href="javascript:;">
                 <div class="parent-icon"><i class="lni lni-certificate"></i>
@@ -244,10 +256,17 @@
             <div class="menu-title">Penilaian Pegawai</div>
             </a>
             <ul>
+<<<<<<< Updated upstream
             @if (Auth::user()->Pegawai->role == 'HRD' || Auth::user()->Pegawai->role == 'Kepala Unit')
                 <li> <a href="{{ route('penilaian-pegawai.index') }}"><i class="bi bi-circle"></i>Penilaian</a></li>
             @endif
                 <li> <a href="{{ route('nilai-saya.index') }}"><i class="bi bi-circle"></i>Nilai Saya</a></li>
+=======
+                @if (Auth::user()->Pegawai->role == 'HRD' || Auth::user()->Pegawai->role == 'Kepala Unit')
+                <li> <a href="form-elements.html"><i class="bi bi-circle"></i>Penilaian</a></li>
+                @endif
+                <li> <a href="form-elements.html"><i class="bi bi-circle"></i>Nilai Saya</a></li>
+>>>>>>> Stashed changes
             </ul>
         </li>
         @if (Auth::user()->Pegawai->role == 'HRD' || Auth::user()->Pegawai->role == 'Kepala Unit')

@@ -28,11 +28,11 @@ class RiwayatPelanggaranController extends Controller
     public function index()
     {
         // $pegawai = MasterPegawai::where('id', Auth::user()->id)->get();
-        $riwayat = RiwayatPelanggaran::with('Pegawai', 'Pelanggaran.Sanksi', 'pejabat')->where('id_pegawai',Auth::user()->id_pegawai )->get();
+        $riwayat = RiwayatPelanggaran::with('Pegawai', 'Pelanggaran.Sanksi', 'pejabat')->where('id_pegawai', Auth::user()->id_pegawai)->get();
         // return $riwayat;
         // $hubungan = MasterHubungan::get();
 
-        return view('user-views.pages.riwayat.pelanggaran',compact('riwayat'));
+        return view('user-views.pages.riwayat.pelanggaran', compact('riwayat'));
     }
 
     /**
@@ -45,7 +45,7 @@ class RiwayatPelanggaranController extends Controller
         $jabatan = MasterJabatan::get();
         $unit = MasterUnitKerja::get();
 
-        return view('user-views.pages.masterdata.pegawai.create',compact('jabatan','unit'));
+        return view('user-views.pages.masterdata.pegawai.create', compact('jabatan', 'unit'));
     }
 
     /**
@@ -65,7 +65,7 @@ class RiwayatPelanggaranController extends Controller
         $riwayat->tanggal = $request->tanggal;
         $riwayat->save();
 
-        return redirect()->route('prestasi.index')->with('messageberhasil','Data Prestasi Berhasil ditambahkan');
+        return redirect()->route('prestasi.index')->with('messageberhasil', 'Data Prestasi Berhasil ditambahkan');
     }
 
     /**
@@ -76,9 +76,9 @@ class RiwayatPelanggaranController extends Controller
      */
     public function show($id)
     {
-        $pegawai = MasterPegawai::with('Jabatan','Unitkerja','User')->find($id);
+        $pegawai = MasterPegawai::with('Jabatan', 'Unitkerja', 'User')->find($id);
 
-        return view('user-views.pages.masterdata.pegawai.detail',compact('pegawai'));
+        return view('user-views.pages.masterdata.pegawai.detail', compact('pegawai'));
     }
 
     /**
@@ -89,11 +89,11 @@ class RiwayatPelanggaranController extends Controller
      */
     public function edit($id)
     {
-        $pegawai = MasterPegawai::with('Jabatan','Unitkerja','User')->find($id);
+        $pegawai = MasterPegawai::with('Jabatan', 'Unitkerja', 'User')->find($id);
         $jabatan = MasterJabatan::get();
         $unit = MasterUnitKerja::get();
 
-        return view('user-views.pages.masterdata.pegawai.edit', compact('pegawai','jabatan','unit'));
+        return view('user-views.pages.masterdata.pegawai.edit', compact('pegawai', 'jabatan', 'unit'));
     }
 
     /**
@@ -106,15 +106,15 @@ class RiwayatPelanggaranController extends Controller
     public function update(Request $request, $id)
     {
 
-            $riwayat = RiwayatPrestasi::find($id);
-            $riwayat->nama_prestasi = $request->nama_prestasi;
-            $riwayat->tingkat = $request->tingkat;
-            $riwayat->tanggal = $request->tanggal;
+        $riwayat = RiwayatPrestasi::find($id);
+        $riwayat->nama_prestasi = $request->nama_prestasi;
+        $riwayat->tingkat = $request->tingkat;
+        $riwayat->tanggal = $request->tanggal;
 
-            $riwayat->update();
+        $riwayat->update();
 
 
-        return redirect()->route('prestasi.index')->with('messageberhasil','Data Prestasi Berhasil diedit');
+        return redirect()->route('prestasi.index')->with('messageberhasil', 'Data Prestasi Berhasil diedit');
     }
 
     /**
@@ -131,6 +131,6 @@ class RiwayatPelanggaranController extends Controller
         $riwayat = RiwayatPrestasi::find($id);
         $riwayat->delete();
 
-        return redirect()->back()->with('messagehapus','Data Prestasi Berhasil dihapus');
+        return redirect()->back()->with('messagehapus', 'Data Prestasi Berhasil dihapus');
     }
 }
