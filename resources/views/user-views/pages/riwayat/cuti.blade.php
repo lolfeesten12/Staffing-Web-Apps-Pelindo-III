@@ -22,14 +22,12 @@ Riwayat Cuti
                 </nav>
             </div>
             <div class="ms-auto">
-                <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
-                    data-bs-target="#Modaltambah">Tambah Cuti</button>
+                <a class="btn btn-sm btn-primary" href="{{ route('pengajuan-cuti.index') }}">Ajukan Cuti</a>
             </div>
         </div>
         <hr>
         @if(session('messageberhasil'))
-        <div
-            class="alert border-0 border-success border-start border-4 bg-light-success alert-dismissible fade show py-2">
+        <div class="alert border-0 border-success border-start border-4 bg-light-success alert-dismissible fade show py-2">
             <div class="d-flex align-items-center">
                 <div class="fs-3 text-success"><i class="bi bi-check-circle-fill"></i>
                 </div>
@@ -41,8 +39,7 @@ Riwayat Cuti
         </div>
         @endif
         @if(session('messagehapus'))
-        <div
-            class="alert border-0 border-danger border-start border-4 bg-light-danger alert-dismissible fade show py-2">
+        <div class="alert border-0 border-danger border-start border-4 bg-light-danger alert-dismissible fade show py-2">
             <div class="d-flex align-items-center">
                 <div class="fs-3 text-danger"><i class="bi bi-check-circle-fill"></i>
                 </div>
@@ -62,33 +59,17 @@ Riwayat Cuti
                     <div id="example_wrapper" class="dataTables_wrapper dt-bootstrap5">
                         <div class="row">
                             <div class="col-sm-12">
-                                <table id="example" class="table table-striped table-bordered dataTable"
-                                    style="width: 100%;" role="grid" aria-describedby="example_info">
+                                <table id="example" class="table table-striped table-bordered dataTable" style="width: 100%;" role="grid" aria-describedby="example_info">
                                     <thead>
                                         <tr role="row">
-                                            <th class="sorting_asc" tabindex="0" aria-controls="example" rowspan="1"
-                                                colspan="1" aria-sort="ascending"
-                                                aria-label="Name: activate to sort column descending"
-                                                style="width: 100px;">No.</th>
+                                            <th class="sorting_asc" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 100px;">No.</th>
 
-                                            <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
-                                                colspan="1" aria-label="Position: activate to sort column ascending"
-                                                style="width: 410px;">Nomor Cuti</th>
-                                            <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
-                                                colspan="1" aria-label="Position: activate to sort column ascending"
-                                                style="width: 410px;">Lama Cuti</th>
-                                            <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
-                                                colspan="1" aria-label="Position: activate to sort column ascending"
-                                                style="width: 410px;">Tanggal Mulai</th>
-                                            <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
-                                                colspan="1" aria-label="Position: activate to sort column ascending"
-                                                style="width: 410px;">Tanggal Selesai</th>
-                                            <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
-                                                colspan="1" aria-label="Position: activate to sort column ascending"
-                                                style="width: 410px;">Alasan</th>
-                                            <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
-                                                colspan="1" aria-label="Position: activate to sort column ascending"
-                                                style="width: 410px;">Status</th>
+                                            <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 410px;">Nomor Cuti</th>
+                                            <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 410px;">Lama Cuti</th>
+                                            <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 410px;">Tanggal Mulai</th>
+                                            <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 410px;">Tanggal Selesai</th>
+                                            <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 410px;">Alasan</th>
+                                            <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 410px;">Status</th>
 
                                         </tr>
                                     </thead>
@@ -119,8 +100,7 @@ Riwayat Cuti
         </div>
     </div>
 </main>
-<div class="modal fade" id="Modaltambah" data-backdrop="static" tabindex="-1" role="dialog"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="Modaltambah" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">

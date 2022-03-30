@@ -4,6 +4,7 @@ use App\Http\Controllers\Absensi\AbsensiController;
 use App\Http\Controllers\Absensi\LaporanAbsensiController;
 use App\Http\Controllers\Absensi\QrAbsensiController;
 use App\Http\Controllers\Cuti\ApprovalCutiController;
+use App\Http\Controllers\Cuti\PengajuanCutiController;
 use App\Http\Controllers\Jadwal\JadwalPegawaiController;
 use App\Http\Controllers\Jadwal\JadwalSayaController;
 use App\Http\Controllers\MasterData\MasterJabatanController;
@@ -94,20 +95,15 @@ Route::group(['middleware' => 'auth'], function () {
             Route::resource('prestasi', RiwayatPrestasiController::class);
             Route::resource('riwayatsanksi', RiwayatSanskiController::class);
         });
+    Route::prefix('Cuti')
+        // ->middleware(['Admin_Role','verified'])
+        ->group(function () {
+            Route::resource('pengajuan-cuti', PengajuanCutiController::class);
+        });
 
     // AKTIVITAS PEGAWAI
     Route::prefix('Jadwal')
-<<<<<<< Updated upstream
         ->middleware(['gabungan', 'verified'])
-        ->group(function () {
-        Route::resource('jadwal-pegawai', JadwalPegawaiController::class);
-        Route::post('jadwal-pegawai/{id_pegawai}/tanggal', [App\Http\Controllers\Jadwal\JadwalpegawaiController::class, 'getJadwal']);
-        Route::get('jadwal-pegawai/{id_pegawai}/tanggal', [App\Http\Controllers\Jadwal\JadwalpegawaiController::class, 'JadwalPegawai']);
-        Route::post('jadwal-pegawai/{id_pegawai}/masuk', [App\Http\Controllers\Jadwal\JadwalpegawaiController::class, 'JadwalMasuk']);
-        Route::post('jadwal-pegawai/{id_pegawai}/libur', [App\Http\Controllers\Jadwal\JadwalpegawaiController::class, 'JadwalLibur']);
-    });
-=======
-        ->middleware('kepala_unit')
         ->group(function () {
             Route::resource('jadwal-pegawai', JadwalPegawaiController::class);
             Route::post('jadwal-pegawai/{id_pegawai}/tanggal', [App\Http\Controllers\Jadwal\JadwalpegawaiController::class, 'getJadwal']);
@@ -115,7 +111,6 @@ Route::group(['middleware' => 'auth'], function () {
             Route::post('jadwal-pegawai/{id_pegawai}/masuk', [App\Http\Controllers\Jadwal\JadwalpegawaiController::class, 'JadwalMasuk']);
             Route::post('jadwal-pegawai/{id_pegawai}/libur', [App\Http\Controllers\Jadwal\JadwalpegawaiController::class, 'JadwalLibur']);
         });
->>>>>>> Stashed changes
 
     Route::prefix('Jadwal')
         ->group(function () {
@@ -124,46 +119,46 @@ Route::group(['middleware' => 'auth'], function () {
         });
 
     Route::prefix('Approval')
-<<<<<<< Updated upstream
-    ->group(function () {
-    Route::resource('approval-cuti', ApprovalCutiController::class);
-    Route::post('approval-cuti/{id_riwayat_cuti}/set-status', [App\Http\Controllers\Cuti\ApprovalCutiController::class, 'Status'])->name('approval-cuti-status');
-    Route::resource('approval-penilaian', ApprovalPenilaianController::class);
-    Route::post('approval-penilaian/{id_penilaian}/set-status', [App\Http\Controllers\Penilaian\ApprovalPenilaianController::class, 'Status'])->name('approval-penilaian-status');
-    });
+        ->group(function () {
+            Route::resource('approval-cuti', ApprovalCutiController::class);
+            Route::post('approval-cuti/{id_riwayat_cuti}/set-status', [App\Http\Controllers\Cuti\ApprovalCutiController::class, 'Status'])->name('approval-cuti-status');
+            Route::resource('approval-penilaian', ApprovalPenilaianController::class);
+            Route::post('approval-penilaian/{id_penilaian}/set-status', [App\Http\Controllers\Penilaian\ApprovalPenilaianController::class, 'Status'])->name('approval-penilaian-status');
+        });
 
     Route::prefix('Laporan')
-    ->group(function () {
-    Route::resource('laporan-absensi', LaporanAbsensiController::class);
-    });
+        ->group(function () {
+            Route::resource('laporan-absensi', LaporanAbsensiController::class);
+            Route::resource('Qr-absensi', QrAbsensiController::class);
+        });
 
     Route::prefix('Penilaian')
-    ->group(function () {
-        Route::resource('penilaian-pegawai', PenilaianPegawaiController::class);
-        Route::get('list-penilaian/{id_pegawai}', [App\Http\Controllers\Penilaian\PenilaianPegawaiController::class, 'DetailNilai'])->name('penilaian-list');
-        Route::resource('nilai-saya', NilaiSayaController::class);
-        Route::put('Nilai/{id_penilaian}/Tanggapan', [App\Http\Controllers\Penilaian\NilaiSayaController::class, 'Tanggapan'])->name('nilai-tanggapan');
-        Route::put('Nilai/{id_penilaian}/Sesuai', [App\Http\Controllers\Penilaian\NilaiSayaController::class, 'Sesuai'])->name('nilai-sesuai');
-    });
+        ->group(function () {
+            Route::resource('penilaian-pegawai', PenilaianPegawaiController::class);
+            Route::get('list-penilaian/{id_pegawai}', [App\Http\Controllers\Penilaian\PenilaianPegawaiController::class, 'DetailNilai'])->name('penilaian-list');
+            Route::resource('nilai-saya', NilaiSayaController::class);
+            Route::put('Nilai/{id_penilaian}/Tanggapan', [App\Http\Controllers\Penilaian\NilaiSayaController::class, 'Tanggapan'])->name('nilai-tanggapan');
+            Route::put('Nilai/{id_penilaian}/Sesuai', [App\Http\Controllers\Penilaian\NilaiSayaController::class, 'Sesuai'])->name('nilai-sesuai');
+        });
 
-       // REQUIREMENT
-       Route::prefix('Requirement')
-       ->middleware(['hrd'])
-       ->group(function () {
-           Route::resource('pengumuman', PengumumanController::class);
-       });
-   
-       Route::prefix('Requirement')
-       ->middleware(['hrd'])
-           ->group(function () {
-               Route::get('/hasil_seleksi', [App\Http\Controllers\WebRequirement\CalonPegawaiController::class, 'HasilSeleksi'])->name('calon-pegawai-hasil');
-               Route::get('/download_cv/{file_cv}', [App\Http\Controllers\WebRequirement\CalonPegawaiController::class, 'getFile'])->name('calon-pegawai-cv');
-               Route::get('/download_pendukung/{file_pendukung}', [App\Http\Controllers\WebRequirement\CalonPegawaiController::class, 'getFilePendukung'])->name('calon-pegawai-pendukung');
-               Route::post('Calon/{id_calon_pegawai}/Status', [App\Http\Controllers\WebRequirement\CalonPegawaiController::class, 'setStatus'])->name('calon-pegawai-status');
-               Route::resource('calon-pegawai', CalonPegawaiController::class);
-               Route::resource('peserta-orientasi', OrientasiCalonController::class);
-               Route::post('peserta-orientasi/{id_calon_pegawai}/sertifikat', [App\Http\Controllers\WebRequirement\OrientasiCalonController::class, 'Sertifikat'])->name('perserta-orientasi-seritifikat');
-       });
+    // REQUIREMENT
+    Route::prefix('Requirement')
+        ->middleware(['hrd'])
+        ->group(function () {
+            Route::resource('pengumuman', PengumumanController::class);
+        });
+
+    Route::prefix('Requirement')
+        ->middleware(['hrd'])
+        ->group(function () {
+            Route::get('/hasil_seleksi', [App\Http\Controllers\WebRequirement\CalonPegawaiController::class, 'HasilSeleksi'])->name('calon-pegawai-hasil');
+            Route::get('/download_cv/{file_cv}', [App\Http\Controllers\WebRequirement\CalonPegawaiController::class, 'getFile'])->name('calon-pegawai-cv');
+            Route::get('/download_pendukung/{file_pendukung}', [App\Http\Controllers\WebRequirement\CalonPegawaiController::class, 'getFilePendukung'])->name('calon-pegawai-pendukung');
+            Route::post('Calon/{id_calon_pegawai}/Status', [App\Http\Controllers\WebRequirement\CalonPegawaiController::class, 'setStatus'])->name('calon-pegawai-status');
+            Route::resource('calon-pegawai', CalonPegawaiController::class);
+            Route::resource('peserta-orientasi', OrientasiCalonController::class);
+            Route::post('peserta-orientasi/{id_calon_pegawai}/sertifikat', [App\Http\Controllers\WebRequirement\OrientasiCalonController::class, 'Sertifikat'])->name('perserta-orientasi-seritifikat');
+        });
 
     Route::prefix('Pelanggaran')
         ->group(function () {
@@ -175,36 +170,12 @@ Route::group(['middleware' => 'auth'], function () {
         ->group(function () {
             Route::resource('program-pelatihan', ProgramPelatihanController::class);
         });
-=======
-        ->group(function () {
-            Route::resource('approval-cuti', ApprovalCutiController::class);
-            Route::post('approval-cuti/{id_riwayat_cuti}/set-status', [App\Http\Controllers\Cuti\ApprovalCutiController::class, 'Status'])->name('approval-cuti-status');
-        });
-
-    Route::prefix('Laporan')
-        ->group(function () {
-            Route::resource('laporan-absensi', LaporanAbsensiController::class);
-            Route::resource('Qr-absensi', QrAbsensiController::class);
-        });
-});
->>>>>>> Stashed changes
 
     Route::prefix('WebPelatihan')
         ->group(function () {
             Route::resource('web-pelatihan', AllPelatihanWebController::class);
         });
-
-     
-
-<<<<<<< Updated upstream
 });
-=======
-// REQUIREMENT
-Route::prefix('Requirement')
-    ->group(function () {
-        Route::resource('pengumuman', PengumumanController::class);
-    });
->>>>>>> Stashed changes
 
 
 

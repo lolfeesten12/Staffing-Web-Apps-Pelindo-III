@@ -186,11 +186,11 @@
                 <div class="menu-title">Pelatihan</div>
             </a>
             <ul>
-                 <li> <a href="{{ route('web-pelatihan.index') }}"><i class="bi bi-circle"></i>Program Pelatihan</a></li>
+                <li> <a href="{{ route('web-pelatihan.index') }}"><i class="bi bi-circle"></i>Program Pelatihan</a></li>
             </ul>
         </li>
         @endif
-        
+
 
         <li class="menu-label">Jadwal dan Absen</li>
         <li>
@@ -234,13 +234,7 @@
                 <div class="menu-title">Cuti</div>
             </a>
             <ul>
-                <li> <a href="ecommerce-products-list.html"><i class="bi bi-circle"></i>Pengajuan Cuti</a>
-<<<<<<< Updated upstream
-=======
-                    @if (Auth::user()->Pegawai->role == 'HRD')
-                <li> <a href="{{ route('approval-cuti.index') }}"><i class="bi bi-circle"></i>Approval Cuti</a>
-                    @endif
->>>>>>> Stashed changes
+                <li> <a href="{{ route('pengajuan-cuti.index') }}"><i class="bi bi-circle"></i>Pengajuan Cuti</a>
             </ul>
         </li>
         @if (Auth::user()->Pegawai->role == 'Pegawai')
@@ -253,20 +247,13 @@
             <a class="has-arrow" href="javascript:;">
                 <div class="parent-icon"><i class="lni lni-certificate"></i>
                 </div>
-            <div class="menu-title">Penilaian Pegawai</div>
+                <div class="menu-title">Penilaian Pegawai</div>
             </a>
             <ul>
-<<<<<<< Updated upstream
-            @if (Auth::user()->Pegawai->role == 'HRD' || Auth::user()->Pegawai->role == 'Kepala Unit')
-                <li> <a href="{{ route('penilaian-pegawai.index') }}"><i class="bi bi-circle"></i>Penilaian</a></li>
-            @endif
-                <li> <a href="{{ route('nilai-saya.index') }}"><i class="bi bi-circle"></i>Nilai Saya</a></li>
-=======
                 @if (Auth::user()->Pegawai->role == 'HRD' || Auth::user()->Pegawai->role == 'Kepala Unit')
-                <li> <a href="form-elements.html"><i class="bi bi-circle"></i>Penilaian</a></li>
+                <li> <a href="{{ route('penilaian-pegawai.index') }}"><i class="bi bi-circle"></i>Penilaian</a></li>
                 @endif
-                <li> <a href="form-elements.html"><i class="bi bi-circle"></i>Nilai Saya</a></li>
->>>>>>> Stashed changes
+                <li> <a href="{{ route('nilai-saya.index') }}"><i class="bi bi-circle"></i>Nilai Saya</a></li>
             </ul>
         </li>
         @if (Auth::user()->Pegawai->role == 'HRD' || Auth::user()->Pegawai->role == 'Kepala Unit')
@@ -282,24 +269,24 @@
         </li>
         @endif
         @if (Auth::user()->Pegawai->role == 'HRD')
-            <li class="menu-label">Menu Approval</li>
-            <li>
-                <a class="has-arrow" href="javascript:;">
-                    <div class="parent-icon"><i class="lni lni-checkmark"></i></i>
-                    </div>
+        <li class="menu-label">Menu Approval</li>
+        <li>
+            <a class="has-arrow" href="javascript:;">
+                <div class="parent-icon"><i class="lni lni-checkmark"></i></i>
+                </div>
                 <div class="menu-title">Approval</div>
-                </a>
-                <ul>
-                    <li> <a href="{{ route('approval-cuti.index') }}"><i class="bi bi-circle"></i>Approval Cuti</a>
-                    <li> <a href="{{ route('approval-penilaian.index') }}"><i class="bi bi-circle"></i>Approval Penilaian</a></li>
-                 
-                </ul>
-            </li>
+            </a>
+            <ul>
+                <li> <a href="{{ route('approval-cuti.index') }}"><i class="bi bi-circle"></i>Approval Cuti</a>
+                <li> <a href="{{ route('approval-penilaian.index') }}"><i class="bi bi-circle"></i>Approval Penilaian</a></li>
+
+            </ul>
+        </li>
         @endif
-      
 
 
-       
+
+
         <li class="menu-label">Logout</li>
         <li>
             <a onclick="event.preventDefault(); document.getElementById('logout-form').submit()">
