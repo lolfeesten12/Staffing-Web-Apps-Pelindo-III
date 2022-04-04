@@ -28,6 +28,7 @@ use App\Http\Controllers\Riwayat\RiwayatKeluargaController;
 
 use App\Http\Controllers\Riwayat\RiwayatSanskiController;
 use App\Http\Controllers\Sanksi\SanksiController;
+use App\Http\Controllers\User\PasswordController;
 use App\Http\Controllers\WebRequirement\CalonPegawaiController;
 use App\Http\Controllers\WebRequirement\HasilSeleksiController;
 use App\Http\Controllers\WebRequirement\PengumumanController;
@@ -68,6 +69,7 @@ Route::group(['middleware' => 'auth'], function () {
         // ->middleware(['Admin_Role','verified'])
         ->group(function () {
             Route::resource('profile', ProfileController::class);
+            Route::resource('password', PasswordController::class);
         });
 
     // MASTER DATA

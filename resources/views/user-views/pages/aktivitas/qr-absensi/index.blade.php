@@ -79,12 +79,17 @@ Qr Code Absensi
         <div class="col-12 col-xl-9">
             <div class="card">
                 <div class="card-body">
+                    @if($jadwal == NULL)
+                    <H1>Jadwal hari Ini Kosong</H1>
+                    @else
                     @if ($jadwal->qrcode == NULL)
                     <H1>QR Code Hari Ini Belum Dibuat</H1>
                     <h1>Silakan Generate QR Code</h1>
                     @else
                     {{ $data }}
                     @endif
+                    @endif
+
 
                 </div>
             </div>

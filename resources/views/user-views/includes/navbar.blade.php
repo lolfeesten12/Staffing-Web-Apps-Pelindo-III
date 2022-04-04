@@ -61,7 +61,7 @@
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="{{ route('profile.index') }}">
+                            <a class="dropdown-item" href="{{ route('password.index') }}">
                                 <div class="d-flex align-items-center">
                                     <div class=""><i class="bi bi-gear-fill"></i></div>
                                     <div class="ms-3"><span>Ganti Password</span></div>
