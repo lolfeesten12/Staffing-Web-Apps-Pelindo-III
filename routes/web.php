@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Absensi\AbsenController;
+use App\Http\Controllers\Absensi\AbsensController;
 use App\Http\Controllers\Absensi\AbsensiController;
 use App\Http\Controllers\Absensi\LaporanAbsensiController;
 use App\Http\Controllers\Absensi\QrAbsensiController;
@@ -132,6 +134,7 @@ Route::group(['middleware' => 'auth'], function () {
         ->group(function () {
             Route::resource('laporan-absensi', LaporanAbsensiController::class);
             Route::resource('Qr-absensi', QrAbsensiController::class);
+            Route::resource('Absen', AbsenController::class);
         });
 
     Route::prefix('Penilaian')

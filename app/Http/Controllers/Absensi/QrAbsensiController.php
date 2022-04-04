@@ -63,9 +63,9 @@ class QrAbsensiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function absen()
     {
-        //
+        return 'ads';
     }
 
     /**

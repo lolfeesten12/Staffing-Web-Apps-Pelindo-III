@@ -30,6 +30,7 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     {{-- <script src="{{ url('/node_modules/sweetalert2/dist/sweetalert2.all.min.js') }}"></script> --}}
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cozmo.github.io/jsQR/jsQR.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/main.min.js"></script>
     <script type="text/javascript">
         function showTime() {

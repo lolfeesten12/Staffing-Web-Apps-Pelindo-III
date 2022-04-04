@@ -218,7 +218,7 @@
                 <div class="menu-title">Absensi</div>
             </a>
             <ul>
-                <li> <a href="ecommerce-products-list.html"><i class="bi bi-circle"></i>Absensi</a>
+                <li> <a href="{{ route('Absen.index') }}"><i class="bi bi-circle"></i>Absensi</a>
                     @if (Auth::user()->Pegawai->role == 'HRD')
                 <li> <a href="{{ route('laporan-absensi.index') }}"><i class="bi bi-circle"></i>Laporan Absensi</a>
                 <li> <a href="{{ route('Qr-absensi.index') }}"><i class="bi bi-circle"></i>QR Code Absen</a>
