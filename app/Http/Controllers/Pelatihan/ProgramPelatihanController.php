@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Pelatihan;
 
 use App\Http\Controllers\Controller;
+use App\Models\Pelatihan\DetailPelatihan;
 use App\Models\Pelatihan\ProgramPelatihan;
 use Illuminate\Http\Request;
 
@@ -18,6 +19,23 @@ class ProgramPelatihanController extends Controller
         $pelatihan = ProgramPelatihan::get();
         return view('user-views.pages.pelatihan.index', compact('pelatihan'));
         
+    }
+
+    public function Peserta($id_pelatihan)
+    {
+        // $detail = ProgramPelatihan::with('Detail')->where('id_pelatihan', $id_pelatihan)->get();
+        $detail = DetailPelatihan::with('Pelatihan','Pegawai')->where('id_pelatihan', $id_pelatihan)->get();
+       
+        return view('user-views.pages.pelatihan.peserta', compact('detail'));
+    }
+
+    public function Selesai($id_pelatihan)
+    {
+        $pelatihan = ProgramPelatihan::find($id_pelatihan);
+        $pelatihan->status = 'Selesai';
+        $pelatihan->save();
+
+        return redirect()->bacK()->with('messageberhasil','Program Pelatihan Berhasil Dijalankan');
     }
 
     /**
@@ -65,6 +83,7 @@ class ProgramPelatihanController extends Controller
             $pelatihan->status_wajib = $request->status_wajib;
             $pelatihan->keterangan = $request->keterangan;
             $pelatihan->cover_foto = $cover_foto;
+            $pelatihan->status = 'Pending';
             $pelatihan->save();
         }else{
             $pelatihan = new ProgramPelatihan;
@@ -78,6 +97,7 @@ class ProgramPelatihanController extends Controller
             $pelatihan->contact_info = $request->contact_info;
             $pelatihan->status_wajib = $request->status_wajib;
             $pelatihan->keterangan = $request->keterangan;
+            $pelatihan->status = 'Pending';
             $pelatihan->save();
         }
 

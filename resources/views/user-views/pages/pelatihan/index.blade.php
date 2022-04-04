@@ -90,6 +90,9 @@ Program Pelatihan
                                                 <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
                                                 style="width: 70px;">Status Wajib</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
+                                                colspan="1" aria-label="Position: activate to sort column ascending"
+                                                style="width: 70px;">Status</th>
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Salary: activate to sort column ascending"
                                                 style="width: 70px;">Action</th>
@@ -105,7 +108,23 @@ Program Pelatihan
                                             <td>{{ $item->penyelenggara }}</td>
                                             <td>{{ $item->periode_awal }}</td>
                                             <td>{{ $item->periode_akhir }}</td>
-                                            <td>{{ $item->status_wajib }}</td>
+                                            <td class="text-center">@if ($item->status_wajib != 'Wajib')
+                                                <a href="{{ route('program-pelatihan-peserta',$item->id_pelatihan) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Peserta"
+                                                    class="btn btn-sm btn-primary">Daftar Peserta</a>
+                                                @else
+                                                <span class="badge bg-light-success text-success w-100">Wajib</span>
+                                                @endif
+                                            </td>
+                                            <td class="text-center">
+                                                @if ($item->status == 'Selesai')
+                                                <span class="badge bg-light-success text-success w-100">Telah Selesai</span>
+                                                @else
+                                                <a href="javascript:;" class="btn btn-sm btn-primary"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#ModalSelesai-{{ $item->id_pelatihan }}"><i class="lni lni-checkmark"></i></a>
+                                                    
+                                                @endif
+                                            </td>
                                             <td class="text-center">
                                                 <a href="{{ route('program-pelatihan.show',$item->id_pelatihan) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Detail Data Pelatihan"
                                                     class="btn btn-sm btn-secondary"><i class="lni lni-eye"></i></a>
@@ -158,4 +177,29 @@ Program Pelatihan
 
 @endforelse
 
+
+@forelse ($pelatihan as $item)
+<div class="modal fade" id="ModalSelesai-{{ $item->id_pelatihan }}" data-backdrop="static" tabindex="-1" role="dialog"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Konfirmasi Penyelesaian Pelatihan</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{ route('program-pelatihan-selesai', $item->id_pelatihan) }}" method="POST" class="d-inline">
+                @csrf
+                <div class="modal-body">
+                    Apakah Anda Yakin Program Pelatihan {{ $item->nama_pelatihan }} Telah Berjalan ?</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-dark">Ya! </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@empty
+
+@endforelse
 @endsection

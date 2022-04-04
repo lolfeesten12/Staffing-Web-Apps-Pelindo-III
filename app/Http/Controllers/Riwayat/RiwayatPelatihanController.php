@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Pelatihan;
+namespace App\Http\Controllers\Riwayat;
 
 use App\Http\Controllers\Controller;
 use App\Models\Pelatihan\DetailPelatihan;
@@ -8,7 +8,7 @@ use App\Models\Pelatihan\ProgramPelatihan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class AllPelatihanWebController extends Controller
+class RiwayatPelatihanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,9 +17,13 @@ class AllPelatihanWebController extends Controller
      */
     public function index()
     {
-        $pelatihan = ProgramPelatihan::get();
+        $riwayat = ProgramPelatihan::where('status_wajib', '=', 'Wajib')->where('status', '=', 'Selesai')->get();
+        $detail = DetailPelatihan::with('Pegawai','Pelatihan')->join('tb_riwayat_pelatihan','tb_detail_pelatihan.id_pelatihan','tb_riwayat_pelatihan.id_pelatihan')
+        ->where('id_pegawai', Auth::user()->Pegawai->id_pegawai)
+        ->where('status','=', 'Selesai')
+        ->get();
 
-        return view('user-views.pages.requirement.webrequirement.pelatihan.index', compact('pelatihan'));
+        return view('user-views.pages.riwayat.riwayatpelatihan', compact('riwayat','detail'));
     }
 
     /**
@@ -51,8 +55,7 @@ class AllPelatihanWebController extends Controller
      */
     public function show($id)
     {
-        $pelatihan = ProgramPelatihan::find($id);
-        return view('user-views.pages.requirement.webrequirement.pelatihan.detail', compact('pelatihan'));
+        //
     }
 
     /**
@@ -75,19 +78,7 @@ class AllPelatihanWebController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if(DetailPelatihan::where('id_pelatihan', $id)->where('id_pegawai', Auth::user()->Pegawai->id_pegawai)->exists()){
-            return redirect()->back()->with('gagal','Error! Maaf Anda Telah Terdaftar pada Program Pelatihan');
-        }else{
-            $pelatihan = new DetailPelatihan;
-            $pelatihan->id_pelatihan = $id;
-            $pelatihan->id_pegawai = Auth::user()->Pegawai->id_pegawai;
-            $pelatihan->save();
-    
-            return redirect()->back()->with('messageberhasil','Berhasil! Anda Telah Terdaftar pada Program');
-        }
-
-        
-        
+        //
     }
 
     /**

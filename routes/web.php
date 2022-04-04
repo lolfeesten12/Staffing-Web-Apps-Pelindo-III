@@ -25,7 +25,7 @@ use App\Http\Controllers\Riwayat\RiwayatPelanggaranController;
 use App\Http\Controllers\Riwayat\RiwayatPendidikanController;
 use App\Http\Controllers\Riwayat\RiwayatPrestasiController;
 use App\Http\Controllers\Riwayat\RiwayatKeluargaController;
-
+use App\Http\Controllers\Riwayat\RiwayatPelatihanController;
 use App\Http\Controllers\Riwayat\RiwayatSanskiController;
 use App\Http\Controllers\Sanksi\SanksiController;
 use App\Http\Controllers\WebRequirement\CalonPegawaiController;
@@ -94,6 +94,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::resource('cuti', RiwayatCutiController::class);
             Route::resource('prestasi', RiwayatPrestasiController::class);
             Route::resource('riwayatsanksi', RiwayatSanskiController::class);
+            Route::resource('riwayatpelatihan', RiwayatPelatihanController::class);
         });
     Route::prefix('Cuti')
         // ->middleware(['Admin_Role','verified'])
@@ -169,6 +170,8 @@ Route::group(['middleware' => 'auth'], function () {
         ->middleware(['hrd'])
         ->group(function () {
             Route::resource('program-pelatihan', ProgramPelatihanController::class);
+            Route::get('/peserta-program/{id_pelatihan}', [App\Http\Controllers\Pelatihan\ProgramPelatihanController::class, 'Peserta'])->name('program-pelatihan-peserta');
+            Route::post('Program/{id_pelatihan}/Selesai', [App\Http\Controllers\Pelatihan\ProgramPelatihanController::class, 'Selesai'])->name('program-pelatihan-selesai');
         });
 
     Route::prefix('WebPelatihan')

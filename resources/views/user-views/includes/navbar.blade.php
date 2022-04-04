@@ -173,7 +173,7 @@
                 <li> <a href="{{ route('cuti.index') }}"><i class="bi bi-circle"></i>Riwayat Cuti</a></li>
                 <li> <a href="{{ route('riwayatpelanggaran.index') }}"><i class="bi bi-circle"></i>Riwayat Pelanggaran</a></li>
                 <li> <a href="{{ route('riwayatsanksi.index') }}"><i class="bi bi-circle"></i>Riwayat Sanksi</a></li>
-                <li> <a href="{{ route('riwayatsanksi.index') }}"><i class="bi bi-circle"></i>Riwayat Seminar</a></li>
+                <li> <a href="{{ route('riwayatpelatihan.index') }}"><i class="bi bi-circle"></i>Riwayat Pelatihan</a></li>
             </ul>
         </li>
 

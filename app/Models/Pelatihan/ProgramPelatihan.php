@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\DB;
 
 class ProgramPelatihan extends Model
 {
-    protected $table = "tb_pelatihan";
+    protected $table = "tb_riwayat_pelatihan";
 
     protected $primaryKey = 'id_pelatihan';
 
@@ -21,7 +21,8 @@ class ProgramPelatihan extends Model
         'status_wajib',
         'contact_info',
         'keterangan',
-        'cover_foto'
+        'cover_foto',
+        'status'
     ];
 
     protected $hidden = [
@@ -33,7 +34,7 @@ class ProgramPelatihan extends Model
 
     public static function getId()
     {
-        $getId = DB::table('tb_pelatihan')->orderBy('id_pelatihan', 'DESC')->take(1)->get();
+        $getId = DB::table('tb_riwayat_pelatihan')->orderBy('id_pelatihan', 'DESC')->take(1)->get();
         if (count($getId) > 0) return $getId;
         return (object)[
             (object)[
@@ -41,4 +42,11 @@ class ProgramPelatihan extends Model
             ]
         ];
     }
+
+    public function Detail()
+    {
+        return $this->hasMany(DetailPelatihan::class, 'id_pelatihan');
+    }
+
+
 }
