@@ -10,13 +10,13 @@ Login Sistem
     <div class="authentication-card">
         <div class="card shadow rounded-0 overflow-hidden">
             <div class="row g-0">
-                <div class="col-lg-6 bg-login d-flex align-items-center justify-content-center">
-                    <img src="assets/images/error/login-img.jpg" class="img-fluid" alt="">
+                <div class="col-lg-6 d-flex align-items-center justify-content-center">
+                    <img src="{{ url('assets/images/logo.png') }}" class="img-fluid" alt="">
                 </div>
                 <div class="col-lg-6">
                     <div class="card-body p-4 p-sm-5">
                         <h5 class="card-title">Sign In</h5>
-                        <p class="card-text mb-5">See your growth and get consulting support!</p>
+                        <p class="card-text mb-5">Silahkan melakukan login terlebih dahulu!</p>
                         <form class="form-body" form method="POST" action="{{ route('login') }}">
                             @csrf
                             {{-- <div class="d-grid">

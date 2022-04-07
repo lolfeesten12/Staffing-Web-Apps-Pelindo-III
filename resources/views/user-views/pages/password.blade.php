@@ -71,8 +71,8 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="card-body p-4 p-sm-5">
-                                    <h5 class="card-title">Genrate New Password</h5>
-                                    <p class="card-text mb-5">. Masukkan Password Baru!</p>
+                                    <h5 class="card-title">Generate New Password</h5>
+                                    <p class="card-text mb-5">Masukkan Password Baru!</p>
                                     <form class="form-body" action="{{ route('password.store') }}" method="POST">
                                         @csrf
                                         <div class="row g-3">

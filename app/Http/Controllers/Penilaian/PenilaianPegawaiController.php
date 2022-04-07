@@ -23,10 +23,10 @@ class PenilaianPegawaiController extends Controller
     {
         if(Auth::user()->Pegawai->role == 'HRD'){
             $pegawai = MasterPegawai::join('tb_master_jabatan','tb_master_pegawai.id_jabatan','tb_master_jabatan.id_jabatan')
-            ->where('id_unit_kerja','=', Auth::user()->Pegawai->id_unit_kerja)->where('nama_jabatan', '!=', 'Kepala HRD')->get();
+            ->where('nama_jabatan', '=', 'Senior Manager Unit')->get();
         }else{
             $pegawai = MasterPegawai::join('tb_master_jabatan','tb_master_pegawai.id_jabatan','tb_master_jabatan.id_jabatan')
-            ->where('id_unit_kerja','=', Auth::user()->Pegawai->id_unit_kerja)->where('nama_jabatan', '!=', 'Kepala Unit')->get();
+            ->where('id_unit_kerja','=', Auth::user()->Pegawai->id_unit_kerja)->where('nama_jabatan', '=', 'Staff')->get();
         }
        
        
@@ -124,7 +124,13 @@ class PenilaianPegawaiController extends Controller
     public function edit($id)
     {
         $pegawai = MasterPegawai::where('id_unit_kerja','=', Auth::user()->Pegawai->id_unit_kerja)->find($id);
-        $hrd = MasterPegawai::where('role','=','HRD')->first();
+        if(Auth::user()->Pegawai->role == 'HRD'){
+            // MASIH ERROR
+            $hrd = MasterPegawai::where('role','=','Direktur Unit')->first();
+        }elseif(Auth::user()->Pegawai->role == 'Kepala Unit'){
+            $hrd = MasterPegawai::where('role','=','Direktur Unit')->where('id_unit_kerja','=', Auth::user()->Pegawai->id_unit_kerja)->first();
+        }
+       
         
         return view('user-views.pages.penilaian.penilaianpegawai.create', compact('pegawai','hrd'));
     }

@@ -145,7 +145,7 @@ class ProgramPelatihanController extends Controller
             $imagePath->move(public_path().'/pelatihan/', $cover_foto); 
             $data[] = $cover_foto;
 
-            $pelatihan = new ProgramPelatihan;
+            $pelatihan = ProgramPelatihan::find($id);
             $pelatihan->nama_pelatihan = $request->nama_pelatihan;
             $pelatihan->jenis_pelatihan = $request->jenis_pelatihan;
             $pelatihan->penyelenggara = $request->penyelenggara;
@@ -158,7 +158,7 @@ class ProgramPelatihanController extends Controller
             $pelatihan->cover_foto = $cover_foto;
             $pelatihan->update();
         }else{
-            $pelatihan = new ProgramPelatihan;
+            $pelatihan = ProgramPelatihan::find($id);
             $pelatihan->nama_pelatihan = $request->nama_pelatihan;
             $pelatihan->jenis_pelatihan = $request->jenis_pelatihan;
             $pelatihan->penyelenggara = $request->penyelenggara;

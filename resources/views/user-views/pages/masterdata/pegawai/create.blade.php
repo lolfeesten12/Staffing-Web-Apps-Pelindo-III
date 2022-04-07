@@ -89,7 +89,7 @@ Create Master Pegawai
                                         <select class="form-select" name="id_unit_kerja" id="id_unit_kerja"
                                             value="{{ old('id_unit_kerja') }}"
                                             class="form-control @error('id_unit_kerja') is-invalid @enderror">
-                                            <option>Pilih Jabatan</option>
+                                            <option>Pilih Unit Kerja</option>
                                             @foreach ($unit as $units)
                                             <option value="{{ $units->id_unit_kerja }}">{{ $units->unit_kerja }}
                                             </option>
@@ -183,9 +183,10 @@ Create Master Pegawai
                                         <select name="role" id="role" class="form-select" value="{{ old('role') }}"
                                             class="form-control @error('role') is-invalid @enderror">
                                             <option value="{{ old('role')}}">Pilih Role</option>
-                                            <option value="Pegawai">Pegawai</option>
+                                            <option value="Pegawai">Pegawai Unit</option>
                                             <option value="HRD">HRD</option>
-                                            <option value="Kepala Unit">Kepala Unit</option>
+                                            <option value="Kepala Unit">Senior Manager Unit</option>
+                                            <option value="Direktur Unit">Direktur Unit</option>
                                         </select>
                                         @error('role')<div class="text-danger small mb-1">{{ $message }}
                                         </div> @enderror

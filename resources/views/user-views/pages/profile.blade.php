@@ -181,23 +181,20 @@ Profile
 
     <!--breadcrumb-->
     <div class="page-breadcrumb d-none d-sm-flex align-items-center">
-        <div class="breadcrumb-title pe-3 text-white">Pages</div>
+        <div class="breadcrumb-title pe-3">Pages</div>
         <div class="ps-3">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb mb-0 p-0">
-                    <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt text-white"></i></a>
+                    <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
                     </li>
-                    <li class="breadcrumb-item active text-white" aria-current="page">User Profile</li>
+                    <li class="breadcrumb-item active" aria-current="page">User Profile</li>
                 </ol>
             </nav>
         </div>
-
     </div>
-    <!--end breadcrumb-->
+    
 
-    <div class="profile-cover bg-dark"></div>
-
-    <div class="row">
+    <div class="row mt-5">
         <div class="col-12 col-lg-12">
             <div class="card shadow-sm border-0">
                 <div class="card-body">
@@ -293,16 +290,6 @@ Profile
                                             @endif
                                         </select>
                                     </div>
-
-
-                                    <div class="col-6">
-                                        <label class="form-label">Nomor SK Penempatan</label>
-                                        <input disabled type="text" class="form-control" value="belom">
-                                    </div>
-                                    {{-- <div class="col-6">
-                                            <label class="form-label">Nomor Telepon</label>
-                                            <input type="text" class="form-control" value="">
-                                        </div> --}}
                                 </div>
                         </div>
                     </div>
@@ -320,20 +307,7 @@ Profile
                                 <label class="form-label">Nomor Telepon</label>
                                 <input type="text" class="form-control" value="{{ $user->Pegawai->no_telp }}" name="no_telp">
                             </div>
-                            {{-- <div class="col-6">
-                                            <label class="form-label">Pin Code</label>
-                                            <input type="text" class="form-control" value="jhon">
-                                        </div>
-                                        <div class="col-6">
-                                            <label class="form-label">Last Name</label>
-                                            <input type="text" class="form-control" value="Deo">
-                                        </div>
-                                        <div class="col-12">
-                                            <label class="form-label">About Me</label>
-                                            <textarea class="form-control" rows="4" cols="4"
-                                                placeholder="Describe yourself..."></textarea>
-                                        </div> --}}
-                            <div class="text-start">
+                            <div class="text-start mt-2">
                                 <button type="submit" class="btn btn-primary px-4">Save Changes</button>
                             </div>
                             </form>

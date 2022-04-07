@@ -147,9 +147,10 @@ Edit Master Pegawai
                                             class="mr-4 mb-3" style="color: red">*</span>
                                         <select name="role" id="role" class="form-select" value="{{ $pegawai->role }}" required>
                                             <option value="{{ $pegawai->role }}">{{ $pegawai->role }}</option>
-                                            <option value="Pegawai">Pegawai</option>
+                                            <option value="Pegawai">Pegawai Uni</option>
                                             <option value="HRD">HRD</option>
-                                            <option value="Kepala Unit">Kepala Unit</option>
+                                            <option value="Kepala Unit">Senior Manager Unit</option>
+                                            <option value="Direktur Unit">Direktur Unit</option>
                                         </select>
                                     </div>
                                     <div class="col-6">

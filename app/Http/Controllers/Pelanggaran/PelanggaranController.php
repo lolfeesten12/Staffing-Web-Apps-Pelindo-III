@@ -20,18 +20,17 @@ class PelanggaranController extends Controller
     {
         if(Auth::user()->Pegawai->role == 'HRD'){
             $pelanggaran = RiwayatPelanggaran::with('Pegawai','Pelanggaran')->leftjoin('tb_master_pegawai','tb_riwayat_pelanggaran.id_pegawai','tb_master_pegawai.id_pegawai')
-            ->join('tb_master_jabatan','tb_master_pegawai.id_jabatan','tb_master_jabatan.id_jabatan')->where('nama_jabatan', '=', 'Kepala Unit')->get();
+            ->join('tb_master_jabatan','tb_master_pegawai.id_jabatan','tb_master_jabatan.id_jabatan')->where('nama_jabatan', '=', 'Senior Manager Unit')->get();
 
             $pegawai = MasterPegawai::join('tb_master_jabatan','tb_master_pegawai.id_jabatan','tb_master_jabatan.id_jabatan')
-            ->where('nama_jabatan', '=', 'Kepala Unit')->get();
-
+            ->where('nama_jabatan', '=', 'Senior Manager Unit')->get();
         }else{
             $pelanggaran = RiwayatPelanggaran::with('Pegawai','Pelanggaran')->leftjoin('tb_master_pegawai','tb_riwayat_pelanggaran.id_pegawai','tb_master_pegawai.id_pegawai')
             ->join('tb_master_jabatan','tb_master_pegawai.id_jabatan','tb_master_jabatan.id_jabatan')
-            ->where('id_unit_kerja','=', Auth::user()->Pegawai->id_unit_kerja)->where('nama_jabatan', '!=', 'Kepala Unit')->where('nama_jabatan', '!=', 'Kepala HRD')->get();
+            ->where('id_unit_kerja','=', Auth::user()->Pegawai->id_unit_kerja)->where('nama_jabatan', '=', 'Staff')->get();
 
             $pegawai = MasterPegawai::join('tb_master_jabatan','tb_master_pegawai.id_jabatan','tb_master_jabatan.id_jabatan')
-            ->where('id_unit_kerja','=', Auth::user()->Pegawai->id_unit_kerja)->where('nama_jabatan', '!=', 'Kepala Unit')->where('nama_jabatan', '!=', 'Kepala HRD')->get();
+            ->where('id_unit_kerja','=', Auth::user()->Pegawai->id_unit_kerja)->where('nama_jabatan', '=', 'Staff')->get();
         }
 
         $masterdata = MasterPelanggaran::get();

@@ -21,12 +21,13 @@ class JadwalPegawaiController extends Controller
     {
         if(Auth::user()->Pegawai->role == 'HRD'){
             $pegawai = MasterPegawai::join('tb_master_jabatan','tb_master_pegawai.id_jabatan','tb_master_jabatan.id_jabatan')
-            ->where('nama_jabatan','!=','HRD')
+            ->where('nama_jabatan','!=','Kepala HRD')
+            ->where('nama_jabatan','!=','Direktur Unit')
             ->where('role','=','Kepala Unit')
             ->get();
         }else{
             $pegawai = MasterPegawai::join('tb_master_jabatan','tb_master_pegawai.id_jabatan','tb_master_jabatan.id_jabatan')
-            ->where('nama_jabatan', '!=' ,'Kepala Unit')
+            ->where('nama_jabatan', '=' ,'Staff')
             ->where('id_unit_kerja','=', Auth::user()->Pegawai->id_unit_kerja)
             ->get();
         }
