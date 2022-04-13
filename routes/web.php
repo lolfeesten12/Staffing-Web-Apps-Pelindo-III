@@ -111,10 +111,10 @@ Route::group(['middleware' => 'auth'], function () {
         ->middleware(['gabungan', 'verified'])
         ->group(function () {
             Route::resource('jadwal-pegawai', JadwalPegawaiController::class);
-            Route::post('jadwal-pegawai/{id_pegawai}/tanggal', [App\Http\Controllers\Jadwal\JadwalpegawaiController::class, 'getJadwal']);
-            Route::get('jadwal-pegawai/{id_pegawai}/tanggal', [App\Http\Controllers\Jadwal\JadwalpegawaiController::class, 'JadwalPegawai']);
-            Route::post('jadwal-pegawai/{id_pegawai}/masuk', [App\Http\Controllers\Jadwal\JadwalpegawaiController::class, 'JadwalMasuk']);
-            Route::post('jadwal-pegawai/{id_pegawai}/libur', [App\Http\Controllers\Jadwal\JadwalpegawaiController::class, 'JadwalLibur']);
+            Route::post('jadwal-pegawai/{id_pegawai}/tanggal', [App\Http\Controllers\Jadwal\JadwalPegawaiController::class, 'getJadwal']);
+            Route::get('jadwal-pegawai/{id_pegawai}/tanggal', [App\Http\Controllers\Jadwal\JadwalPegawaiController::class, 'JadwalPegawai']);
+            Route::post('jadwal-pegawai/{id_pegawai}/masuk', [App\Http\Controllers\Jadwal\JadwalPegawaiController::class, 'JadwalMasuk']);
+            Route::post('jadwal-pegawai/{id_pegawai}/libur', [App\Http\Controllers\Jadwal\JadwalPegawaiController::class, 'JadwalLibur']);
         });
 
     Route::prefix('Jadwal')
