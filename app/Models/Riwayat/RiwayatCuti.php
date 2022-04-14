@@ -5,6 +5,7 @@ namespace App\Models\Riwayat;
 use App\Models\MasterData\MasterPegawai;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class RiwayatCuti extends Model
 {
@@ -34,5 +35,16 @@ class RiwayatCuti extends Model
     public function Pegawai()
     {
         return $this->belongsTo(MasterPegawai::class, 'id_pegawai', 'id_pegawai');
+    }
+
+    public static function getId()
+    {
+        $getId = DB::table('tb_riwayat_cuti')->orderBy('id_riwayat_cuti', 'DESC')->take(1)->get();
+        if (count($getId) > 0) return $getId;
+        return (object)[
+            (object)[
+                'id_riwayat_cuti' => 0
+            ]
+        ];
     }
 }

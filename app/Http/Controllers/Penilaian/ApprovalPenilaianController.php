@@ -16,7 +16,7 @@ class ApprovalPenilaianController extends Controller
     public function index()
     {
         // $nilai = Nilai::with('Pegawai','Penilai','AtasanPenilai')->get();
-        $nilai = Nilai::with('Pegawai','Penilai','AtasanPenilai')->where('status_acc','=','Ditanggapi')->groupBy('periode_mulai','periode_akhir','status_acc')->selectRaw('periode_mulai, periode_akhir, status_acc, COUNT(id_penilaian) as jumlah_pegawai')->get();
+        $nilai = Nilai::with('Pegawai','Penilai','AtasanPenilai')->groupBy('periode_mulai','periode_akhir','status_acc')->selectRaw('periode_mulai, periode_akhir, status_acc, COUNT(id_penilaian) as jumlah_pegawai')->get();
         return view('user-views.pages.penilaian.approvalnilai.index', compact('nilai'));
     }
 
@@ -49,7 +49,7 @@ class ApprovalPenilaianController extends Controller
      */
     public function show($periode_mulai)
     {
-        $nilai = Nilai::with('Pegawai','Penilai','AtasanPenilai')->where('periode_mulai', $periode_mulai)->where('status_acc','=','Ditanggapi')->get();
+        $nilai = Nilai::with('Pegawai','Penilai','AtasanPenilai')->where('periode_mulai', $periode_mulai)->get();
         // return $nilai
         return view('user-views.pages.penilaian.approvalnilai.detail', compact('nilai'));
 
@@ -88,6 +88,7 @@ class ApprovalPenilaianController extends Controller
         $item = Nilai::findOrFail($id);
         $item->status_acc = $request->status_acc;
         $item->save();
+        
         return redirect()->route('approval-penilaian.show', $item->periode_mulai);
     }
 
