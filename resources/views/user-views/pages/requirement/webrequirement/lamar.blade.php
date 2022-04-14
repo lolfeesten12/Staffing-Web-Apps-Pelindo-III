@@ -27,8 +27,15 @@ Apply Lamaran {{ $pengumuman->nama_pengumuman }}
                         <h5 class="card-title">{{ $pengumuman->nama_pengumuman }}</h5>
                         <p class="card-text">
                             Dibutuhkan <span class="text-purple"> {{ $pengumuman->Jabatan->nama_jabatan }} </span>,
+                            @if ($pengumuman->job_years_experience == 'Fresh Graduate' )
+                            <span class="text-purple"> {{ $pengumuman->job_years_experience }}</span>, Tipe
+                            Job
+                            @else
                             Pengalaman selama
-                            <span class="text-purple"> {{ $pengumuman->job_years_experience }} Tahun </span>, Tipe Job
+                            <span class="text-purple"> {{ $pengumuman->job_years_experience }} Tahun </span>, Tipe
+                            Job
+                            @endif
+                           
                             <span class="text-purple">{{ $pengumuman->job_type }}</span>
                         </p>
                         <p>

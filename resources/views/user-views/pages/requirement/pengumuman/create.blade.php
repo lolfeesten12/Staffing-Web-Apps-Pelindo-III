@@ -114,11 +114,20 @@ Create Pengumuman
                                         </div> @enderror
                                     </div>
                                     <div class="col-4">
-                                        <label class="form-label mr-1" for="job_years_experience">Years of Experience</label><span class="mr-4 mb-3" style="color: red">*</span>
-                                        <input type="text" class="form-control" placeholder="Input Years of Experience"
-                                            name="job_years_experience" value="{{ old('job_years_experience') }}"
+                                        <label class="small mb-1 mr-1" for="job_years_experience">Years of Experience</label><span class="mr-4 mb-3" style="color: red">*</span>
+                                        <select name="job_years_experience" id="job_years_experience" class="form-select"
+                                            value="{{ old('job_years_experience') }}"
                                             class="form-control @error('job_years_experience') is-invalid @enderror">
-                                        @error('job_years_experience')<div class="invalid-feedback">{{ $message }}
+                                            <option value="{{ old('job_years_experience')}}">Pilih Years of Experience</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value=">5">>5</option>
+                                            <option value="Fresh Graduate">Fresh Graduate</option>
+                                        </select>
+                                        @error('job_years_experience')<div class="text-danger small mb-1">{{ $message }}
                                         </div> @enderror
                                     </div>
                                     <div class="col-4">

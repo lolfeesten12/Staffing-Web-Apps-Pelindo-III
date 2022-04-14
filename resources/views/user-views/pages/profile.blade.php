@@ -244,51 +244,71 @@ Profile
                                     </div>
                                     <div class="col-6">
                                         <label class="form-label">Agama</label>
-                                        <select class="form-select" aria-label="Agama" name="agama">
-                                            @if ($user->Pegawai->agama == "Hindu")
-                                            <option selected value="Hindu">Hindu</option>
-                                            <option value="Budha">Budha</option>
-                                            <option value="Islam">Islam</option>
-                                            <option value="Katolik">Katolik</option>
-                                            <option value="Konghucu">Konghucu</option>
-                                            <option value="Protestan">Protestan</option>
-                                            @elseif ($user->Pegawai->agama == "Budha")
-                                            <option value="Hindu">Hindu</option>
-                                            <option selected value="Budha">Budha</option>
-                                            <option value="Islam">Islam</option>
-                                            <option value="Katolik">Katolik</option>
-                                            <option value="Konghucu">Konghucu</option>
-                                            <option value="Protestan">Protestan</option>
-                                            @elseif ($user->Pegawai->agama == "Islam")
-                                            <option value="Hindu">Hindu</option>
-                                            <option value="Budha">Budha</option>
-                                            <option selected value="Islam">Islam</option>
-                                            <option value="Katolik">Katolik</option>
-                                            <option value="Konghucu">Konghucu</option>
-                                            <option value="Protestan">Protestan</option>
-                                            @elseif ($user->Pegawai->agama == "Katolik")
-                                            <option value="Hindu">Hindu</option>
-                                            <option value="Budha">Budha</option>
-                                            <option value="Islam">Islam</option>
-                                            <option selected value="Katolik">Katolik</option>
-                                            <option value="Konghucu">Konghucu</option>
-                                            <option value="Protestan">Protestan</option>
-                                            @elseif ($user->Pegawai->agama == "Konghucu")
-                                            <option value="Hindu">Hindu</option>
-                                            <option value="Budha">Budha</option>
-                                            <option value="Islam">Islam</option>
-                                            <option value="Katolik">Katolik</option>
-                                            <option selected value="Konghucu">Konghucu</option>
-                                            <option value="Protestan">Protestan</option>
-                                            @elseif ($user->Pegawai->agama == "Protestan")
-                                            <option value="Hindu">Hindu</option>
-                                            <option value="Budha">Budha</option>
-                                            <option value="Islam">Islam</option>
-                                            <option value="Katolik">Katolik</option>
-                                            <option value="Konghucu">Konghucu</option>
-                                            <option selected value="Protestan">Protestan</option>
+                                     
+                                            @if ($user->Pegawai->agama == null)
+                                                <select name="agama" id="agama" class="form-select" value="{{ old('agama') }}"
+                                                    class="form-control @error('agama') is-invalid @enderror">
+                                                    <option value="{{ old('agama')}}"> Pilih Agama</option>
+                                                    <option value="Hindu">Hindu</option>
+                                                    <option value="Islam">Islam</option>
+                                                    <option value="Budha">Budha</option>
+                                                    <option value="Konghucu">Konghucu</option>
+                                                    <option value="Katolik">Katolik</option>
+                                                    <option value="Protestan">Protestan</option>
+                                                </select>
+                                                @error('agama')<div class="text-danger small mb-1">{{ $message }}
+                                                </div> @enderror
+                                            </div>
+
+                                            @else
+                                            <select class="form-select" aria-label="Agama" name="agama">
+                                                @if ($user->Pegawai->agama == "Hindu")
+                                                <option selected value="Hindu">Hindu</option>
+                                                <option value="Budha">Budha</option>
+                                                <option value="Islam">Islam</option>
+                                                <option value="Katolik">Katolik</option>
+                                                <option value="Konghucu">Konghucu</option>
+                                                <option value="Protestan">Protestan</option>
+                                                @elseif ($user->Pegawai->agama == "Budha")
+                                                <option value="Hindu">Hindu</option>
+                                                <option selected value="Budha">Budha</option>
+                                                <option value="Islam">Islam</option>
+                                                <option value="Katolik">Katolik</option>
+                                                <option value="Konghucu">Konghucu</option>
+                                                <option value="Protestan">Protestan</option>
+                                                @elseif ($user->Pegawai->agama == "Islam")
+                                                <option value="Hindu">Hindu</option>
+                                                <option value="Budha">Budha</option>
+                                                <option selected value="Islam">Islam</option>
+                                                <option value="Katolik">Katolik</option>
+                                                <option value="Konghucu">Konghucu</option>
+                                                <option value="Protestan">Protestan</option>
+                                                @elseif ($user->Pegawai->agama == "Katolik")
+                                                <option value="Hindu">Hindu</option>
+                                                <option value="Budha">Budha</option>
+                                                <option value="Islam">Islam</option>
+                                                <option selected value="Katolik">Katolik</option>
+                                                <option value="Konghucu">Konghucu</option>
+                                                <option value="Protestan">Protestan</option>
+                                                @elseif ($user->Pegawai->agama == "Konghucu")
+                                                <option value="Hindu">Hindu</option>
+                                                <option value="Budha">Budha</option>
+                                                <option value="Islam">Islam</option>
+                                                <option value="Katolik">Katolik</option>
+                                                <option selected value="Konghucu">Konghucu</option>
+                                                <option value="Protestan">Protestan</option>
+                                                @elseif ($user->Pegawai->agama == "Protestan")
+                                                <option value="Hindu">Hindu</option>
+                                                <option value="Budha">Budha</option>
+                                                <option value="Islam">Islam</option>
+                                                <option value="Katolik">Katolik</option>
+                                                <option value="Konghucu">Konghucu</option>
+                                                <option selected value="Protestan">Protestan</option>
+                                                @endif
+                                            </select>
+                                            
                                             @endif
-                                        </select>
+                                            
                                     </div>
                                 </div>
                         </div>

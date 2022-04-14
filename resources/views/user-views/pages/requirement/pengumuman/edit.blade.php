@@ -94,9 +94,18 @@ Create Pengumuman
                                             name="penempatan" value="{{ $pengumuman->penempatan }}" required>
                                     </div>
                                     <div class="col-4">
-                                        <label class="form-label mr-1" for="job_years_experience">Years of Experience</label><span class="mr-4 mb-3" style="color: red">*</span>
-                                        <input type="text" class="form-control" placeholder="Input Years of Experience"
-                                            name="job_years_experience" value="{{ $pengumuman->job_years_experience }}" required>
+                                        <label class="small mb-1 mr-1" for="job_years_experience">Years of Experience</label><span class="mr-4 mb-3" style="color: red">*</span>
+                                        <select name="job_years_experience" id="job_years_experience" class="form-select"
+                                            value="{{ $pengumuman->job_years_experience }}">
+                                            <option value="{{ $pengumuman->job_years_experience }}">{{ $pengumuman->job_years_experience }}</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value=">5">>5</option>
+                                            <option value="Fresh Graduate">Fresh Graduate</option>
+                                        </select>
                                     </div>
                                     <div class="col-4">
                                         <label class="form-label mr-1" for="kisaran_gaji">Kisaran Gaji</label><span class="mr-4 mb-3" style="color: red">*</span>
