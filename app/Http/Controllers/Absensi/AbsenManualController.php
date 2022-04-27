@@ -107,6 +107,12 @@ class AbsenManualController extends Controller
             $absen->keterangan = $request->keterangan;
         }
 
+        // $date1 = Carbon::createFromFormat('H:i:s', $jam);
+        // $date2 = Carbon::createFromFormat('mH:i:s', $sekarang);
+
+        // $result = $date1->gt($date2);
+        // return $jam;
+
 
         $absen->save();
 

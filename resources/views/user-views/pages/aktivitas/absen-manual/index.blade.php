@@ -161,6 +161,8 @@ Absen Manual
                                                                     @csrf
                                                                     <input name="tipe" type="hidden" value="masuk"></input>
                                                                     <input name="id_jadwal" type="hidden" value={{ $item->id_jadwal }}></input>
+                                                                    <input name="jam" type="hidden" value={{ $item->ShiftKerja->jam_masuk }}></input>
+
 
                                                                     <button type="submit" class="btn btn-sm btn-primary px-5 radius-30">Absen Masuk</button>
                                                                 </form>
