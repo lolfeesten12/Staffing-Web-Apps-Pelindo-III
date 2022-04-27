@@ -245,7 +245,7 @@
         </ul>
     </li> --}}
 
-    @if (Auth::user()->Pegawai->role == 'HRD')
+    @if (Auth::user()->Pegawai->role == 'HRD' || Auth::user()->Pegawai->role == 'Kepala Unit')
 
     <li>
         <a href="javascript:;" class="has-arrow">
