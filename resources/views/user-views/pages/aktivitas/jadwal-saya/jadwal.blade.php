@@ -33,6 +33,32 @@ Jadwal {{ $pegawai->nama_pegawai }}
     </div>
 
     <div class="container-fluid">
+        @if(session('tukargagal'))
+        <div
+            class="alert border-0 border-danger border-start border-4 bg-light-danger alert-dismissible fade show py-2">
+            <div class="d-flex align-items-center">
+                <div class="fs-3 text-danger"><i class="lni lni-close"></i>
+                </div>
+                <div class="ms-3">
+                    <div class="text-danger"> {{ session('tukargagal') }}</div>
+                </div>
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        @endif
+        @if(session('berhasil'))
+        <div
+            class="alert border-0 border-success border-start border-4 bg-light-success alert-dismissible fade show py-2">
+            <div class="d-flex align-items-center">
+                <div class="fs-3 text-success"><i class="bi bi-check-circle-fill"></i>
+                </div>
+                <div class="ms-3">
+                    <div class="text-success"> {{ session('berhasil') }}</div>
+                </div>
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        @endif
         <div class="row">
             <div class="col-lg-12 mx-auto">
                 <div class="row">
@@ -60,6 +86,12 @@ Jadwal {{ $pegawai->nama_pegawai }}
                                 </div>
                             </div>
                         </div>
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <button type="button" class="btn btn-sm btn-primary w-100" data-bs-toggle="modal"
+                                    data-bs-target="#modaltukar"><i class="lni lni-calendar"></i> Tukar Jadwal Kerja</button>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-9">
                         <div class="card">
@@ -77,6 +109,35 @@ Jadwal {{ $pegawai->nama_pegawai }}
         </div>
     </div>
 </main>
+
+<div class="modal fade" id="modaltukar" data-backdrop="static" tabindex="-1" role="dialog"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Pilih Tanggal</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{ route('jadwal-saya.create') }}" method="GET">
+                @csrf
+                <div class="modal-body">
+                <div class="form-group">
+                        <label class="small mb-1 mr-1" for="tanggal">Pilih Tanggal yang ingin ditukar</label><span class="mr-4 mb-3"
+                            style="color: red">*</span>
+                        <input class="form-control" name="tanggal" type="date" id="tanggal"
+                            placeholder="Input Tanggal" value="{{ old('tanggal') }}" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="Submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
 
 
 <script>

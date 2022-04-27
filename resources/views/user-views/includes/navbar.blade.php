@@ -209,6 +209,7 @@
                 <li> <a href="{{ route('jadwal-pegawai.index') }}"><i class="bi bi-circle"></i>Atur Jadwal Pegawai</a></li>
                 @endif
                 <li> <a href="{{ route('jadwal-saya.index') }}"><i class="bi bi-circle"></i>Jadwal Saya</a></li>
+                <li> <a href="{{ route('jadwal-saya.show', Auth::user()->pegawai->id_pegawai) }}"><i class="bi bi-circle"></i>List Penukaran Jadwal</a></li>
             </ul>
         </li>
         <li>

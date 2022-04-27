@@ -171,7 +171,7 @@ Atur Jadwal {{ $pegawai->nama_pegawai }}
                         {"data": "jam_masuk"},
                         {"data": "jam_selesai"},
                         {"data": "tanggal_masuk",render:function(data, type, row, meta){
-                            console.log(row, data)
+                            console.log(data)
                             if (data == null){
                                 return `<button class="btn btn-primary px-5 radius-30" onclick="masuk(event,${row.id_shift_kerja},'${date.dateStr}', '${id_pegawai}')">Masuk</button>`
                             }else{

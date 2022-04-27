@@ -18,6 +18,8 @@ class JadwalPegawai extends Model
         'id_shift_kerja',
         'id_atasan',
         'tanggal_masuk',
+        'id_penukar',
+        'status'
     ];
 
     protected $hidden = [
@@ -33,6 +35,11 @@ class JadwalPegawai extends Model
     }
 
     public function Pegawai()
+    {
+        return $this->belongsTo(MasterPegawai::class, 'id_pegawai', 'id_pegawai');
+    }
+
+    public function Penukar()
     {
         return $this->belongsTo(MasterPegawai::class, 'id_pegawai', 'id_pegawai');
     }

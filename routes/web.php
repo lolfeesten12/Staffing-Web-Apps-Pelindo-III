@@ -121,6 +121,7 @@ Route::group(['middleware' => 'auth'], function () {
         ->group(function () {
             Route::resource('jadwal-saya', JadwalSayaController::class);
             Route::get('jadwal-saya/{id_pegawai}/tanggal', [App\Http\Controllers\Jadwal\JadwalSayaController::class, 'JadwalPegawai']);
+            Route::post('approval-jadwal/{id_jadwal}/status-tukar', [App\Http\Controllers\Jadwal\JadwalSayaController::class, 'ApprovalTukar'])->name('approval-tukar-jadwal');
         });
 
     Route::prefix('Approval')
