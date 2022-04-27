@@ -228,7 +228,7 @@
                         class="bi bi-circle"></i>List Penukaran Jadwal</a></li>
         </ul>
     </li>
-    <li>
+    {{-- <li>
         <a href="javascript:;" class="has-arrow">
             <div class="parent-icon"><i class="lni lni-checkbox"></i>
             </div>
@@ -238,12 +238,12 @@
             <li> <a href="{{ route('Absen.index') }}"><i class="bi bi-circle"></i>Absensi</a>
                 @if (Auth::user()->Pegawai->role == 'HRD')
             <li> <a href="{{ route('laporan-absensi.index') }}"><i class="bi bi-circle"></i>Laporan Absensi</a>
-            {{-- <li> <a href="{{ route('Qr-absensi.index') }}"><i class="bi bi-circle"></i>QR Code Absen</a> --}}
+            <li> <a href="{{ route('Qr-absensi.index') }}"><i class="bi bi-circle"></i>QR Code Absen</a>
 
                 @endif
 
         </ul>
-    </li>
+    </li> --}}
 
     @if (Auth::user()->Pegawai->role == 'HRD')
 
