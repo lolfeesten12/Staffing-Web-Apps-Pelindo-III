@@ -23,9 +23,11 @@
                     <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="#" data-bs-toggle="dropdown">
                         <div class="user-setting d-flex align-items-center">
                             @if (!Auth::user()->pegawai->avatar)
-                            <img src="https://ui-avatars.com/api/?name=Admin" class="rounded-circle" alt="" style="border-radius: 50%">
+                            <img src="https://ui-avatars.com/api/?name=Admin" class="rounded-circle" alt=""
+                                style="border-radius: 50%">
                             @else
-                            <img class="rounded-circle" width="40" height="40" src="{{ asset('/profile/'.Auth::user()->pegawai['avatar']) }}" alt="">
+                            <img class="rounded-circle" width="40" height="40"
+                                src="{{ asset('/profile/'.Auth::user()->pegawai['avatar']) }}" alt="">
                             @endif
 
                         </div>
@@ -35,16 +37,21 @@
                             <a class="dropdown-item" href="#">
                                 <div class="d-flex align-items-center">
                                     @if (!Auth::user()->pegawai->avatar)
-                                    <img src="https://ui-avatars.com/api/?name=Admin" class="rounded-circle" alt="" style="border-radius: 50%">
+                                    <img src="https://ui-avatars.com/api/?name=Admin" class="rounded-circle" alt=""
+                                        style="border-radius: 50%">
                                     @else
-                                    <img class="rounded-circle" width="54" height="54" src="{{ asset('/profile/'.Auth::user()->pegawai['avatar']) }}" alt="">
+                                    <img class="rounded-circle" width="54" height="54"
+                                        src="{{ asset('/profile/'.Auth::user()->pegawai['avatar']) }}" alt="">
                                     @endif
 
-                                    {{-- <img src="{{ url('assets/images/avatars/avatar-1.png') }}" alt="" class="rounded-circle"
+                                    {{-- <img src="{{ url('assets/images/avatars/avatar-1.png') }}" alt=""
+                                    class="rounded-circle"
                                     width="54" height="54"> --}}
                                     <div class="ms-3">
-                                        <h6 class="mb-0 dropdown-user-name">Halo, {{ Auth::user()->Pegawai->nama_panggilan }}</h6>
-                                        <small class="mb-0 dropdown-user-designation text-secondary">{{ Auth::user()->Pegawai->Unitkerja->unit_kerja }}</small>
+                                        <h6 class="mb-0 dropdown-user-name">Halo,
+                                            {{ Auth::user()->Pegawai->nama_panggilan }}</h6>
+                                        <small
+                                            class="mb-0 dropdown-user-designation text-secondary">{{ Auth::user()->Pegawai->Unitkerja->unit_kerja }}</small>
                                     </div>
                                 </div>
                             </a>
@@ -72,7 +79,8 @@
                             <hr class="dropdown-divider">
                         </li>
                         <li>
-                            <a class="dropdown-item" href="authentication-signup-with-header-footer.html" onclick="event.preventDefault(); document.getElementById('logout-form').submit()">
+                            <a class="dropdown-item" href="authentication-signup-with-header-footer.html"
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit()">
                                 <div class="d-flex align-items-center">
                                     <div class=""><i class="bi bi-lock-fill"></i></div>
                                     <div class="ms  -3"><span>Logout</span></div>
@@ -85,8 +93,10 @@
                     </ul>
                 </li>
                 <li>
-                    <h6 class="mb-0 dropdown-user-name text-white">Halo, {{ Auth::user()->Pegawai->nama_panggilan }}</h6>
-                    <small class="mb-0 dropdown-user-designation text-secondary text-white">{{ Auth::user()->Pegawai->Unitkerja->unit_kerja }}</small>
+                    <h6 class="mb-0 dropdown-user-name text-white">Halo, {{ Auth::user()->Pegawai->nama_panggilan }}
+                    </h6>
+                    <small
+                        class="mb-0 dropdown-user-designation text-secondary text-white">{{ Auth::user()->Pegawai->Unitkerja->unit_kerja }}</small>
                 </li>
             </ul>
         </div>
@@ -144,7 +154,8 @@
                 <li> <a href="{{ route('calon-pegawai.index') }}"><i class="bi bi-circle"></i>Calon Pegawai</a></li>
                 <li> <a href="{{ route('calon-pegawai-hasil') }}"><i class="bi bi-circle"></i>Hasil Seleksi</a></li>
                 <li> <a href="{{ route('peserta-orientasi.index') }}"><i class="bi bi-circle"></i>Orientasi</a></li>
-                <li> <a href="{{ route('web-requirement.index') }}"><i class="bi bi-circle"></i>Menuju Web Recrut</a></li>
+                <li> <a href="{{ route('web-requirement.index') }}"><i class="bi bi-circle"></i>Menuju Web Recrut</a>
+                </li>
             </ul>
         </li>
         <li>
@@ -154,7 +165,8 @@
                 <div class="menu-title">Pelatihan</div>
             </a>
             <ul>
-                <li> <a href="{{ route('program-pelatihan.index') }}"><i class="bi bi-circle"></i>Program Pelatihan</a></li>
+                <li> <a href="{{ route('program-pelatihan.index') }}"><i class="bi bi-circle"></i>Program Pelatihan</a>
+                </li>
             </ul>
         </li>
         @endif
@@ -171,9 +183,11 @@
                 <li> <a href="{{ route('pendidikan.index') }}"><i class="bi bi-circle"></i>Riwayat Pendidikan</a></li>
                 <li> <a href="{{ route('prestasi.index') }}"><i class="bi bi-circle"></i>Riwayat Prestasi</a></li>
                 <li> <a href="{{ route('cuti.index') }}"><i class="bi bi-circle"></i>Riwayat Cuti</a></li>
-                <li> <a href="{{ route('riwayatpelanggaran.index') }}"><i class="bi bi-circle"></i>Riwayat Pelanggaran</a></li>
+                <li> <a href="{{ route('riwayatpelanggaran.index') }}"><i class="bi bi-circle"></i>Riwayat
+                        Pelanggaran</a></li>
                 <li> <a href="{{ route('riwayatsanksi.index') }}"><i class="bi bi-circle"></i>Riwayat Sanksi</a></li>
-                {{-- <li> <a href="{{ route('riwayatpelatihan.index') }}"><i class="bi bi-circle"></i>Riwayat Pelatihan</a>
+                {{-- <li> <a href="{{ route('riwayatpelatihan.index') }}"><i class="bi bi-circle"></i>Riwayat
+                Pelatihan</a>
         </li> --}}
     </ul>
     </li>
@@ -204,31 +218,32 @@
             <div class="menu-title">Penjadwalan</div>
             @endif
 
-            </a>
-            <ul>
-                @if (Auth::user()->Pegawai->role == 'HRD' || Auth::user()->Pegawai->role == 'Kepala Unit')
-                <li> <a href="{{ route('jadwal-pegawai.index') }}"><i class="bi bi-circle"></i>Atur Jadwal Pegawai</a></li>
-                @endif
-                <li> <a href="{{ route('jadwal-saya.index') }}"><i class="bi bi-circle"></i>Jadwal Saya</a></li>
-                <li> <a href="{{ route('jadwal-saya.show', Auth::user()->pegawai->id_pegawai) }}"><i class="bi bi-circle"></i>List Penukaran Jadwal</a></li>
-            </ul>
-        </li>
-        <li>
-            <a href="javascript:;" class="has-arrow">
-                <div class="parent-icon"><i class="lni lni-checkbox"></i>
-                </div>
-                <div class="menu-title">Absensi</div>
-            </a>
-            <ul>
-                <li> <a href="{{ route('Absen.index') }}"><i class="bi bi-circle"></i>Absensi</a>
-    @if (Auth::user()->Pegawai->role == 'HRD')
-    <li> <a href="{{ route('laporan-absensi.index') }}"><i class="bi bi-circle"></i>Laporan Absensi</a>
-    {{-- <li> <a href="{{ route('Qr-absensi.index') }}"><i class="bi bi-circle"></i>QR Code Absen</a> --}}
+        </a>
+        <ul>
+            @if (Auth::user()->Pegawai->role == 'HRD' || Auth::user()->Pegawai->role == 'Kepala Unit')
+            <li> <a href="{{ route('jadwal-pegawai.index') }}"><i class="bi bi-circle"></i>Atur Jadwal Pegawai</a></li>
+            @endif
+            <li> <a href="{{ route('jadwal-saya.index') }}"><i class="bi bi-circle"></i>Jadwal Saya</a></li>
+            <li> <a href="{{ route('jadwal-saya.show', Auth::user()->pegawai->id_pegawai) }}"><i
+                        class="bi bi-circle"></i>List Penukaran Jadwal</a></li>
+        </ul>
+    </li>
+    <li>
+        <a href="javascript:;" class="has-arrow">
+            <div class="parent-icon"><i class="lni lni-checkbox"></i>
+            </div>
+            <div class="menu-title">Absensi</div>
+        </a>
+        <ul>
+            <li> <a href="{{ route('Absen.index') }}"><i class="bi bi-circle"></i>Absensi</a>
+                @if (Auth::user()->Pegawai->role == 'HRD')
+            <li> <a href="{{ route('laporan-absensi.index') }}"><i class="bi bi-circle"></i>Laporan Absensi</a>
+            {{-- <li> <a href="{{ route('Qr-absensi.index') }}"><i class="bi bi-circle"></i>QR Code Absen</a> --}}
 
-        @endif
+                @endif
 
         </ul>
-    </li> --}}
+    </li>
 
     @if (Auth::user()->Pegawai->role == 'HRD')
 
@@ -296,7 +311,8 @@
         </a>
         <ul>
             <li> <a href="{{ route('approval-cuti.index') }}"><i class="bi bi-circle"></i>Approval Cuti</a>
-            <li> <a href="{{ route('approval-penilaian.index') }}"><i class="bi bi-circle"></i>Approval Penilaian</a></li>
+            <li> <a href="{{ route('approval-penilaian.index') }}"><i class="bi bi-circle"></i>Approval Penilaian</a>
+            </li>
 
         </ul>
     </li>
