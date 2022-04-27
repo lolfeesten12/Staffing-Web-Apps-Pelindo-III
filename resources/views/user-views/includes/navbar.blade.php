@@ -223,7 +223,7 @@
                 <li> <a href="{{ route('Absen.index') }}"><i class="bi bi-circle"></i>Absensi</a>
     @if (Auth::user()->Pegawai->role == 'HRD')
     <li> <a href="{{ route('laporan-absensi.index') }}"><i class="bi bi-circle"></i>Laporan Absensi</a>
-    <li> <a href="{{ route('Qr-absensi.index') }}"><i class="bi bi-circle"></i>QR Code Absen</a>
+    {{-- <li> <a href="{{ route('Qr-absensi.index') }}"><i class="bi bi-circle"></i>QR Code Absen</a> --}}
 
         @endif
 
