@@ -2,6 +2,7 @@
 
 namespace App\Models\Jadwal;
 
+use App\Models\Absensi\Absensi;
 use App\Models\MasterData\MasterPegawai;
 use App\Models\MasterData\MasterShift;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -40,5 +41,9 @@ class JadwalPegawai extends Model
     public function id_atasan()
     {
         return $this->belongsTo(MasterPegawai::class, 'id_pegawai', 'id_atasan');
+    }
+    public function Absen()
+    {
+        return $this->belongsTo(Absensi::class, 'id_jadwal', 'id_jadwal');
     }
 }
