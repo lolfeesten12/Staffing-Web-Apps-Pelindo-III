@@ -173,35 +173,36 @@
                 <li> <a href="{{ route('cuti.index') }}"><i class="bi bi-circle"></i>Riwayat Cuti</a></li>
                 <li> <a href="{{ route('riwayatpelanggaran.index') }}"><i class="bi bi-circle"></i>Riwayat Pelanggaran</a></li>
                 <li> <a href="{{ route('riwayatsanksi.index') }}"><i class="bi bi-circle"></i>Riwayat Sanksi</a></li>
-                <li> <a href="{{ route('riwayatpelatihan.index') }}"><i class="bi bi-circle"></i>Riwayat Pelatihan</a></li>
-            </ul>
-        </li>
+                {{-- <li> <a href="{{ route('riwayatpelatihan.index') }}"><i class="bi bi-circle"></i>Riwayat Pelatihan</a>
+        </li> --}}
+    </ul>
+    </li>
 
-        @if (Auth::user()->Pegawai->role != 'HRD')
-        <li class="menu-label">Pelatihan</li>
-        <li>
-            <a href="javascript:;" class="has-arrow">
-                <div class="parent-icon"><i class="lni lni-blackboard"></i>
-                </div>
-                <div class="menu-title">Pelatihan</div>
-            </a>
-            <ul>
-                <li> <a href="{{ route('web-pelatihan.index') }}"><i class="bi bi-circle"></i>Program Pelatihan</a></li>
-            </ul>
-        </li>
-        @endif
+    @if (Auth::user()->Pegawai->role != 'HRD')
+    <li class="menu-label">Pelatihan</li>
+    <li>
+        <a href="javascript:;" class="has-arrow">
+            <div class="parent-icon"><i class="lni lni-blackboard"></i>
+            </div>
+            <div class="menu-title">Pelatihan</div>
+        </a>
+        <ul>
+            <li> <a href="{{ route('web-pelatihan.index') }}"><i class="bi bi-circle"></i>Program Pelatihan</a></li>
+        </ul>
+    </li>
+    @endif
 
 
-        <li class="menu-label">Jadwal dan Absen</li>
-        <li>
-            <a href="javascript:;" class="has-arrow">
-                <div class="parent-icon"><i class="fadeIn animated bx bx-calendar-week"></i>
-                </div>
-                @if (Auth::user()->Pegawai->role == 'Pegawai')
-                <div class="menu-title">Jadwal Saya</div>
-                @else
-                <div class="menu-title">Penjadwalan</div>
-                @endif
+    <li class="menu-label">Jadwal dan Absen</li>
+    <li>
+        <a href="javascript:;" class="has-arrow">
+            <div class="parent-icon"><i class="fadeIn animated bx bx-calendar-week"></i>
+            </div>
+            @if (Auth::user()->Pegawai->role == 'Pegawai')
+            <div class="menu-title">Jadwal Saya</div>
+            @else
+            <div class="menu-title">Penjadwalan</div>
+            @endif
 
             </a>
             <ul>
@@ -220,85 +221,101 @@
             </a>
             <ul>
                 <li> <a href="{{ route('Absen.index') }}"><i class="bi bi-circle"></i>Absensi</a>
-                    @if (Auth::user()->Pegawai->role == 'HRD')
-                <li> <a href="{{ route('laporan-absensi.index') }}"><i class="bi bi-circle"></i>Laporan Absensi</a>
-                <li> <a href="{{ route('Qr-absensi.index') }}"><i class="bi bi-circle"></i>QR Code Absen</a>
+    @if (Auth::user()->Pegawai->role == 'HRD')
+    <li> <a href="{{ route('laporan-absensi.index') }}"><i class="bi bi-circle"></i>Laporan Absensi</a>
+    <li> <a href="{{ route('Qr-absensi.index') }}"><i class="bi bi-circle"></i>QR Code Absen</a>
 
-                    @endif
-
-            </ul>
-        </li>
-        <li>
-            <a href="javascript:;" class="has-arrow">
-                <div class="parent-icon"><i class="lni lni-write"></i>
-                </div>
-                <div class="menu-title">Cuti</div>
-            </a>
-            <ul>
-                <li> <a href="{{ route('pengajuan-cuti.index') }}"><i class="bi bi-circle"></i>Pengajuan Cuti</a>
-            </ul>
-        </li>
-        @if (Auth::user()->Pegawai->role == 'Pegawai')
-        <li class="menu-label">Penilaian</li>
-        @else
-        <li class="menu-label">Penilaian dan Pelanggaran</li>
         @endif
 
-        <li>
-            <a class="has-arrow" href="javascript:;">
-                <div class="parent-icon"><i class="lni lni-certificate"></i>
-                </div>
-                <div class="menu-title">Penilaian Pegawai</div>
-            </a>
-            <ul>
-                @if (Auth::user()->Pegawai->role == 'HRD' || Auth::user()->Pegawai->role == 'Kepala Unit')
-                <li> <a href="{{ route('penilaian-pegawai.index') }}"><i class="bi bi-circle"></i>Penilaian</a></li>
-                @endif
-                <li> <a href="{{ route('nilai-saya.index') }}"><i class="bi bi-circle"></i>Nilai Saya</a></li>
-            </ul>
-        </li>
-        @if (Auth::user()->Pegawai->role == 'HRD' || Auth::user()->Pegawai->role == 'Kepala Unit')
-        <li>
-            <a class="has-arrow" href="javascript:;">
-                <div class="parent-icon"><i class="lni lni-ban"></i>
-                </div>
-                <div class="menu-title">Pelanggaran</div>
-            </a>
-            <ul>
-                <li> <a href="{{ route('pelanggaran-pegawai.index') }}"><i class="bi bi-circle"></i>Pelanggaran</a></li>
-            </ul>
-        </li>
-        @endif
-        @if (Auth::user()->Pegawai->role == 'HRD')
-        <li class="menu-label">Menu Approval</li>
-        <li>
-            <a class="has-arrow" href="javascript:;">
-                <div class="parent-icon"><i class="lni lni-checkmark"></i></i>
-                </div>
-                <div class="menu-title">Approval</div>
-            </a>
-            <ul>
-                <li> <a href="{{ route('approval-cuti.index') }}"><i class="bi bi-circle"></i>Approval Cuti</a>
-                <li> <a href="{{ route('approval-penilaian.index') }}"><i class="bi bi-circle"></i>Approval Penilaian</a></li>
+        </ul>
+    </li> --}}
 
-            </ul>
-        </li>
-        @endif
+    @if (Auth::user()->Pegawai->role == 'HRD')
+
+    <li>
+        <a href="javascript:;" class="has-arrow">
+            <div class="parent-icon"><i class="lni lni-checkbox"></i>
+            </div>
+            <div class="menu-title">Absensi</div>
+        </a>
+        <ul>
+            <li> <a href="{{ route('laporan-absensi.index') }}"><i class="bi bi-circle"></i>Laporan Absensi</a>
+            <li> <a href="{{ route('absen-manual.index') }}"><i class="bi bi-circle"></i>Absen Pegawai</a>
+        </ul>
+    </li>
+    @endif
+
+    <li>
+        <a href="javascript:;" class="has-arrow">
+            <div class="parent-icon"><i class="lni lni-write"></i>
+            </div>
+            <div class="menu-title">Cuti</div>
+        </a>
+        <ul>
+            <li> <a href="{{ route('pengajuan-cuti.index') }}"><i class="bi bi-circle"></i>Pengajuan Cuti</a>
+        </ul>
+    </li>
+    @if (Auth::user()->Pegawai->role == 'Pegawai')
+    <li class="menu-label">Penilaian</li>
+    @else
+    <li class="menu-label">Penilaian dan Pelanggaran</li>
+    @endif
+
+    <li>
+        <a class="has-arrow" href="javascript:;">
+            <div class="parent-icon"><i class="lni lni-certificate"></i>
+            </div>
+            <div class="menu-title">Penilaian Pegawai</div>
+        </a>
+        <ul>
+            @if (Auth::user()->Pegawai->role == 'HRD' || Auth::user()->Pegawai->role == 'Kepala Unit')
+            <li> <a href="{{ route('penilaian-pegawai.index') }}"><i class="bi bi-circle"></i>Penilaian</a></li>
+            @endif
+            <li> <a href="{{ route('nilai-saya.index') }}"><i class="bi bi-circle"></i>Nilai Saya</a></li>
+        </ul>
+    </li>
+    @if (Auth::user()->Pegawai->role == 'HRD' || Auth::user()->Pegawai->role == 'Kepala Unit')
+    <li>
+        <a class="has-arrow" href="javascript:;">
+            <div class="parent-icon"><i class="lni lni-ban"></i>
+            </div>
+            <div class="menu-title">Pelanggaran</div>
+        </a>
+        <ul>
+            <li> <a href="{{ route('pelanggaran-pegawai.index') }}"><i class="bi bi-circle"></i>Pelanggaran</a></li>
+        </ul>
+    </li>
+    @endif
+    @if (Auth::user()->Pegawai->role == 'HRD')
+    <li class="menu-label">Menu Approval</li>
+    <li>
+        <a class="has-arrow" href="javascript:;">
+            <div class="parent-icon"><i class="lni lni-checkmark"></i></i>
+            </div>
+            <div class="menu-title">Approval</div>
+        </a>
+        <ul>
+            <li> <a href="{{ route('approval-cuti.index') }}"><i class="bi bi-circle"></i>Approval Cuti</a>
+            <li> <a href="{{ route('approval-penilaian.index') }}"><i class="bi bi-circle"></i>Approval Penilaian</a></li>
+
+        </ul>
+    </li>
+    @endif
 
 
 
 
-        <li class="menu-label">Logout</li>
-        <li>
-            <a onclick="event.preventDefault(); document.getElementById('logout-form').submit()">
-                <div class="parent-icon"><i class="fadeIn animated bx bx-arrow-back"></i>
-                </div>
-                <div class="menu-title">Logout</div>
-                <form id="logout-form" action="{{route('logout')}}" method="post" style="display: none">
-                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                </form>
-            </a>
+    <li class="menu-label">Logout</li>
+    <li>
+        <a onclick="event.preventDefault(); document.getElementById('logout-form').submit()">
+            <div class="parent-icon"><i class="fadeIn animated bx bx-arrow-back"></i>
+            </div>
+            <div class="menu-title">Logout</div>
+            <form id="logout-form" action="{{route('logout')}}" method="post" style="display: none">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+            </form>
+        </a>
 
-        </li>
+    </li>
     </ul>
 </aside>
