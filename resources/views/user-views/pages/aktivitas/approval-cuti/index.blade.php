@@ -66,6 +66,9 @@ Approval Pengajuan Cuti
                                                 colspan="1" aria-sort="ascending"
                                                 aria-label="Name: activate to sort column descending"
                                                 style="width: 100px;">No.</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
+                                                colspan="1" aria-label="Position: activate to sort column ascending"
+                                                style="width: 60px;">Nomor Cuti</th>
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
                                                 style="width: 170px;">Nama Pegawai</th>
@@ -93,6 +96,15 @@ Approval Pengajuan Cuti
                                         @forelse ($cuti as $item)
                                         <tr role="row" class="odd">
                                             <th scope="row" class="small" class="sorting_1">{{ $loop->iteration}}.</th>
+                                            <td>
+                                            @if ($item->cuti_nomor == null)
+                                                Proses Cuti Terlebih Dahulu
+                                            @elseif ($item->status_acc == 'Tolak')
+                                                Ditolak
+                                            @else
+                                                {{ $item->cuti_nomor }}
+                                            @endif
+                                             </td>
                                             <td>{{ $item->Pegawai->nama_pegawai }}</td>
                                             <td>{{ $item->jenis_cuti }}</td>
                                             <td>{{ $item->cuti_lama }}</td>

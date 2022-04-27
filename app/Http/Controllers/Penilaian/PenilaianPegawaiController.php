@@ -123,7 +123,7 @@ class PenilaianPegawaiController extends Controller
      */
     public function edit($id)
     {
-        $pegawai = MasterPegawai::where('id_unit_kerja','=', Auth::user()->Pegawai->id_unit_kerja)->find($id);
+        $pegawai = MasterPegawai::find($id);
         if(Auth::user()->Pegawai->role == 'HRD'){
             // MASIH ERROR
             $hrd = MasterPegawai::where('role','=','Direktur Unit')->first();

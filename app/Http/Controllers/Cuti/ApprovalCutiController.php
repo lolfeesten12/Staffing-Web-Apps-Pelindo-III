@@ -24,9 +24,35 @@ class ApprovalCutiController extends Controller
         $request->validate([
             'status_acc' => 'required|in:Terima,Tolak,Diproses'
         ]);
-
         $item = RiwayatCuti::findOrFail($id_riwayat_cuti);
+
+        $id = RiwayatCuti::getId();
+        foreach($id as $value);
+        $idlama = $value->id_riwayat_cuti;
+        $idbaru = $idlama + 1;
+        // $blt = date('y-m');
+        $jenis = $item->jenis_cuti;
+
+        if($jenis == 'Sakit'){
+            $tes = 'S';
+        }elseif($jenis == 'Tahunan'){
+            $tes = 'THN';
+        }elseif($jenis == 'Melahirkan'){
+            $tes = 'LHR';
+        }elseif($jenis == 'Alasan Penting'){
+            $tes = 'AP';
+        }
+
+        $cuti_nomor = 'CT/'.$tes.'/00'.$idbaru;
+       
         $item->status_acc = $request->status_acc;
+        $item->status_dilaksanakan = 'Belum Dilaksanakan';
+
+        if($item->status_acc == 'Tolak'){
+            $item->cuti_nomor = 'Ditolak';
+        }else{
+            $item->cuti_nomor = $cuti_nomor;
+        }
 
         $item->save();
         return redirect()->route('approval-cuti.index');
