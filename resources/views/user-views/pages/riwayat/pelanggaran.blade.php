@@ -58,7 +58,7 @@ Riwayat Pelanggaran
                     <div id="example_wrapper" class="dataTables_wrapper dt-bootstrap5">
                         <div class="row">
                             <div class="col-sm-12">
-                                <table id="example" class="table table-striped table-bordered dataTable"
+                                <table id="example2" class="table table-striped table-bordered dataTable"
                                     style="width: 100%;" role="grid" aria-describedby="example_info">
                                     <thead>
                                         <tr role="row">
