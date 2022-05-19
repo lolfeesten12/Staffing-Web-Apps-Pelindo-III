@@ -33,8 +33,8 @@ Web Requirement
         </div>
     </div>
 </div>
-<div class="container">
-    <div class="mt-5">
+<div class="container mb-10">
+    <div class="mt-5 mb-10">
         <h5>Lamaran yang Tersedia</h5>
         <hr>
         <div class="row">
