@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Cuti;
 
 use App\Http\Controllers\Controller;
 use App\Models\Riwayat\RiwayatCuti;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ApprovalCutiController extends Controller
@@ -32,6 +33,7 @@ class ApprovalCutiController extends Controller
         $idbaru = $idlama + 1;
         // $blt = date('y-m');
         $jenis = $item->jenis_cuti;
+        $year = Carbon::now('y');
 
         if($jenis == 'Sakit'){
             $tes = 'S';
@@ -43,8 +45,8 @@ class ApprovalCutiController extends Controller
             $tes = 'AP';
         }
 
-        $cuti_nomor = 'CT/'.$tes.'/00'.$idbaru;
-       
+        $cuti_nomor = 'CT.'.$idbaru.'/CT.05.04/'.$tes.'/RBNT-'.$year;
+      
         $item->status_acc = $request->status_acc;
         $item->status_dilaksanakan = 'Belum Dilaksanakan';
 
