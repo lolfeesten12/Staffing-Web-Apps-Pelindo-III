@@ -33,7 +33,7 @@ class ApprovalCutiController extends Controller
         $idbaru = $idlama + 1;
         // $blt = date('y-m');
         $jenis = $item->jenis_cuti;
-        $year = Carbon::now('y');
+        
 
         if($jenis == 'Sakit'){
             $tes = 'S';
@@ -45,7 +45,7 @@ class ApprovalCutiController extends Controller
             $tes = 'AP';
         }
 
-        $cuti_nomor = 'CT.'.$idbaru.'/CT.05.04/'.$tes.'/RBNT-'.$year;
+        $cuti_nomor = 'CT.'.$idbaru.'/CT.05.04/'.$tes.'/RBNT-2022';
       
         $item->status_acc = $request->status_acc;
         $item->status_dilaksanakan = 'Belum Dilaksanakan';
