@@ -2,7 +2,7 @@
     <div class="container">
         <a class="navbar-brand" href="#">
             <div>
-                <img src="http://sistem-kepegawaian-pelindo.local:8000/assets/images/logo.png" width="40"
+                <img src="{{ asset('assets/images/logo.png') }}" width="40"
                     class="logo-icon" alt="logo icon">
             </div>
         </a>
