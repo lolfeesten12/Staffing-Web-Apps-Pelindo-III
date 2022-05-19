@@ -46,9 +46,9 @@
 
 
 
-    <footer class="bg-white border-top p-3 text-center fixed-bottom mt-10">
+    {{-- <footer class="bg-white border-top p-3 text-center fixed-bottom mt-10">
         <p class="mb-0">Copyright © 2022. PT. Pelabuhan Indonesia.</p>
-    </footer>
+    </footer> --}}
 
     </div>
     <script src="{{ url('assets/js/bootstrap.bundle.min.js') }}"></script>
