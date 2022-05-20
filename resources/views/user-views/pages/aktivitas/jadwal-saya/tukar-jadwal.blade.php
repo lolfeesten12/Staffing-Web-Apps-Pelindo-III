@@ -61,7 +61,7 @@
                                             <input class="form-check-input" type="checkbox" value=""
                                                 id="flexCheckDefault">
                                             <label class="form-check-label" for="flexCheckDefault">
-                                                Saya yakin ingin menukar jadwal
+                                                Saya yakin ingin menukar jadwal tersebut
                                             </label>
                                         </div>
                                     </div>
