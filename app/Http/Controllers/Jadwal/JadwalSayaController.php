@@ -78,16 +78,22 @@ class JadwalSayaController extends Controller
         $request->validate([
             'status' => 'required|in:Setuju Penukaran,Tolak Penukaran'
         ]);
-
         $item = JadwalPegawai::findOrFail($id_jadwal);
+
+        $tukar = JadwalPegawai::where('id_pegawai', $item->id_penukar)->where('tanggal_masuk', $item->tanggal_masuk)->first();
+        $tukar->status = 'Setuju Penukaran';
+        $tukar->id_pegawai = $item->id_pegawai;
+        $tukar->id_penukar = $item->id_pegawai;
+        $tukar->save();
+
         $item->status = $request->status;
-        
         if($item->status == 'Setuju Penukaran'){
             $item->id_pegawai = $item->id_penukar;
         }
-
         $item->save();
+
         
+
         return redirect()->route('jadwal-saya.show', Auth::user()->Pegawai->id_pegawai);
     }
 

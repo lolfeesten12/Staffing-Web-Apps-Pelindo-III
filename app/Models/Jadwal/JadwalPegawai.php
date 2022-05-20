@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class JadwalPegawai extends Model
 {
-    protected $table = "tb_jadwal_pegawai";
+    protected $table = 'tb_jadwal_pegawai';
 
     protected $primaryKey = 'id_jadwal';
 
@@ -42,7 +42,7 @@ class JadwalPegawai extends Model
 
     public function Penukar()
     {
-        return $this->belongsTo(MasterPegawai::class, 'id_pegawai', 'id_pegawai');
+        return $this->belongsTo(MasterPegawai::class, 'id_penukar', 'id_pegawai');
     }
 
     public function id_atasan()

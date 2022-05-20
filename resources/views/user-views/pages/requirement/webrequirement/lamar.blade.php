@@ -135,7 +135,7 @@ Apply Lamaran {{ $pengumuman->nama_pengumuman }}
                                             value="{{ old('file_cv') }}" accept="application/pdf" multiple="multiple"
                                             required>
                                         <div class="small">
-                                            <span class="text-muted">Accept File in PDF Format </span>
+                                            <span class="text-muted">Accept File in PDF Format, File Size Max 2 MB</span>
                                         </div>
                                     </div>
                                     <div class="col-6">
@@ -145,7 +145,7 @@ Apply Lamaran {{ $pengumuman->nama_pengumuman }}
                                             accept="application/pdf" multiple="multiple">
                                         <div class="small">
                                             <span class="text-muted">Accept File in PDF Format, Anda dapat menambahkan
-                                                file pendukung seperti Portofolio, Certificate dll.</span>
+                                                file pendukung seperti Portofolio, Certificate dll. File Size Max 2 MB</span>
                                         </div>
                                     </div>
                                     <div class="col-12">

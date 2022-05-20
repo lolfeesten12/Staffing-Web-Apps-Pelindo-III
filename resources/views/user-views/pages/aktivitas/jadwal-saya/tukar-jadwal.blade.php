@@ -17,7 +17,7 @@
                     <ol class="breadcrumb mb-0 p-0">
                         <li class="breadcrumb-item"><a href="javascript:;"><i class="lni lni-database"></i></a>
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">Tukar Jadwal Tanggal {{ $jadwal[0]->tanggal_masuk }}</li>
+                        <li class="breadcrumb-item active" aria-current="page">Tukar Jadwal Tanggal</li>
                     </ol>
                 </nav>
             </div>
