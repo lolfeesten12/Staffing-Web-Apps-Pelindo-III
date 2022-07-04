@@ -27,7 +27,6 @@ Jadwal {{ $pegawai->nama_pegawai }}
                     </ol>
                 </nav>
             </div>
-
         </div>
         <hr>
     </div>

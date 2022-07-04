@@ -21,6 +21,7 @@ class MasterPegawai extends Model
     protected $fillable = [
         'id_unit_kerja',
         'id_jabatan',
+        'id_pangkat',
         'nama_pegawai',
         'nama_panggilan',
         'nik_pegawai',
@@ -45,12 +46,17 @@ class MasterPegawai extends Model
 
     public function Jabatan()
     {
-        return $this->belongsTo(MasterJabatan::class, 'id_jabatan', 'id_jabatan');
+        return $this->belongsTo(MasterJabatan::class, 'id_jabatan', 'id_jabatan')->withTrashed();;
+    }
+
+    public function Pangkat()
+    {
+        return $this->belongsTo(MasterPangkat::class, 'id_pangkat', 'id_pangkat')->withTrashed();
     }
 
     public function UnitKerja()
     {
-        return $this->belongsTo(MasterUnitKerja::class, 'id_unit_kerja', 'id_unit_kerja');
+        return $this->belongsTo(MasterUnitKerja::class, 'id_unit_kerja', 'id_unit_kerja')->withTrashed();
     }
 
     public function User()

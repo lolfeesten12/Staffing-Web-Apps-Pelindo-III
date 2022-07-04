@@ -68,7 +68,7 @@ Create Master Pegawai
                                             <span class="text-muted">16 Digit Number </span>
                                         </div>
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col-4">
                                         <label class="small mb-1 mr-1" for="id_jabatan">Jabatan</label><span
                                             class="mr-4 mb-3" style="color: red">*</span>
                                         <select class="form-select" name="id_jabatan" id="id_jabatan"
@@ -83,7 +83,36 @@ Create Master Pegawai
                                         @error('id_jabatan')<div class="text-danger small mb-1">{{ $message }}
                                         </div> @enderror
                                     </div>
-                                    <div class="col-6">
+                                   
+                                    <div class="col-4">
+                                        <label class="small mb-1 mr-1" for="id_pangkat">Pangkat dan Golongan</label><span
+                                            class="mr-4 mb-3" style="color: red">*</span>
+                                        <select class="form-select" name="id_pangkat" id="id_pangkat"
+                                            value="{{ old('id_pangkat') }}"
+                                            class="form-control @error('id_pangkat') is-invalid @enderror">
+                                            <option value="" holder>Pilih Pangkat dan Golongan</option>
+                                        </select>
+                                            <span class="small" style="font-size: 13px"
+                                            style="color: rgb(117, 114, 114)">(Pilih Jabatan terlebih dahulu)</span>
+                                        @error('id_pangkat')<div class="text-danger small mb-1">{{ $message }}
+                                        </div> @enderror
+                                    </div>
+                                    {{-- <div class="col-4">
+                                        <label class="small mb-1 mr-1" for="id_pangkat">Pangkat dan Golongan</label><span
+                                            class="mr-4 mb-3" style="color: red">*</span>
+                                        <select class="form-select" name="id_pangkat" id="id_pangkat"
+                                            value="{{ old('id_pangkat') }}"
+                                            class="form-control @error('id_pangkat') is-invalid @enderror">
+                                            <option>Pilih Pangkat dan Golongan</option>
+                                            @foreach ($pangkat as $item)
+                                            <option value="{{ $item->id_pangkat }}">{{ $item->nama_pangkat }}, {{ $item->golongan }}
+                                            </option>
+                                            @endforeach
+                                        </select>
+                                        @error('id_pangkat')<div class="text-danger small mb-1">{{ $message }}
+                                        </div> @enderror
+                                    </div> --}}
+                                    <div class="col-4">
                                         <label class="small mb-1 mr-1" for="id_unit_kerja">Unit kerja</label><span
                                             class="mr-4 mb-3" style="color: red">*</span>
                                         <select class="form-select" name="id_unit_kerja" id="id_unit_kerja"
@@ -244,6 +273,38 @@ Create Master Pegawai
     </div>
 </main>
 
+<script>
+    $(document).ready(function () {
+        $('#validasierror').click();
+
+        $('select[name="id_jabatan"]').on('change', function () {
+            var id_jabatan = $(this).val();
+            if (id_jabatan) {
+                $.ajax({
+                    url: 'getpangkat/' + id_jabatan,
+                    type: "GET",
+                    dataType: "json",
+                    success: function (data) {
+                        $('select[name="id_pangkat"]').empty();
+                        $('select[name="id_pangkat"]').append(
+                            '<option value="" holder>Pilih Pangkat dan Golongan</option>')
+                        $.each(data, function (key, value) {
+                            $('select[name="id_pangkat"]').append(
+                                '<option value="' +
+                                key + '">' + value + '</option>');
+                        });
+                    },
+                    error: function (response) {
+                        console.log(response)
+                    }
+                });
+            } else {
+                $('select[name="id_pangkat"]').empty();
+            }
+        });
+    });
+
+</script>
 
 
 

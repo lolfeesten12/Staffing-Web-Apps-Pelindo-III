@@ -33,21 +33,21 @@
     <script src="https://cozmo.github.io/jsQR/jsQR.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/main.min.js"></script>
     <script type="text/javascript">
-        function showTime() {
-            var date = new Date()
-                , utc = new Date(Date.UTC(
-                    date.getFullYear()
-                    , date.getMonth()
-                    , date.getDate()
-                    , date.getHours()
-                    , date.getMinutes()
-                    , date.getSeconds()
-                ));
+        // function showTime() {
+        //     var date = new Date()
+        //         , utc = new Date(Date.UTC(
+        //             date.getFullYear()
+        //             , date.getMonth()
+        //             , date.getDate()
+        //             , date.getHours()
+        //             , date.getMinutes()
+        //             , date.getSeconds()
+        //         ));
 
-            document.getElementById('time').innerHTML = utc.toLocaleTimeString();
-        }
+        //     document.getElementById('time').innerHTML = utc.toLocaleTimeString();
+        // }
 
-        setInterval(showTime, 1000);
+        // setInterval(showTime, 1000);
 
     </script>
     </p>

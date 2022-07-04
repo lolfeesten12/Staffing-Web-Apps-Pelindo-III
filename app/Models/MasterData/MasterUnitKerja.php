@@ -4,9 +4,12 @@ namespace App\Models\MasterData;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class MasterUnitKerja extends Model
 {
+    use SoftDeletes;
+    
     protected $table = "tb_master_unit_kerja";
 
     protected $primaryKey = 'id_unit_kerja';
@@ -18,6 +21,7 @@ class MasterUnitKerja extends Model
     protected $hidden = [
         'created_at',
         'updated_at',
+        'deleted_at'
     ];
 
     public $timestamps = true;

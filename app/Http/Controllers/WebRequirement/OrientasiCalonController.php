@@ -15,11 +15,21 @@ class OrientasiCalonController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $peserta = CalonPegawai::with([
+            'PesertaOrientasi.MasterOrientasi',
+        ])->where('status_calon', '=', 'Diterima')->get();
 
-        $peserta = CalonPegawai::with('PesertaOrientasi.MasterOrientasi')->where('status_calon', '=', 'Diterima')
-        ->get();
+
+        // if($request->from){
+        //     $tes->where('status_orientasi', '=', $request->from);
+        // }
+
+        // $peserta = $tes->get();
+
+        // $peserta = CalonPegawai::with('PesertaOrientasi.MasterOrientasi')->where('status_calon', '=', 'Diterima')
+        // ->get();
 
         return view('user-views.pages.requirement.orientasi.index', compact('peserta'));
     }

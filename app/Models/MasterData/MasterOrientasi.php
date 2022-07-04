@@ -11,7 +11,8 @@ class MasterOrientasi extends Model
 
     protected $fillable = [
         'tanggal_orientasi',
-        'periode_orientasi'
+        'periode_orientasi',
+        'status_orientasi'
     ];
 
     protected $hidden = [

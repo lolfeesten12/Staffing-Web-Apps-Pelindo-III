@@ -4,6 +4,7 @@ namespace App\Http\Controllers\MasterData;
 
 use App\Http\Controllers\Controller;
 use App\Models\MasterData\MasterJabatan;
+use App\Models\MasterData\MasterPangkat;
 use App\Models\MasterData\MasterPegawai;
 use App\Models\MasterData\MasterUnitKerja;
 use App\Models\User;
@@ -21,8 +22,8 @@ class MasterPegawaiController extends Controller
      */
     public function index()
     {
-        $pegawai = MasterPegawai::with('Jabatan','UnitKerja')->get();
-
+        $pegawai = MasterPegawai::with('Jabatan','UnitKerja','Pangkat')->get();
+       
         return view('user-views.pages.masterdata.pegawai.index',compact('pegawai'));
     }
 
@@ -35,8 +36,9 @@ class MasterPegawaiController extends Controller
     {
         $jabatan = MasterJabatan::get();
         $unit = MasterUnitKerja::get();
+        $pangkat = MasterPangkat::get();
 
-        return view('user-views.pages.masterdata.pegawai.create',compact('jabatan','unit'));
+        return view('user-views.pages.masterdata.pegawai.create',compact('jabatan','unit','pangkat'));
     }
 
     /**
@@ -58,6 +60,7 @@ class MasterPegawaiController extends Controller
         $pegawai = new MasterPegawai;
         $pegawai->id_jabatan = $request->id_jabatan;
         $pegawai->id_unit_kerja = $request->id_unit_kerja;
+        $pegawai->id_pangkat = $request->id_pangkat;
         $pegawai->nama_pegawai = $request->nama_pegawai;
         $pegawai->nama_panggilan = $request->nama_panggilan;
         $pegawai->nik_pegawai = $request->nik_pegawai;
@@ -92,7 +95,7 @@ class MasterPegawaiController extends Controller
      */
     public function show($id)
     {
-        $pegawai = MasterPegawai::with('Jabatan','Unitkerja','User')->find($id);
+        $pegawai = MasterPegawai::with('Jabatan','Unitkerja','User','Pangkat')->find($id);
         return view('user-views.pages.masterdata.pegawai.detail',compact('pegawai'));
     }
 
@@ -100,6 +103,13 @@ class MasterPegawaiController extends Controller
     {
         $pegawai = MasterPegawai::with('Jabatan','Unitkerja','User','RiwayatKeluarga','RiwayatPendidikan','RiwayatPrestasi','RiwayatCuti','RiwayatPelanggaran')->find($id_pegawai);
         return view('user-views.pages.masterdata.pegawai.getriwayat',compact('pegawai'));
+    }
+
+    public function GetPangkat($id)
+    {
+        $pangkat = MasterPangkat::where('id_jabatan', '=', $id)->pluck('nama_pangkat', 'id_pangkat');
+        // return $merk;
+        return json_encode($pangkat);
     }
 
     /**
@@ -113,8 +123,9 @@ class MasterPegawaiController extends Controller
         $pegawai = MasterPegawai::with('Jabatan','Unitkerja','User')->find($id);
         $jabatan = MasterJabatan::get();
         $unit = MasterUnitKerja::get();
+        $pangkat = MasterPangkat::Get();
 
-        return view('user-views.pages.masterdata.pegawai.edit', compact('pegawai','jabatan','unit'));
+        return view('user-views.pages.masterdata.pegawai.edit', compact('pegawai','jabatan','unit','pangkat'));
     }
 
     /**
@@ -136,6 +147,7 @@ class MasterPegawaiController extends Controller
             $pegawai = MasterPegawai::find($id);
             $pegawai->id_jabatan = $request->id_jabatan;
             $pegawai->id_unit_kerja = $request->id_unit_kerja;
+            $pegawai->id_pangkat = $request->id_pangkat;
             $pegawai->nama_pegawai = $request->nama_pegawai;
             $pegawai->nama_panggilan = $request->nama_panggilan;
             $pegawai->nik_pegawai = $request->nik_pegawai;
@@ -158,6 +170,7 @@ class MasterPegawaiController extends Controller
             $pegawai = MasterPegawai::find($id);
             $pegawai->id_jabatan = $request->id_jabatan;
             $pegawai->id_unit_kerja = $request->id_unit_kerja;
+            $pegawai->id_pangkat = $request->id_pangkat;
             $pegawai->nama_pegawai = $request->nama_pegawai;
             $pegawai->nama_panggilan = $request->nama_panggilan;
             $pegawai->nik_pegawai = $request->nik_pegawai;

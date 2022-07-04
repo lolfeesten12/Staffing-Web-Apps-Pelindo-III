@@ -6,16 +6,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class MasterJabatan extends Model
+class MasterPangkat extends Model
 {
     use SoftDeletes;
-    
-    protected $table = "tb_master_jabatan";
 
-    protected $primaryKey = 'id_jabatan';
+    protected $table = "tb_master_pangkat";
+
+    protected $primaryKey = 'id_pangkat';
 
     protected $fillable = [
-        'nama_jabatan',
+        'nama_pangkat',
+        'id_jabatan',
+        'golongan',
     ];
 
     protected $hidden = [
@@ -26,8 +28,8 @@ class MasterJabatan extends Model
 
     public $timestamps = true;
 
-    public function pegawai()
+    public function Jabatan()
     {
-        return $this->hasMany(MasterPegawai::class, 'id_jabatan');
+        return $this->belongsTo(MasterJabatan::class, 'id_jabatan', 'id_jabatan');
     }
 }

@@ -77,6 +77,9 @@ Master Pegawai
                                                 style="width: 80px;">Jabatan</th>
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
+                                                style="width: 80px;">Pangkat</th>
+                                            <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
+                                                colspan="1" aria-label="Position: activate to sort column ascending"
                                                 style="width: 80px;">Unit Kerja</th>
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
@@ -98,6 +101,7 @@ Master Pegawai
                                             <th scope="row" class="small" class="sorting_1">{{ $loop->iteration}}.</th>
                                             <td>{{ $item->nama_pegawai }}</td>
                                             <td>{{ $item->Jabatan->nama_jabatan }}</td>
+                                            <td>{{ $item->Pangkat->nama_pangkat }}, {{ $item->Pangkat->golongan }}</td>
                                             <td>{{ $item->UnitKerja->unit_kerja }}</td>
                                             <td>{{ $item->jenis_kelamin }}</td>
                                             <td>{{ $item->no_telp }}</td>

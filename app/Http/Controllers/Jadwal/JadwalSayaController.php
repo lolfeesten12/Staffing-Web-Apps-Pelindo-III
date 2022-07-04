@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Jadwal;
 
 use App\Http\Controllers\Controller;
+use App\Mail\MailTukarJadwal;
 use App\Models\Jadwal\JadwalPegawai;
 use App\Models\MasterData\MasterPegawai;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class JadwalSayaController extends Controller
 {
@@ -69,6 +71,11 @@ class JadwalSayaController extends Controller
         $jadwal->id_penukar = Auth::user()->Pegawai->id_pegawai;
         $jadwal->status = 'Pending Penukaran';
         $jadwal->update();
+
+        $email = JadwalPegawai::join('tb_master_pegawai','tb_jadwal_pegawai.id_pegawai','tb_master_pegawai.id_pegawai')
+        ->join('users','tb_master_pegawai.id_pegawai','users.id_pegawai')->where('id_jadwal', $request->id_jadwal)->get('email');
+
+        Mail::to($email)->send(new MailTukarJadwal());
 
         return redirect()->route('jadwal-saya.index')->with('berhasil','Berhasil Menukar, Mohon tunggu persetujuan dari pihak terkait');
     }

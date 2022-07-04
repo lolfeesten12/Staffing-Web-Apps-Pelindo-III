@@ -22,6 +22,29 @@ Atur Orientasi
                 </nav>
             </div>
         </div>
+        <div class="col-12 col-xl-auto mt-4">
+            <span id="total_records"></span>
+            <p></p>
+            <form id="form1">
+                <div class="row input-daterange">
+                    <div class="col-md-5">
+                        <label class="small">Filter berdasarkan status terlaksana</label>
+                        <select name="filter" id="filter" class="form-select">
+                            <option value="">Pilih Status Pelaksanaan</option>
+                            <option value="Belum Terlaksana">Belum Terlaksana</option>
+                            <option value="Telah Terlaksana">Telah Terlaksana</option>
+                        </select>
+                            {{-- <input type="date" name="from_date" id="from_date"
+                                class="form-control form-control-sm" placeholder="From Date" /> --}}
+                        
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" name="filter" onclick="filter_status(event)"
+                            class="btn btn-sm btn-primary px-4 mt-4">Filter</button>
+                    </div>
+                </div>
+            </form>
+        </div>
         <hr>
         @if(session('messageberhasil'))
         <div
@@ -81,6 +104,9 @@ Atur Orientasi
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
                                                 style="width: 70px;">No. Sertifikat</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
+                                                colspan="1" aria-label="Position: activate to sort column ascending"
+                                                style="width: 70px;">Status Orientasi</th>
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Salary: activate to sort column ascending"
                                                 style="width: 70px;">Action</th>
@@ -96,6 +122,7 @@ Atur Orientasi
                                             <td>{{ $item->PesertaOrientasi->MasterOrientasi->periode_orientasi ?? 'Belum Ditentukan' }}
                                             </td>
                                             <td>{{ $item->PesertaOrientasi->no_sertifikat ?? 'Belum Ditentukan'}}</td>
+                                            <td>{{ $item->PesertaOrientasi->MasterOrientasi->status_orientasi ?? 'Belum Ditentukan' }}</td>
                                             <td class="text-center">
                                                 <a href="javascript:;" class="btn btn-sm btn-secondary"
                                                     data-bs-toggle="modal"
@@ -287,6 +314,32 @@ Atur Orientasi
 @endforelse
 
 
+<script>
+    function filter_status(event) {
+        event.preventDefault()
+        var form1 = $('#form1')
+        var filter = form1.find('select[name="filter"]').val()
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
 
+        Toast.fire({
+            icon: 'info',
+            title: 'Mohon Tunggu, Sedang diproses ...'
+        })
+
+        window.location.href = '/Requirement/peserta-orientasi?from=' + filter
+
+    }
+
+</script>
 
 @endsection

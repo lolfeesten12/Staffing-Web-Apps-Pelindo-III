@@ -2,7 +2,7 @@
 
 
 @section('name')
-Master Orientasi
+Master Pangkat dan Golongan
 @endsection
 
 @section('content')
@@ -17,7 +17,7 @@ Master Orientasi
                     <ol class="breadcrumb mb-0 p-0">
                         <li class="breadcrumb-item"><a href="javascript:;"><i class="lni lni-database"></i></a>
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">Orientasi</li>
+                        <li class="breadcrumb-item active" aria-current="page">Pangkat dan Golongan</li>
                     </ol>
                 </nav>
             </div>
@@ -70,43 +70,35 @@ Master Orientasi
                                                 colspan="1" aria-sort="ascending"
                                                 aria-label="Name: activate to sort column descending"
                                                 style="width: 100px;">No.</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
+                                                colspan="1" aria-label="Position: activate to sort column ascending"
+                                                style="width: 110px;">Jabatan</th>
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
-                                                style="width: 410px;">Periode Orientasi</th>
-                                                <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
+                                                style="width: 410px;">Nama Pangkat</th>
+                                            <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
-                                                style="width: 210px;">Tanggal Orientasi</th>
-                                                <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
-                                                colspan="1" aria-label="Position: activate to sort column ascending"
-                                                style="width: 130px;">Status</th>
+                                                style="width: 210px;">Golongan</th>
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Salary: activate to sort column ascending"
                                                 style="width: 70px;">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @forelse ($orientasi as $item)
+                                        @forelse ($pangkat as $item)
                                         <tr role="row" class="odd">
                                             <th scope="row" class="small" class="sorting_1">{{ $loop->iteration}}.</th>
-                                            <td>{{ $item->periode_orientasi }}</td>
-                                            <td>{{ $item->tanggal_orientasi }}</td>
-                                            <td class="text-center">
-                                                @if ($item->status_orientasi == 'Belum Terlaksana')
-                                                    <span class="badge bg-light-danger text-danger w-60">{{ $item->status_orientasi }}</span>
-                                                @else
-                                                <span class="badge bg-light-success text-success w-60">{{ $item->status_orientasi }}</span>
-                                                @endif
-
-                                            </td>
-                                          
+                                            <td>{{ $item->Jabatan->nama_jabatan }}</td>
+                                            <td>{{ $item->nama_pangkat }}</td>
+                                            <td>{{ $item->golongan }}</td>
                                             <td class="text-center">
                                                 <a href="javascript:;" class="btn btn-sm btn-primary"
                                                     data-bs-toggle="modal"
-                                                    data-bs-target="#Modaledit-{{ $item->id_orientasi }}"><i
+                                                    data-bs-target="#Modaledit-{{ $item->id_pangkat }}"><i
                                                         class="bi bi-pencil-fill"></i></a>
                                                 <a href="javascript:;" class="btn btn-sm btn-danger"
                                                     data-bs-toggle="modal"
-                                                    data-bs-target="#Modalhapus-{{ $item->id_orientasi }}"><i
+                                                    data-bs-target="#Modalhapus-{{ $item->id_pangkat }}"><i
                                                         class="bi bi-trash-fill"></i></a>
                                             </td>
                                         </tr>
@@ -130,26 +122,38 @@ Master Orientasi
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Tambah Data Orientasi</h5>
+                <h5 class="modal-title">Tambah Data Pangkat</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="{{ route('orientasi.store') }}" method="POST">
+            <form action="{{ route('pangkat.store') }}" method="POST">
                 @csrf
                 <div class="modal-body">
                     <label class="small mb-1">Isikan Form Dibawah Ini</label>
                     <hr>
                     </hr>
                     <div class="form-group">
-                        <label class="small mb-1 mr-1" for="periode_orientasi">Periode Orientasi</label><span class="mr-4 mb-3"
-                            style="color: red">*</span>
-                        <input class="form-control" name="periode_orientasi" type="text" id="periode_orientasi"
-                            placeholder="Input Periode Orientasi" value="{{ old('periode_orientasi') }}" required />
+                        <label class="small mb-1 mr-1" for="id_jabatan">Pilih Jabatan</label><span
+                            class="mr-4 mb-3" style="color: red">*</span>
+                        <select class="form-select" name="id_jabatan" id="id_jabatan"
+                            value="{{ old('id_jabatan') }}" required>
+                            <option>Pilih Jabatan</option>
+                            @foreach ($jabatan as $item)
+                            <option value="{{ $item->id_jabatan }}">{{ $item->nama_jabatan }}
+                            </option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="form-group">
-                        <label class="small mb-1 mr-1" for="tanggal_orientasi">Tanggal Orientasi</label><span class="mr-4 mb-3"
+                        <label class="small mb-1 mr-1" for="nama_pangkat">Nama Pangkat</label><span class="mr-4 mb-3"
                             style="color: red">*</span>
-                        <input class="form-control" name="tanggal_orientasi" type="date" id="tanggal_orientasi"
-                            placeholder="Input Tanggal Orientasi" value="{{ old('tanggal_orientasi') }}" required />
+                        <input class="form-control" name="nama_pangkat" type="text" id="nama_pangkat"
+                            placeholder="Input Nama Pangkat" value="{{ old('nama_pangkat') }}" required />
+                    </div>
+                    <div class="form-group">
+                        <label class="small mb-1 mr-1" for="golongan">Golongan Pangkat</label><span class="mr-4 mb-3"
+                            style="color: red">*</span>
+                        <input class="form-control" name="golongan" type="text" id="golongan"
+                            placeholder="Input Golongan" value="{{ old('golongan') }}" required />
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -161,16 +165,16 @@ Master Orientasi
     </div>
 </div>
 
-@forelse ($orientasi as $item)
-<div class="modal fade" id="Modaledit-{{ $item->id_orientasi }}" data-backdrop="static" tabindex="-1" role="dialog"
+@forelse ($pangkat as $item)
+<div class="modal fade" id="Modaledit-{{ $item->id_pangkat }}" data-backdrop="static" tabindex="-1" role="dialog"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Edit Data Orientasi</h5>
+                <h5 class="modal-title">Edit Data Pangkat</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="{{ route('orientasi.update', $item->id_orientasi) }}" method="POST">
+            <form action="{{ route('pangkat.update', $item->id_pangkat) }}" method="POST">
                 @method('PUT')
                 @csrf
                 <div class="modal-body">
@@ -178,16 +182,28 @@ Master Orientasi
                     <hr>
                     </hr>
                     <div class="form-group">
-                        <label class="small mb-1 mr-1" for="periode_orientasi">Periode Orientasi</label><span class="mr-4 mb-3"
-                            style="color: red">*</span>
-                        <input class="form-control" name="periode_orientasi" type="text" id="periode_orientasi"
-                            placeholder="Input Periode Orientasi" value="{{ $item->periode_orientasi }}" required />
+                        <label class="small mb-1 mr-1" for="id_jabatan">Pilih Jabatan</label><span
+                            class="mr-4 mb-3" style="color: red">*</span>
+                        <select class="form-select" name="id_jabatan" id="id_jabatan"
+                            value="{{ $item->Jabatan->id_jabatan }}" required>
+                            <option value="{{ $item->Jabatan->id_jabatan }}">{{ $item->Jabatan->nama_jabatan }}</option>
+                            @foreach ($jabatan as $item)
+                            <option value="{{ $item->id_jabatan }}">{{ $item->nama_jabatan }}
+                            </option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="form-group">
-                        <label class="small mb-1 mr-1" for="tanggal_orientasi">Tanggal Orientasi</label><span class="mr-4 mb-3"
+                        <label class="small mb-1 mr-1" for="nama_pangkat">Nama Pangkat</label><span class="mr-4 mb-3"
                             style="color: red">*</span>
-                        <input class="form-control" name="tanggal_orientasi" type="date" id="tanggal_orientasi"
-                            placeholder="Input Tanggal Orientasi" value="{{ $item->tanggal_orientasi }}" required />
+                        <input class="form-control" name="nama_pangkat" type="text" id="nama_pangkat"
+                            value="{{ $item->nama_pangkat }}" required></input>
+                    </div>
+                    <div class="form-group">
+                        <label class="small mb-1 mr-1" for="golongan">Golongan</label><span class="mr-4 mb-3"
+                            style="color: red">*</span>
+                        <input class="form-control" name="golongan" type="text" id="golongan"
+                            value="{{ $item->golongan }}" required></input>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -202,20 +218,20 @@ Master Orientasi
 
 @endforelse
 
-@forelse ($orientasi as $item)
-<div class="modal fade" id="Modalhapus-{{ $item->id_orientasi }}" data-backdrop="static" tabindex="-1" role="dialog"
+@forelse ($pangkat as $item)
+<div class="modal fade" id="Modalhapus-{{ $item->id_pangkat }}" data-backdrop="static" tabindex="-1" role="dialog"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content bg-danger">
             <div class="modal-header">
-                <h5 class="modal-title text-white">Hapus Data Orientasi</h5>
+                <h5 class="modal-title text-white">Hapus Unit Kerja</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="{{ route('orientasi.destroy', $item->id_orientasi) }}" method="POST" class="d-inline">
+            <form action="{{ route('pangkat.destroy', $item->id_pangkat) }}" method="POST" class="d-inline">
                 @csrf
                 @method('delete')
                 <div class="modal-body text-white">
-                    Apakah Anda Yakin Menghapus Data Master Orientasi {{ $item->periode_orientasi }} ?</div>
+                    Apakah Anda Yakin Menghapus Data Master Pangkat dan Golongan {{ $item->nama_pangkat }}, {{ $item->golongan }} ?</div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-dark">Ya! Hapus</button>

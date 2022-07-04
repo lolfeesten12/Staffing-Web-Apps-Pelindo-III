@@ -74,12 +74,17 @@ Detail Master Pegawai
                                             <input type="text" class="form-control" 
                                                 value="{{ $pegawai->nik_pegawai }}" readonly> 
                                         </div>
-                                        <div class="col-6">
+                                        <div class="col-4">
                                             <label class="form-label mr-1" for="nik_pegawai">Jabatan Pegawai</label>
                                             <input type="text" class="form-control" 
                                                 value="{{ $pegawai->Jabatan->nama_jabatan }}" readonly> 
                                         </div>
-                                        <div class="col-6">
+                                        <div class="col-4">
+                                            <label class="form-label mr-1" for="nik_pegawai">Pangkat dan Golongan Pegawai</label>
+                                            <input type="text" class="form-control" 
+                                                value="{{ $pegawai->Pangkat->nama_pangkat }}, {{ $pegawai->Pangkat->golongan }}" readonly> 
+                                        </div>
+                                        <div class="col-4">
                                             <label class="form-label mr-1" for="nik_pegawai">Unit Kerja Pegawai</label>
                                             <input type="text" class="form-control" 
                                                 value="{{ $pegawai->Unitkerja->unit_kerja }}" readonly> 

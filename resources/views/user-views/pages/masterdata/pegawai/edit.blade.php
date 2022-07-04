@@ -60,7 +60,7 @@ Edit Master Pegawai
                                             <span class="text-muted">16 Digit Number </span>
                                         </div>
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col-4">
                                         <label class="small mb-1 mr-1" for="id_jabatan">Jabatan</label><span
                                             class="mr-4 mb-3" style="color: red">*</span>
                                         <select class="form-select" name="id_jabatan" id="id_jabatan"
@@ -72,7 +72,19 @@ Edit Master Pegawai
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col-4">
+                                        <label class="small mb-1 mr-1" for="id_pangkat">Pangkat dan Golongan</label><span
+                                            class="mr-4 mb-3" style="color: red">*</span>
+                                        <select class="form-select" name="id_pangkat" id="id_pangkat"
+                                            value="{{ $pegawai->Pangkat->id_pangkat }}" required> 
+                                            <option value="{{ $pegawai->Pangkat->id_pangkat }}">{{ $pegawai->Pangkat->nama_pangkat }}, {{ $pegawai->Pangkat->golongan }}</option>
+                                            @foreach ($pangkat as $item)
+                                            <option value="{{ $item->id_pangkat }}">{{ $item->nama_pangkat }}, {{ $pegawai->Pangkat->golongan }}
+                                            </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-4">
                                         <label class="small mb-1 mr-1" for="id_unit_kerja">Unit kerja</label><span
                                             class="mr-4 mb-3" style="color: red">*</span>
                                         <select class="form-select" name="id_unit_kerja" id="id_unit_kerja"
@@ -183,7 +195,6 @@ Edit Master Pegawai
     </div>
     </div>
 </main>
-
 
 
 

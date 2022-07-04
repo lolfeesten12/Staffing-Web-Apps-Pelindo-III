@@ -12,6 +12,7 @@ use App\Http\Controllers\Jadwal\JadwalPegawaiController;
 use App\Http\Controllers\Jadwal\JadwalSayaController;
 use App\Http\Controllers\MasterData\MasterJabatanController;
 use App\Http\Controllers\MasterData\MasterOrientasiController;
+use App\Http\Controllers\MasterData\MasterPangkatController;
 use App\Http\Controllers\MasterData\MasterPegawaiController;
 use App\Http\Controllers\MasterData\MasterPelanggaranController;
 use App\Http\Controllers\MasterData\MasterSanksiController;
@@ -42,6 +43,7 @@ use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\WebRequirement\OrientasiCalonController;
 use App\Models\Absensi\Absensi;
 use App\Models\MasterData\MasterOrientasi;
+use App\Models\MasterData\MasterPangkat;
 use App\Models\Pelatihan\ProgramPelatihan;
 use App\Models\Riwayat\RiwayatPendidikan;
 
@@ -80,9 +82,11 @@ Route::group(['middleware' => 'auth'], function () {
         ->middleware(['hrd'])
         ->group(function () {
             Route::resource('unit-kerja', MasterUnitKerjaController::class);
+            Route::resource('pangkat', MasterPangkatController::class);
             Route::resource('jabatan', MasterJabatanController::class);
             Route::resource('pegawai', MasterPegawaiController::class);
             Route::get('pegawai/{id_pegawai}/riwayat', [App\Http\Controllers\MasterData\MasterPegawaiController::class, 'GetRiwayat'])->name('pegawai-riwayat');
+            Route::get('pegawai/getpangkat/{id}', [App\Http\Controllers\MasterData\MasterPegawaiController::class, 'GetPangkat'])->name('pegawai-pangkat');
             Route::resource('shift', MasterShiftController::class);
             Route::resource('sanksi', MasterSanksiController::class);
             Route::resource('pelanggaran', MasterPelanggaranController::class);
