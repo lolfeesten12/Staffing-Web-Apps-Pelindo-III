@@ -98,7 +98,9 @@ Route::group(['middleware' => 'auth'], function () {
         // ->middleware(['Admin_Role','verified'])
         ->group(function () {
             Route::resource('keluarga', RiwayatKeluargaController::class);
+            Route::post('keluarga/tambahdetail', [App\Http\Controllers\Riwayat\RiwayatKeluargaController::class, 'storehubungan'])->name('keluarga-tambahdetail');
             Route::resource('pendidikan', RiwayatPendidikanController::class);
+            Route::post('pendidikan/tambahdetail', [App\Http\Controllers\Riwayat\RiwayatPendidikanController::class, 'storependidikan'])->name('pendidikan-tambahdetail');
             Route::resource('riwayatpelanggaran', RiwayatPelanggaranController::class);
             Route::resource('cuti', RiwayatCutiController::class);
             Route::resource('prestasi', RiwayatPrestasiController::class);

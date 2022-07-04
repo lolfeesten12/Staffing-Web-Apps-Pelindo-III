@@ -16,8 +16,8 @@ class RiwayatKeluarga extends Model
     protected $primaryKey = 'id_riwayat_keluarga';
 
     protected $fillable = [
-        'id_pegawai','id_hub_keluarga', 'kel_nama', 'kel_tempat_lahir', 'kel_tanggal_lahir',
-        'kel_alamat'
+        'id_pegawai','hubungan_keluarga', 'kel_nama', 'kel_tempat_lahir', 'kel_tanggal_lahir',
+        'kel_alamat', 'id_detail_hub_keluarga'
     ];
 
     protected $hidden = [
@@ -31,8 +31,8 @@ class RiwayatKeluarga extends Model
     {
         return $this->belongsTo(MasterPegawai::class, 'id_pegawai', 'id_pegawai');
     }
-    public function Hubungan()
+    public function DetailHubungan()
     {
-        return $this->belongsTo(MasterHubunganKeluarga::class, 'id_hub_keluarga', 'id_hub_keluarga');
+        return $this->belongsTo(DetailRiwayatKeluarga::class, 'id_pegawai', 'id_pegawai');
     }
 }

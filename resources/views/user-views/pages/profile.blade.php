@@ -8,7 +8,7 @@ Profile
 @section('content')
 @if (session('absenkeluar'))
 <script type="text/javascript">
-    $(window).on('load', function() {
+    $(window).on('load', function () {
         $('#absenkeluar').modal('show');
     });
 
@@ -17,7 +17,7 @@ Profile
 
 @if (session('absenmasuk'))
 <script type="text/javascript">
-    $(window).on('load', function() {
+    $(window).on('load', function () {
         $('#absenmasuk').modal('show');
     });
 
@@ -46,16 +46,22 @@ Profile
                                             <h5 class="card-title">Absensi Masuk</h5>
                                             <p class="card-text mb-5">
                                                 <h1 id="time"></h1>
-                                                <form class="form-body" action="{{ route('absen.store') }}" method="POST" enctype="multipart/form-data">
+                                                <form class="form-body" action="{{ route('absen.store') }}"
+                                                    method="POST" enctype="multipart/form-data">
                                                     @csrf
-                                                    <input type="hidden" name="id_jadwal" value="{{ session('absenmasuk') }}" class="form-control @error('nama_pegawai') is-invalid @enderror">
-                                                    <input type="hidden" name="tipe" value="masuk" class="form-control @error('nama_pegawai') is-invalid @enderror">
+                                                    <input type="hidden" name="id_jadwal"
+                                                        value="{{ session('absenmasuk') }}"
+                                                        class="form-control @error('nama_pegawai') is-invalid @enderror">
+                                                    <input type="hidden" name="tipe" value="masuk"
+                                                        class="form-control @error('nama_pegawai') is-invalid @enderror">
 
                                                     <div class="row g-3">
                                                         <div class="col-12">
                                                             <div class="d-grid gap-3">
-                                                                <button type="submit" class="btn btn-primary radius-30">Absen</button>
-                                                                <button type="button" data-bs-dismiss="modal" class="btn btn-light radius-30">Kembali</button>
+                                                                <button type="submit"
+                                                                    class="btn btn-primary radius-30">Absen</button>
+                                                                <button type="button" data-bs-dismiss="modal"
+                                                                    class="btn btn-light radius-30">Kembali</button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -90,16 +96,22 @@ Profile
                                             <h5 class="card-title">Absensi Keluar</h5>
                                             <p class="card-text mb-5">
                                                 <h1 id="time"></h1>
-                                                <form class="form-body" action="{{ route('absen.store') }}" method="POST" enctype="multipart/form-data">
+                                                <form class="form-body" action="{{ route('absen.store') }}"
+                                                    method="POST" enctype="multipart/form-data">
                                                     @csrf
-                                                    <input type="hidden" name="id_absensi" value="{{ session('absenkeluar') }}" class="form-control @error('nama_pegawai') is-invalid @enderror">
-                                                    <input type="hidden" name="tipe" value="keluar" class="form-control @error('nama_pegawai') is-invalid @enderror">
+                                                    <input type="hidden" name="id_absensi"
+                                                        value="{{ session('absenkeluar') }}"
+                                                        class="form-control @error('nama_pegawai') is-invalid @enderror">
+                                                    <input type="hidden" name="tipe" value="keluar"
+                                                        class="form-control @error('nama_pegawai') is-invalid @enderror">
 
                                                     <div class="row g-3">
                                                         <div class="col-12">
                                                             <div class="d-grid gap-3">
-                                                                <button type="submit" class="btn btn-primary radius-30">Absen</button>
-                                                                <button type="button" data-bs-dismiss="modal" class="btn btn-light radius-30">Kembali</button>
+                                                                <button type="submit"
+                                                                    class="btn btn-primary radius-30">Absen</button>
+                                                                <button type="button" data-bs-dismiss="modal"
+                                                                    class="btn btn-light radius-30">Kembali</button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -167,7 +179,8 @@ Profile
     @endif
 
     @if(session('messageberhasil'))
-    <div class="alert border-0 border-success border-start border-4 bg-light-success alert-dismissible fade show py-2 mb-5">
+    <div
+        class="alert border-0 border-success border-start border-4 bg-light-success alert-dismissible fade show py-2 mb-5">
         <div class="d-flex align-items-center">
             <div class="fs-3 text-success"><i class="bi bi-check-circle-fill"></i>
             </div>
@@ -192,29 +205,49 @@ Profile
             </nav>
         </div>
     </div>
-    
+
+
 
     <div class="row mt-5">
         <div class="col-12 col-lg-12">
+            @if (count($jadwal) > 0)
+            <div class="alert border-0 border-danger border-start border-4 bg-light-danger alert-dismissible fade show py-2">
+                <div class="d-flex align-items-center">
+                    <div class="fs-3 text-danger"><i class="bi bi-info-circle-fill"></i>
+                    </div>
+                    <div class="ms-3">
+                        <div class="text-danger">Terdapat Penukaran Jadwal, Lihat Sekarang!</div>
+                    </div>
+                    <a type="button" href="{{ route('jadwal-saya.show', Auth::user()->pegawai->id_pegawai) }}" class="btn btn-danger" style="margin-left: 950px">Lihat Penukaran <span class="badge bg-dark">{{ $jadwalcount }} Data</span>
+                    </a>
+                </div>               
+            </div>
+            @else
+            
+            @endif
+           
             <div class="card shadow-sm border-0">
                 <div class="card-body">
                     <h5 class="mb-0">My Account</h5>
                     <hr>
                     <div class="card shadow-none border">
                         <div class="profile-avatar text-center">
-                            <img src="{{ asset('/profile/'.Auth::user()->pegawai['avatar']) }}" class="rounded-circle shadow" width="225" height="225" alt="">
+                            <img src="{{ asset('/profile/'.Auth::user()->pegawai['avatar']) }}"
+                                class="rounded-circle shadow" width="225" height="225" alt="">
                         </div>
                         <div class="card-header">
                             <h6 class="mb-0">USER INFORMATION</h6>
                         </div>
                         <div class="card-body">
-                            <form class="row g-3" action="{{ route('profile.update', Auth::user()->id) }}" method="POST">
+                            <form class="row g-3" action="{{ route('profile.update', Auth::user()->id) }}"
+                                method="POST">
                                 @method('PUT')
                                 @csrf
                                 <div class="row g-3">
                                     <div class="col-12">
                                         <label class="form-label">Nama</label>
-                                        <input type="text" class="form-control" value="{{ $user->Pegawai->nama_pegawai }} " name="nama_pegawai">
+                                        <input type="text" class="form-control"
+                                            value="{{ $user->Pegawai->nama_pegawai }} " name="nama_pegawai">
                                     </div>
 
                                     <div class="col-12">
@@ -236,108 +269,111 @@ Profile
                                         </select> </div>
                                     <div class="col-6">
                                         <label class="form-label">Tanggal Lahir</label>
-                                        <input type="date" class="form-control" value="{{ $user->Pegawai->tanggal_lahir }}" name="tanggal_lahir">
+                                        <input type="date" class="form-control"
+                                            value="{{ $user->Pegawai->tanggal_lahir }}" name="tanggal_lahir">
                                     </div>
                                     <div class="col-6">
                                         <label class="form-label">Tempat Lahir</label>
-                                        <input type="text" class="form-control" value="{{ $user->Pegawai->tempat_lahir }}" name="tempat_lahir">
+                                        <input type="text" class="form-control"
+                                            value="{{ $user->Pegawai->tempat_lahir }}" name="tempat_lahir">
                                     </div>
                                     <div class="col-6">
                                         <label class="form-label">Agama</label>
-                                     
-                                            @if ($user->Pegawai->agama == null)
-                                                <select name="agama" id="agama" class="form-select" value="{{ old('agama') }}"
-                                                    class="form-control @error('agama') is-invalid @enderror">
-                                                    <option value="{{ old('agama')}}"> Pilih Agama</option>
-                                                    <option value="Hindu">Hindu</option>
-                                                    <option value="Islam">Islam</option>
-                                                    <option value="Budha">Budha</option>
-                                                    <option value="Konghucu">Konghucu</option>
-                                                    <option value="Katolik">Katolik</option>
-                                                    <option value="Protestan">Protestan</option>
-                                                </select>
-                                                @error('agama')<div class="text-danger small mb-1">{{ $message }}
-                                                </div> @enderror
-                                            </div>
 
-                                            @else
-                                            <select class="form-select" aria-label="Agama" name="agama">
-                                                @if ($user->Pegawai->agama == "Hindu")
-                                                <option selected value="Hindu">Hindu</option>
-                                                <option value="Budha">Budha</option>
-                                                <option value="Islam">Islam</option>
-                                                <option value="Katolik">Katolik</option>
-                                                <option value="Konghucu">Konghucu</option>
-                                                <option value="Protestan">Protestan</option>
-                                                @elseif ($user->Pegawai->agama == "Budha")
-                                                <option value="Hindu">Hindu</option>
-                                                <option selected value="Budha">Budha</option>
-                                                <option value="Islam">Islam</option>
-                                                <option value="Katolik">Katolik</option>
-                                                <option value="Konghucu">Konghucu</option>
-                                                <option value="Protestan">Protestan</option>
-                                                @elseif ($user->Pegawai->agama == "Islam")
-                                                <option value="Hindu">Hindu</option>
-                                                <option value="Budha">Budha</option>
-                                                <option selected value="Islam">Islam</option>
-                                                <option value="Katolik">Katolik</option>
-                                                <option value="Konghucu">Konghucu</option>
-                                                <option value="Protestan">Protestan</option>
-                                                @elseif ($user->Pegawai->agama == "Katolik")
-                                                <option value="Hindu">Hindu</option>
-                                                <option value="Budha">Budha</option>
-                                                <option value="Islam">Islam</option>
-                                                <option selected value="Katolik">Katolik</option>
-                                                <option value="Konghucu">Konghucu</option>
-                                                <option value="Protestan">Protestan</option>
-                                                @elseif ($user->Pegawai->agama == "Konghucu")
-                                                <option value="Hindu">Hindu</option>
-                                                <option value="Budha">Budha</option>
-                                                <option value="Islam">Islam</option>
-                                                <option value="Katolik">Katolik</option>
-                                                <option selected value="Konghucu">Konghucu</option>
-                                                <option value="Protestan">Protestan</option>
-                                                @elseif ($user->Pegawai->agama == "Protestan")
-                                                <option value="Hindu">Hindu</option>
-                                                <option value="Budha">Budha</option>
-                                                <option value="Islam">Islam</option>
-                                                <option value="Katolik">Katolik</option>
-                                                <option value="Konghucu">Konghucu</option>
-                                                <option selected value="Protestan">Protestan</option>
-                                                @endif
-                                            </select>
-                                            
-                                            @endif
-                                            
+                                        @if ($user->Pegawai->agama == null)
+                                        <select name="agama" id="agama" class="form-select" value="{{ old('agama') }}"
+                                            class="form-control @error('agama') is-invalid @enderror">
+                                            <option value="{{ old('agama')}}"> Pilih Agama</option>
+                                            <option value="Hindu">Hindu</option>
+                                            <option value="Islam">Islam</option>
+                                            <option value="Budha">Budha</option>
+                                            <option value="Konghucu">Konghucu</option>
+                                            <option value="Katolik">Katolik</option>
+                                            <option value="Protestan">Protestan</option>
+                                        </select>
+                                        @error('agama')<div class="text-danger small mb-1">{{ $message }}
+                                        </div> @enderror
                                     </div>
+
+                                    @else
+                                    <select class="form-select" aria-label="Agama" name="agama">
+                                        @if ($user->Pegawai->agama == "Hindu")
+                                        <option selected value="Hindu">Hindu</option>
+                                        <option value="Budha">Budha</option>
+                                        <option value="Islam">Islam</option>
+                                        <option value="Katolik">Katolik</option>
+                                        <option value="Konghucu">Konghucu</option>
+                                        <option value="Protestan">Protestan</option>
+                                        @elseif ($user->Pegawai->agama == "Budha")
+                                        <option value="Hindu">Hindu</option>
+                                        <option selected value="Budha">Budha</option>
+                                        <option value="Islam">Islam</option>
+                                        <option value="Katolik">Katolik</option>
+                                        <option value="Konghucu">Konghucu</option>
+                                        <option value="Protestan">Protestan</option>
+                                        @elseif ($user->Pegawai->agama == "Islam")
+                                        <option value="Hindu">Hindu</option>
+                                        <option value="Budha">Budha</option>
+                                        <option selected value="Islam">Islam</option>
+                                        <option value="Katolik">Katolik</option>
+                                        <option value="Konghucu">Konghucu</option>
+                                        <option value="Protestan">Protestan</option>
+                                        @elseif ($user->Pegawai->agama == "Katolik")
+                                        <option value="Hindu">Hindu</option>
+                                        <option value="Budha">Budha</option>
+                                        <option value="Islam">Islam</option>
+                                        <option selected value="Katolik">Katolik</option>
+                                        <option value="Konghucu">Konghucu</option>
+                                        <option value="Protestan">Protestan</option>
+                                        @elseif ($user->Pegawai->agama == "Konghucu")
+                                        <option value="Hindu">Hindu</option>
+                                        <option value="Budha">Budha</option>
+                                        <option value="Islam">Islam</option>
+                                        <option value="Katolik">Katolik</option>
+                                        <option selected value="Konghucu">Konghucu</option>
+                                        <option value="Protestan">Protestan</option>
+                                        @elseif ($user->Pegawai->agama == "Protestan")
+                                        <option value="Hindu">Hindu</option>
+                                        <option value="Budha">Budha</option>
+                                        <option value="Islam">Islam</option>
+                                        <option value="Katolik">Katolik</option>
+                                        <option value="Konghucu">Konghucu</option>
+                                        <option selected value="Protestan">Protestan</option>
+                                        @endif
+                                    </select>
+
+                                    @endif
+
                                 </div>
                         </div>
                     </div>
-                    <div class="card shadow-none border">
-                        <div class="card-header">
-                            <h6 class="mb-0">CONTACT INFORMATION</h6>
-                        </div>
-                        <div class="card-body">
-
-                            <div class="col-12">
-                                <label class="form-label">Alamat</label>
-                                <input type="text" class="form-control" value="{{ $user->Pegawai->alamat }}" name="alamat">
-                            </div>
-                            <div class="col-12">
-                                <label class="form-label">Nomor Telepon</label>
-                                <input type="text" class="form-control" value="{{ $user->Pegawai->no_telp }}" name="no_telp">
-                            </div>
-                            <div class="text-start mt-2">
-                                <button type="submit" class="btn btn-primary px-4">Save Changes</button>
-                            </div>
-                            </form>
-                        </div>
-                    </div>
-
                 </div>
+                <div class="card shadow-none border">
+                    <div class="card-header">
+                        <h6 class="mb-0">CONTACT INFORMATION</h6>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="col-12">
+                            <label class="form-label">Alamat</label>
+                            <input type="text" class="form-control" value="{{ $user->Pegawai->alamat }}" name="alamat">
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Nomor Telepon</label>
+                            <input type="text" class="form-control" value="{{ $user->Pegawai->no_telp }}"
+                                name="no_telp">
+                        </div>
+                        <div class="text-start mt-2">
+                            <button type="submit" class="btn btn-primary px-4">Save Changes</button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+
             </div>
         </div>
-        {{-- <div class="col-12 col-lg-4">
+    </div>
+    {{-- <div class="col-12 col-lg-4">
             <div class="card shadow-sm border-0 overflow-hidden">
                 <div class="card-body">
                     <div class="profile-avatar text-center">

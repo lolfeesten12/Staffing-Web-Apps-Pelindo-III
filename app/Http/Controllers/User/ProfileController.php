@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Jadwal\JadwalPegawai;
 use App\Models\MasterData\MasterPegawai;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -18,8 +19,11 @@ class ProfileController extends Controller
     public function index()
     {
         $user = User::with('Pegawai')->where('id', Auth::user()->id)->first();
-        // return $user;
-        return view('user-views.pages.profile', compact('user'));
+        $jadwal = JadwalPegawai::where('id_pegawai', Auth::user()->id_pegawai)->where('status','Pending Penukaran')->get();
+        $jadwalcount = JadwalPegawai::where('id_pegawai', Auth::user()->id_pegawai)->where('status','Pending Penukaran')->count();
+     
+
+        return view('user-views.pages.profile', compact('user','jadwalcount','jadwal'));
     }
 
     /**

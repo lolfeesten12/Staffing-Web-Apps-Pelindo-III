@@ -7,6 +7,7 @@ use App\Models\MasterData\MasterHubungan;
 use App\Models\MasterData\MasterJabatan;
 use App\Models\MasterData\MasterPegawai;
 use App\Models\MasterData\MasterUnitKerja;
+use App\Models\Riwayat\DetailRiwayatPendidikan;
 use App\Models\Riwayat\RiwayatKeluarga;
 use App\Models\Riwayat\RiwayatPendidikan;
 use App\Models\User;
@@ -24,12 +25,11 @@ class RiwayatPendidikanController extends Controller
      */
     public function index()
     {
-        // $pegawai = MasterPegawai::where('id', Auth::user()->id)->get();
+    
         $riwayat = RiwayatPendidikan::with('Pegawai')->where('id_pegawai',Auth::user()->id_pegawai )->get();
-        // return $riwayat;
-        // $hubungan = MasterHubungan::get();
+        $detail = DetailRiwayatPendidikan::where('id_pegawai', Auth::user()->id_pegawai)->get();
 
-        return view('user-views.pages.riwayat.pendidikan',compact('riwayat'));
+        return view('user-views.pages.riwayat.pendidikan',compact('riwayat','detail'));
     }
 
     /**
@@ -53,17 +53,33 @@ class RiwayatPendidikanController extends Controller
      */
     public function store(Request $request)
     { 
-        
+        $data = DetailRiwayatPendidikan::where('nama_pendidikan', $request->tipe_pendidikan)->first();
+      
         $riwayat = new RiwayatPendidikan();
         $riwayat->id_pegawai = Auth::user()->id_pegawai;
-        $riwayat->tipe_pendidikan = $request->tipe_pendidikan;
         $riwayat->nama_sekolah = $request->nama_sekolah;
         $riwayat->jurusan = $request->jurusan;
         $riwayat->no_ijasah = $request->no_ijasah;
         $riwayat->tanggal_ijasah = $request->tanggal_ijasah;
+
+        if (empty($data)){
+            $riwayat->tipe_pendidikan = $request->tipe_pendidikan;
+        }else{
+            $riwayat->id_detail_pendidikan = $data['id_detail_pendidikan'];
+        }
         $riwayat->save();
 
         return redirect()->route('pendidikan.index')->with('messageberhasil','Data Pendidikan Berhasil ditambahkan');
+    }
+
+    public function storependidikan (Request $request)
+    {
+        $pendidikan = new DetailRiwayatPendidikan;
+        $pendidikan->id_pegawai = Auth::user()->id_pegawai;
+        $pendidikan->nama_pendidikan = $request->nama_pendidikan;
+        $pendidikan->save();
+
+        return redirect()->route('pendidikan.index')->with('messageberhasil','Data Tipe Pendidikan Berhasil ditambahkan');
     }
 
     /**

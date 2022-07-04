@@ -184,8 +184,7 @@
                 <li> <a href="{{ route('pendidikan.index') }}"><i class="bi bi-circle"></i>Riwayat Pendidikan</a></li>
                 <li> <a href="{{ route('prestasi.index') }}"><i class="bi bi-circle"></i>Riwayat Prestasi</a></li>
                 <li> <a href="{{ route('cuti.index') }}"><i class="bi bi-circle"></i>Riwayat Cuti</a></li>
-                <li> <a href="{{ route('riwayatpelanggaran.index') }}"><i class="bi bi-circle"></i>Riwayat
-                        Pelanggaran</a></li>
+                <li> <a href="{{ route('riwayatpelanggaran.index') }}"><i class="bi bi-circle"></i>Riwayat Pelanggaran</a></li>
                 <li> <a href="{{ route('riwayatsanksi.index') }}"><i class="bi bi-circle"></i>Riwayat Sanksi</a></li>
                 {{-- <li> <a href="{{ route('riwayatpelatihan.index') }}"><i class="bi bi-circle"></i>Riwayat
                 Pelatihan</a>
@@ -225,26 +224,10 @@
             <li> <a href="{{ route('jadwal-pegawai.index') }}"><i class="bi bi-circle"></i>Atur Jadwal Pegawai</a></li>
             @endif
             <li> <a href="{{ route('jadwal-saya.index') }}"><i class="bi bi-circle"></i>Jadwal Saya</a></li>
-            <li> <a href="{{ route('jadwal-saya.show', Auth::user()->pegawai->id_pegawai) }}"><i
-                        class="bi bi-circle"></i>List Penukaran Jadwal</a></li>
+            <li> <a href="{{ route('jadwal-saya.show', Auth::user()->pegawai->id_pegawai) }}"><i class="bi bi-circle"></i>List Penukaran Jadwal</a></li>
         </ul>
     </li>
-    {{-- <li>
-        <a href="javascript:;" class="has-arrow">
-            <div class="parent-icon"><i class="lni lni-checkbox"></i>
-            </div>
-            <div class="menu-title">Absensi</div>
-        </a>
-        <ul>
-            <li> <a href="{{ route('Absen.index') }}"><i class="bi bi-circle"></i>Absensi</a>
-                @if (Auth::user()->Pegawai->role == 'HRD')
-            <li> <a href="{{ route('laporan-absensi.index') }}"><i class="bi bi-circle"></i>Laporan Absensi</a>
-            <li> <a href="{{ route('Qr-absensi.index') }}"><i class="bi bi-circle"></i>QR Code Absen</a>
-
-                @endif
-
-        </ul>
-    </li> --}}
+  
 
     @if (Auth::user()->Pegawai->role == 'HRD')
 

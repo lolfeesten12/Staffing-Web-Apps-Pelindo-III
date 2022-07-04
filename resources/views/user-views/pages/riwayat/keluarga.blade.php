@@ -95,7 +95,12 @@ Riwayat Keluarga
                                         <tr role="row" class="odd">
                                             <th scope="row" class="small" class="sorting_1">{{ $loop->iteration}}.</th>
                                             <td>{{ $item->kel_nama }}</td>
-                                            <td>{{ $item->hubungan->hubungan_keluarga }}</td>
+                                            <td>@if ($item->hubungan_keluarga != null)
+                                                    {{ $item->hubungan_keluarga }}
+                                                @else
+                                                    {{ $item->DetailHubungan->nama_hubungan }}
+                                                @endif
+                                            </td>
                                             <td>{{ $item->kel_tempat_lahir }}</td>
                                             <td>{{ $item->kel_tanggal_lahir }}</td>
                                             <td>{{ $item->kel_alamat }}</td>
@@ -147,13 +152,24 @@ Riwayat Keluarga
                             placeholder="Input Nama Keluarga" value="{{ old('kel_nama') }}" required />
                         <label class="small mb-1 mr-1" for="id_hub_keluarga">Hubungan Keluarga</label><span class="mr-4 mb-3"
                             style="color: red">*</span>
-
-                        <select class="form-select" aria-label="Default select example" name="id_hub_keluarga" type="text" id="id_hub_keluarga" required >
-                                <option selected="">Pilih Hubungan Keluarga</option>
-                                @foreach ($hubungan as $item)
-                                    <option value={{ $item->id_hub_keluarga }}>{{ $item->hubungan_keluarga }}</option>
-                                @endforeach
+                        <div class="input-group mb-3">
+                            <button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal"
+                            data-bs-target="#Modaltambahhubungan">Tambah</button>
+                            <select name="hubungan_keluarga" id="hubungan_keluarga" class="form-select"
+                                value="{{ old('hubungan_keluarga') }}">
+                                <option value="{{ old('hubungan_keluarga')}}">Pilih Hubungan</option>
+                                <option value="Ayah">Ayah</option>
+                                <option value="Ibu">Ibu</option>
+                                <option value="Anak Pertama">Anak Pertama</option>
+                                <option value="Anak Kedua">Anak Kedua</option>
+                                @if ($detailhubungan != '' | $detailhubungan != null)
+                                    @foreach ($detailhubungan as $detail)
+                                        <option value={{ $detail->nama_hubungan }}>{{ $detail->nama_hubungan }}</option>
+                                    @endforeach
+                                @endif
                             </select>
+                        </div>
+                       
                         <label class="small mb-1 mr-1" for="kel_tanggal_lahir">Tanggal Lahir</label><span class="mr-4 mb-3"
                             style="color: red">*</span>
                         <input class="form-control" name="kel_tanggal_lahir" type="date" id="kel_tanggal_lahir"
@@ -166,6 +182,37 @@ Riwayat Keluarga
                             style="color: red">*</span>
                         <input class="form-control" name="kel_alamat" type="text" id="kel_alamat"
                             placeholder="Alamat Keluarga" value="{{ old('kel_alamat') }}" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="Submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{{-- TAMBAH HUBUNGAN --}}
+<div class="modal fade" id="Modaltambahhubungan" data-backdrop="static" tabindex="-1" role="dialog"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Tambah Hubungan keluarga</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{ route('keluarga-tambahdetail') }}" method="POST">
+                @csrf
+                <div class="modal-body">
+                    <label class="small mb-1">Isikan Form Dibawah Ini</label>
+                    <hr>
+                    </hr>
+                    <div class="form-group">
+                        <label class="small mb-1 mr-1" for="nama_hubungan">Nama Hubungan</label><span class="mr-4 mb-3"
+                            style="color: red">*</span>
+                        <input class="form-control" name="nama_hubungan" type="text" id="nama_hubungan"
+                            placeholder="Input Nama Hubungan Keluarga" value="{{ old('nama_hubungan') }}" required />
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -200,15 +247,27 @@ Riwayat Keluarga
                 <label class="small mb-1 mr-1" for="id_hub_keluarga">Hubungan Keluarga</label><span class="mr-4 mb-3"
                     style="color: red">*</span>
 
-                <select class="form-select" aria-label="Default select example" name="id_hub_keluarga" type="text" id="id_hub_keluarga" required >
-                        <option selected="">Pilih Hubungan Keluarga</option>
-                        @foreach ($hubungan as $items)
-                            <option value={{ $items->id_hub_keluarga }}
-                                @if($items->id_hub_keluarga == $item->id_hub_keluarga)
-                                selected
-                            @endif>{{ $items->hubungan_keluarga }}</option>
-                        @endforeach
+                <div class="input-group mb-3">
+                    <button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal"
+                    data-bs-target="#Modaltambahhubungan">Tambah</button>
+                    <select name="hubungan_keluarga" id="hubungan_keluarga" class="form-select" value="{{ old('hubungan_keluarga') }}">
+                        @if ($item->DetailHubungan != null)
+                            <option value="{{ $item->hubungan_keluarga }}">{{ $item->hubungan_keluarga }}</option>
+                        @else
+                            <option value="{{ $item->id_detail_hub_keluarga }}">{{ $item->DetailHubungan->nama_hubungan }}</option>
+                        @endif
+                      
+                        <option value="Ayah">Ayah</option>
+                        <option value="Ibu">Ibu</option>
+                        <option value="Anak Pertama">Anak Pertama</option>
+                        <option value="Anak Kedua">Anak Kedua</option>
+                        @if ($detailhubungan != '' | $detailhubungan != null)
+                            @foreach ($detailhubungan as $detail)
+                                <option value={{ $detail->nama_hubungan }}>{{ $detail->nama_hubungan }}</option>
+                            @endforeach
+                        @endif
                     </select>
+                </div>
                 <label class="small mb-1 mr-1" for="kel_tanggal_lahir">Tanggal Lahir</label><span class="mr-4 mb-3"
                     style="color: red">*</span>
                 <input class="form-control" name="kel_tanggal_lahir" type="date" id="kel_tanggal_lahir"

@@ -6,20 +6,14 @@ use App\Models\MasterData\MasterPegawai;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class RiwayatPendidikan extends Model
+class DetailRiwayatPendidikan extends Model
 {
-    protected $table = "tb_riwayat_pendidikan";
+    protected $table = "tb_detail_pendidikan";
 
-    protected $primaryKey = 'id_riwayat_pendidikan';
+    protected $primaryKey = 'id_detail_pendidikan';
 
     protected $fillable = [
-        'id_pegawai',
-        'tipe_pendidikan',
-        'nama_sekolah',
-        'jurusan',
-        'no_ijasah',
-        'tanggal_ijasah',
-        'file_ijasah'
+        'id_pegawai','nama_pendidikan'
     ];
 
     protected $hidden = [
@@ -32,9 +26,5 @@ class RiwayatPendidikan extends Model
     public function Pegawai()
     {
         return $this->belongsTo(MasterPegawai::class, 'id_pegawai', 'id_pegawai');
-    }
-    public function DetailPendidikan()
-    {
-        return $this->belongsTo(DetailRiwayatPendidikan::class, 'id_pegawai', 'id_pegawai');
     }
 }
