@@ -8,6 +8,7 @@ use App\Http\Controllers\Absensi\LaporanAbsensiController;
 use App\Http\Controllers\Absensi\QrAbsensiController;
 use App\Http\Controllers\Cuti\ApprovalCutiController;
 use App\Http\Controllers\Cuti\PengajuanCutiController;
+use App\Http\Controllers\User\DashboardController;
 use App\Http\Controllers\Jadwal\JadwalPegawaiController;
 use App\Http\Controllers\Jadwal\JadwalSayaController;
 use App\Http\Controllers\MasterData\MasterJabatanController;
@@ -46,6 +47,7 @@ use App\Models\MasterData\MasterOrientasi;
 use App\Models\MasterData\MasterPangkat;
 use App\Models\Pelatihan\ProgramPelatihan;
 use App\Models\Riwayat\RiwayatPendidikan;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,18 +66,26 @@ Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', [App\Http\Controllers\User\ProfileController::class, 'index']);
+    Route::get('/dashboard', [App\Http\Controllers\DashboardHRDController::class, 'index'])->name('dashboard');
     Route::get('/absen/{id}', [App\Http\Controllers\Absensi\AbsensiController::class, 'index']);
     Route::resource('absen', AbsensiController::class);
+ 
 
-
-
-    // ---------------------user------------------
+    // USER
     Route::prefix('User')
-        // ->middleware(['Admin_Role','verified'])
         ->group(function () {
             Route::resource('profile', ProfileController::class);
             Route::resource('password', PasswordController::class);
         });
+
+    // DASHBOARD
+    // Route::prefix('User')
+    //     ->middleware(['hrd'])
+    //     ->group(function () {
+    //         // Route::get('/dashboard', DashboardController::class);
+    //         Route::get('/dashboard', [App\Http\Controllers\User\DashboardController::class, 'index']);
+    //     });
+
 
     // MASTER DATA
     Route::prefix('Masterdata')

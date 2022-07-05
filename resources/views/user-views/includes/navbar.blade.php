@@ -119,9 +119,16 @@
 
     <ul class="metismenu" id="menu">
         <li>
+            @if (Auth::user()->Pegawai->role == 'HRD')
+                <a href="{{ route('dashboard') }}">
+                    <div class="parent-icon"><i class="lni lni-home"></i></div>
+                    <div class="menu-title">Dashboard</div>
+                </a>
+            @endif
+        </li>
+        <li>
             <a href="{{ route('profile.index') }}">
-                <div class="parent-icon"><i class="lni lni-user"></i>
-                </div>
+                <div class="parent-icon"><i class="lni lni-user"></i></div>
                 <div class="menu-title">Profile</div>
             </a>
         </li>

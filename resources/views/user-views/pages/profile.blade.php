@@ -218,7 +218,7 @@ Profile
                     <div class="ms-3">
                         <div class="text-danger">Terdapat Penukaran Jadwal, Lihat Sekarang!</div>
                     </div>
-                    <a type="button" href="{{ route('jadwal-saya.show', Auth::user()->pegawai->id_pegawai) }}" class="btn btn-danger" style="margin-left: 950px">Lihat Penukaran <span class="badge bg-dark">{{ $jadwalcount }} Data</span>
+                    <a type="button" href="{{ route('jadwal-saya.show', Auth::user()->pegawai->id_pegawai) }}" class="btn btn-danger" style="margin-left: 500px">Lihat Penukaran <span class="badge bg-dark">{{ $jadwalcount }} Data</span>
                     </a>
                 </div>               
             </div>

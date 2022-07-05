@@ -3,8 +3,13 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request as HttpRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -26,13 +31,28 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    
+   
+    // protected $redirectTo = RouteServiceProvider::HOME;
+    
+    protected function authenticated($request, $user)
+    {
+       $tes = $user->Pegawai->role;
+       if($tes == "HRD"){
+            return redirect('/dashboard');
+       }else{
+            return redirect('/');
+       }
+    }
+  
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
+ 
+
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
