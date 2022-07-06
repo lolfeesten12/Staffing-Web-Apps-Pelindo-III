@@ -237,7 +237,6 @@
   
 
     @if (Auth::user()->Pegawai->role == 'HRD')
-
     <li>
         <a href="javascript:;" class="has-arrow">
             <div class="parent-icon"><i class="lni lni-checkbox"></i>
@@ -261,6 +260,32 @@
             <li> <a href="{{ route('pengajuan-cuti.index') }}"><i class="bi bi-circle"></i>Pengajuan Cuti</a>
         </ul>
     </li>
+
+    
+    <li class="menu-label">Mutasi</li>
+    <li>
+        <a class="has-arrow" href="javascript:;">
+            <div class="parent-icon"><i class="lni lni-briefcase"></i>
+            </div>
+            <div class="menu-title">Mutasi Pegawai</div>
+        </a>
+        <ul>
+            @if (Auth::user()->Pegawai->role == 'Pegawai')
+                <li> <a href="{{ route('mutasi.index') }}"><i class="bi bi-circle"></i>Pengumuman Mutasi</a>
+            @endif
+            @if (Auth::user()->Pegawai->role == 'HRD')
+                <li> <a href="{{ route('usulan-mutasi.index') }}"><i class="bi bi-circle"></i>Usulan Mutasi</a>
+                <li> <a href="{{ route('mutasi.index') }}"><i class="bi bi-circle"></i>Mutasi</a>
+                <li> <a href="{{ route('usulan-pangkat.index') }}"><i class="bi bi-circle"></i>Usulan Mutasi Pangkat</a>
+                <li> <a href="{{ route('mutasi-pangkat.index') }}"><i class="bi bi-circle"></i>Mutasi Pangkat</a>
+                <li> <a href="{{ route('usulan-jabatan.index') }}"><i class="bi bi-circle"></i>Usulan Mutasi Jabatan</a>
+                <li> <a href="{{ route('mutasi-jabatan.index') }}"><i class="bi bi-circle"></i>Mutasi Jabatan</a>
+            @endif
+        </ul>
+    </li>
+  
+
+
     @if (Auth::user()->Pegawai->role == 'Pegawai')
     <li class="menu-label">Penilaian</li>
     @else
