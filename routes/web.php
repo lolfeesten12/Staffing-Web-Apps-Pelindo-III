@@ -158,8 +158,11 @@ Route::group(['middleware' => 'auth'], function () {
         ->middleware(['direktur'])
         ->group(function () {
             Route::resource('approval-mutasi', ApprovalUsulanMutasiController::class);
+            Route::post('approval-mutasi/{id}/set-status', [App\Http\Controllers\Mutasi\ApprovalUsulanMutasiController::class, 'Status'])->name('status-approval-mutasi');
             Route::resource('approval-mutasi-pangkat', ApprovalMutasiPangkatController::class);
+            Route::post('approval-mutasi-pangkat/{id}/set-status', [App\Http\Controllers\Mutasi\ApprovalMutasiPangkatController::class, 'Status'])->name('status-approval-pangkat');
             Route::resource('approval-mutasi-jabatan', ApprovalMutasiJabatanController::class);
+            Route::post('approval-mutasi-jabatan/{id}/set-status', [App\Http\Controllers\Mutasi\ApprovalMutasiJabatanController::class, 'Status'])->name('status-approval-jabatan');
         });
 
     Route::prefix('Laporan')

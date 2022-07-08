@@ -356,10 +356,10 @@
                 <li> <a href="{{ route('approval-cuti.index') }}"><i class="bi bi-circle"></i>Approval Cuti</a>
                 <li> <a href="{{ route('approval-penilaian.index') }}"><i class="bi bi-circle"></i>Approval Penilaian</a></li>
             @elseif (Auth::user()->Pegawai->role == 'Direktur')
-
+                <li> <a href="{{ route('approval-mutasi.index') }}"><i class="bi bi-circle"></i>Mutasi</a>
+                <li> <a href="{{ route('approval-mutasi-pangkat.index') }}"><i class="bi bi-circle"></i>Mutasi Pangkat</a>
+                <li> <a href="{{ route('approval-mutasi-jabatan.index') }}"><i class="bi bi-circle"></i>Mutasi Jabatan</a>
             @endif
-          
-
         </ul>
     </li>
     @endif

@@ -19,11 +19,25 @@ class ApprovalUsulanMutasiController extends Controller
         return view('user-views.pages.mutasi.approval.mutasi.index', compact('usulan'));
     }
 
+    public function Status(Request $request, $id)
+    {
+        // $request->validate([
+        //     'status' => 'required|in:Terima,Tolak,Pending'
+        // ]);
+
+        $item = UsulanMutasi::find($id);
+        $item->status_approval = $request->status_approval;
+        $item->keterangan_approval = $request->keterangan_approval;
+        $item->save();
+
+        return redirect()->route('approval-mutasi.index');
+    }
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
+    
     public function create()
     {
         //
@@ -48,7 +62,8 @@ class ApprovalUsulanMutasiController extends Controller
      */
     public function show($id)
     {
-        //
+        $item = UsulanMutasi::find($id);
+        return view('user-views.pages.mutasi.approval.mutasi.detail', compact('item'));
     }
 
     /**

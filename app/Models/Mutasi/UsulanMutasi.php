@@ -26,7 +26,8 @@ class UsulanMutasi extends Model
         'tanggal_surat',
         'nomor_surat',
         'status_approval',
-        'file'
+        'file',
+        'keterangan_approval'
     ];
 
     protected $hidden = [
