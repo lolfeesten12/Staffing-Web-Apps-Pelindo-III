@@ -21,9 +21,12 @@ Pengumuman Requirement
                     </ol>
                 </nav>
             </div>
+            @if (Auth::user()->Pegawai->role != 'Direktur')
             <div class="ms-auto">
                 <a href="{{ route('pengumuman.create') }}" class="btn btn-sm btn-primary">Tambah Data</a>
-            </div>
+            </div> 
+            @endif
+            
         </div>
         <hr>
         @if(session('messageberhasil'))
@@ -84,9 +87,12 @@ Pengumuman Requirement
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
                                                 style="width: 60px;">Tanggal Selesai</th>
-                                            <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
+                                               
+                                                <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Salary: activate to sort column ascending"
                                                 style="width: 70px;">Action</th>
+                                             
+                                            
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -98,16 +104,21 @@ Pengumuman Requirement
                                             <td>{{ $item->job_type }}</td>
                                             <td>{{ $item->tanggal_mulai }}</td>
                                             <td>{{ $item->tanggal_selesai }}</td>
+                                        
                                             <td class="text-center">
                                                 <a href="{{ route('pengumuman.show',$item->id_pengumuman) }}"
                                                     class="btn btn-sm btn-secondary"><i class="lni lni-eye"></i></a>
+                                                    @if (Auth::user()->Pegawai->role != 'Direktur')
                                                 <a href="{{ route('pengumuman.edit',$item->id_pengumuman) }}"
                                                     class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i></a>
                                                 <a href="javascript:;" class="btn btn-sm btn-danger"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#Modalhapus-{{ $item->id_pengumuman }}"><i
                                                         class="bi bi-trash-fill"></i></a>
+                                                        @endif
                                             </td>
+                                          
+                                           
                                         </tr>
                                         @empty
 

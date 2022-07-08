@@ -107,9 +107,12 @@ Atur Orientasi
                                                 <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
                                                 style="width: 70px;">Status Orientasi</th>
-                                            <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
+                                                @if (Auth::user()->Pegawai->role != 'Direktur')
+                                                <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Salary: activate to sort column ascending"
                                                 style="width: 70px;">Action</th>
+                                                @endif
+                                           
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -123,6 +126,7 @@ Atur Orientasi
                                             </td>
                                             <td>{{ $item->PesertaOrientasi->no_sertifikat ?? 'Belum Ditentukan'}}</td>
                                             <td>{{ $item->PesertaOrientasi->MasterOrientasi->status_orientasi ?? 'Belum Ditentukan' }}</td>
+                                            @if (Auth::user()->Pegawai->role != 'Direktur')
                                             <td class="text-center">
                                                 <a href="javascript:;" class="btn btn-sm btn-secondary"
                                                     data-bs-toggle="modal"
@@ -143,6 +147,8 @@ Atur Orientasi
 
 
                                             </td>
+                                            @endif
+                                           
                                         </tr>
                                         @empty
 

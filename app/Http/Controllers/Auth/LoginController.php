@@ -38,8 +38,10 @@ class LoginController extends Controller
     protected function authenticated($request, $user)
     {
        $tes = $user->Pegawai->role;
-       if($tes == "HRD"){
+       if($tes == "HRD" || $tes == 'Direktur'){
             return redirect('/dashboard');
+       }elseif($tes == 'Kepala Unit' || $tes == 'Manager Unit' || $tes == 'Direktur Unit'){
+            return redirect('/dashboardunit');
        }else{
             return redirect('/');
        }

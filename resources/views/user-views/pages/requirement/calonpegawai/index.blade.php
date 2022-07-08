@@ -93,9 +93,12 @@ Calon Pegawai
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
                                                 style="width: 70px;">Status Penilaian</th>
-                                            <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
+                                                @if (Auth::user()->Pegawai->role != 'Direktur')
+                                                <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Salary: activate to sort column ascending"
                                                 style="width: 70px;">Action</th>
+                                                @endif
+                                            
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -142,21 +145,23 @@ Calon Pegawai
                                                 @endif
                                             </td>
                                                 
-                                                
-                                            <td class="text-center">
-                                                <a href="{{ route('calon-pegawai.show',$item->id_calon_pegawai) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Detail Calon Pegawai"
-                                                    class="btn btn-sm btn-secondary"><i class="lni lni-eye"></i></a>
-                                                @if($item->status_nilai == 'Belum dinilai')
-                                                <a href="" class="btn btn-sm btn-primary" type="button" 
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#Modalnilai-{{ $item->id_calon_pegawai }}">
-                                                    <i class="lni lni-calculator"></i>
-                                                </a>
-                                                @else
-                                                <span>
-                                                    @endif
-                                                </span>
-                                            </td>
+                                                @if (Auth::user()->Pegawai->Role == 'Direktur')
+                                                <td class="text-center">
+                                                    <a href="{{ route('calon-pegawai.show',$item->id_calon_pegawai) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Detail Calon Pegawai"
+                                                        class="btn btn-sm btn-secondary"><i class="lni lni-eye"></i></a>
+                                                    @if($item->status_nilai == 'Belum dinilai')
+                                                    <a href="" class="btn btn-sm btn-primary" type="button" 
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#Modalnilai-{{ $item->id_calon_pegawai }}">
+                                                        <i class="lni lni-calculator"></i>
+                                                    </a>
+                                                    @else
+                                                    <span>
+                                                        @endif
+                                                    </span>
+                                                </td>
+                                                @endif
+                                           
                                         </tr>
                                         @empty
 

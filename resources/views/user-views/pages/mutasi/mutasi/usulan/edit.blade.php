@@ -28,7 +28,7 @@ Edit Data Usulan
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-10 mx-auto">
+            <div class="col-lg-8 mx-auto">
                 <div class="card">
                     <div class="card-header py-3 bg-transparent">
                         <h5 class="mb-0">Lengkapi Form Berikut</h5>
@@ -39,44 +39,62 @@ Edit Data Usulan
                                 @method('PUT')
                                 @csrf
                                 <div class="row g-3">
-                                    <div class="col-4">
-                                        <label class="small mb-1 mr-1" for="jenis_mutasi">Jenis Mutasi</label><span
-                                            class="mr-4 mb-3" style="color: red">*</span>
-                                            <select name="jenis_mutasi" id="jenis_mutasi" class="form-select"
-                                            value="{{ old('jenis_mutasi') }}"
-                                            class="form-control @error('jenis_mutasi') is-invalid @enderror">
-                                            <option value="{{ $item->jenis_mutasi }}">{{ $item->jenis_mutasi }}</option>
-                                            <option value="Internal">Internal</option>
-                                            <option value="Promosi Pangkat">Promosi Pangkat</option>
-                                            <option value="Demosi Pangkat">Demosi Pangkat</option>
-                                            <option value="Promosi Jabatan">Promosi Jabatan</option>
-                                            <option value="Demosi jabatan">Demosi jabatan</option>
-                                        </select>
-                                        @error('jenis_mutasi')<div class="text-danger small mb-1">{{ $message }}
-                                        </div> @enderror
+                                    <div class="col-6">
+                                        <label class="form-label mr-1" for="nomor_surat">Nomor Surat</label><span class="mr-4 mb-3"
+                                            style="color: red">*</span>
+                                        <input type="text" class="form-control" placeholder="Input Nomor Surat" name="nomor_surat"
+                                            value="{{ $item->nomor_surat }}">
                                     </div>
-                                    <div class="col-8">
-                                        <label class="small mb-1 mr-1" for="id_pegawai">Pegawai diusulkan</label><span
+                                    <div class="col-6">
+                                        <label class="form-label mr-1" for="tanggal_surat">Tanggal Surat</label><span
                                             class="mr-4 mb-3" style="color: red">*</span>
-                                        <select class="form-select" name="id_pegawai" id="id_pegawai"
-                                            value="{{ old('id_pegawai') }}"
-                                            class="form-control @error('id_pegawai') is-invalid @enderror">
-                                            <option value="{{ $item->Pegawai->id_pegawai }}">{{ $item->Pegawai->nama_pegawai }}</option>
-                                            @foreach ($pegawai as $item)
-                                            <option value="{{ $item->id_pegawai }}">{{ $item->nama_pegawai }}
+                                        <input type="date" class="form-control" placeholder="Input Tanggal Surat"
+                                            name="tanggal_surat" value="{{ $item->tanggal_surat }}">
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="form-label mr-1" for="unit_kerja">Unit Kerja</label><span
+                                            class="mr-4 mb-3" style="color: red">*</span>
+                                        <input type="text" class="form-control" placeholder="Input Tanggal Surat"
+                                            name="unit_kerja" value="{{ $item->Pegawai->UnitKerja->unit_kerja }}" readonly>
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="form-label mr-1" for="id_pegawai">Pegawai</label><span
+                                            class="mr-4 mb-3" style="color: red">*</span>
+                                        <input type="text" class="form-control" placeholder="Input Tanggal Surat"
+                                            name="id_pegawai" value="{{ $item->Pegawai->nama_pegawai }}" readonly>
+                                    </div>
+                                    
+                                    @if ($item->jenis_mutasi != 'Resign')
+                                    <div class="col-12">
+                                        <label class="small mb-1 mr-1" for="id_divisi_tujuan">Unit Kerja Tujuan</label><span
+                                            class="mr-4 mb-3" style="color: red">*</span>
+                                        <select class="form-select" name="id_divisi_tujuan" id="id_divisi_tujuan"
+                                            value="{{ old('id_divisi_tujuan') }}"
+                                            class="form-control @error('id_divisi_tujuan') is-invalid @enderror">
+                                            <option value="{{ $item->id_divisi_tujuan }}">{{ $item->Unit->unit_kerja }}</option>
+                                            @foreach ($unit as $item)
+                                            <option value="{{ $item->id_unit_kerja }}">{{ $item->unit_kerja }}
                                             </option>
                                             @endforeach
                                         </select>
-                                        @error('id_pegawai')<div class="text-danger small mb-1">{{ $message }}
+                                        @error('id_divisi_tujuan')<div class="text-danger small mb-1">{{ $message }}
                                         </div> @enderror
                                     </div>
-                                    <div class="col-12">
-                                        <label class="form-label mr-1" for="alasan_usulan">Alasan Usulan Mutasi</label><span class="mr-4 mb-3" style="color: red">*</span>
-                                        <textarea type="text" class="form-control" placeholder="Alasan Usulan Mutasi Pegawai"
-                                            name="alasan_usulan" value="{{ old('alasan_usulan') }}"
-                                            class="form-control @error('alasan_usulan') is-invalid @enderror"> {{ $item->alasan_usulan }} </textarea>
-                                        @error('alasan_usulan')<div class="invalid-feedback">{{ $message }}
-                                        </div> @enderror
+                                    @endif
+                                    <div class="col-4">
+                                        <label class="small mb-1" for="file">File</label><span class="mr-4 mb-3"
+                                            style="color: red">*</span>
+                                        <input class="form-control" id="file" type="file" name="file"
+                                            value="{{ $item->file }}" accept="application/pdf" multiple="multiple">
+                                        <div class="small">
+                                            <span class="text-muted">Accept File in PDF Format, File Size Max 2 MB</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-8">
+                                        <label class="small mb-1" for="alasan_usulan">Alasan Usulan</label><span class="mr-4 mb-3"
+                                            style="color: red">*</span>
+                                        <textarea class="form-control" id="text" type="alasan_usulan" name="alasan_usulan"
+                                            value="{{ old('alasan_usulan') }}" rows="5">{{ $item->alasan_usulan }}</textarea>
                                     </div>
                                     <div class="col-12">
                                         <button class="btn btn-primary px-4" type="submit">Edit Data</button>
@@ -90,8 +108,5 @@ Edit Data Usulan
     </div>
     </div>
 </main>
-
-
-
 
 @endsection

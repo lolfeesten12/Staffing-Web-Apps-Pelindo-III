@@ -119,11 +119,16 @@
 
     <ul class="metismenu" id="menu">
         <li>
-            @if (Auth::user()->Pegawai->role == 'HRD')
+            @if (Auth::user()->Pegawai->role == 'HRD' || Auth::user()->Pegawai->role == 'Direktur')
                 <a href="{{ route('dashboard') }}">
                     <div class="parent-icon"><i class="lni lni-home"></i></div>
                     <div class="menu-title">Dashboard</div>
                 </a>
+            @elseif (Auth::user()->Pegawai->role == 'Kepala Unit' || Auth::user()->Pegawai->role == 'Manager Unit')
+            <a href="{{ route('dashboardunit') }}">
+                <div class="parent-icon"><i class="lni lni-home"></i></div>
+                <div class="menu-title">Dashboard</div>
+            </a>
             @endif
         </li>
         <li>
@@ -132,7 +137,7 @@
                 <div class="menu-title">Profile</div>
             </a>
         </li>
-        @if (Auth::user()->Pegawai->role == 'HRD')
+        @if (Auth::user()->Pegawai->role == 'HRD' || Auth::user()->Pegawai->role == 'Direktur')
         <li class="menu-label">Data Master</li>
         <li>
             <a href="javascript:;" class="has-arrow">
@@ -151,15 +156,26 @@
                 <li> <a href="{{ route('orientasi.index') }}"><i class="bi bi-circle"></i>Orientasi</a></li>
             </ul>
         </li>
+        @if (Auth::user()->Pegawai->role == 'Direktur')
+            <li class="menu-label">Pelaporan</li>
+        @endif
+        
         <li>
             <a href="javascript:;" class="has-arrow">
                 <div class="parent-icon"><i class="lni lni-users"></i>
                 </div>
+                @if (Auth::user()->Pegawai->role == 'Direktur')
+                    <div class="menu-title">Pengadaan Pegawai</div>
+                @else
                 <div class="menu-title">Requirement</div>
+                @endif
+                
             </a>
             <ul>
-                <li> <a href="{{ route('pengumuman.index') }}"><i class="bi bi-circle"></i>Pengumuman</a></li>
-                <li> <a href="{{ route('calon-pegawai.index') }}"><i class="bi bi-circle"></i>Calon Pegawai</a></li>
+                <li> <a href="{{ route('pengumuman.index') }}"><i class="bi bi-circle"></i>Lowongan</a></li>
+                @if (Auth::user()->Pegawai->role != 'Direktur')
+                    <li> <a href="{{ route('calon-pegawai.index') }}"><i class="bi bi-circle"></i>Calon Pegawai</a></li>
+                @endif
                 <li> <a href="{{ route('calon-pegawai-hasil') }}"><i class="bi bi-circle"></i>Hasil Seleksi</a></li>
                 <li> <a href="{{ route('peserta-orientasi.index') }}"><i class="bi bi-circle"></i>Orientasi</a></li>
                 <li> <a href="{{ route('web-requirement.index') }}"><i class="bi bi-circle"></i>Menuju Web Recrut</a>
@@ -179,6 +195,7 @@
         </li>
         @endif
 
+        @if (Auth::user()->Pegawai->role != 'Direktur')
         <li class="menu-label">Riwayat Pegawai</li>
         <li>
             <a href="javascript:;" class="has-arrow">
@@ -192,14 +209,13 @@
                 <li> <a href="{{ route('prestasi.index') }}"><i class="bi bi-circle"></i>Riwayat Prestasi</a></li>
                 <li> <a href="{{ route('cuti.index') }}"><i class="bi bi-circle"></i>Riwayat Cuti</a></li>
                 <li> <a href="{{ route('riwayatpelanggaran.index') }}"><i class="bi bi-circle"></i>Riwayat Pelanggaran</a></li>
-                <li> <a href="{{ route('riwayatsanksi.index') }}"><i class="bi bi-circle"></i>Riwayat Sanksi</a></li>
-                {{-- <li> <a href="{{ route('riwayatpelatihan.index') }}"><i class="bi bi-circle"></i>Riwayat
-                Pelatihan</a>
-        </li> --}}
-    </ul>
-    </li>
+                <li> <a href="{{ route('riwayatsanksi.index') }}"><i class="bi bi-circle"></i>Riwayat Sanksi</a></li>    
+            </ul>
+        </li>
+        @endif
+     
 
-    @if (Auth::user()->Pegawai->role != 'HRD')
+    @if (Auth::user()->Pegawai->role != 'HRD' && Auth::user()->Pegawai->role != 'Direktur')
     <li class="menu-label">Pelatihan</li>
     <li>
         <a href="javascript:;" class="has-arrow">
@@ -213,7 +229,7 @@
     </li>
     @endif
 
-
+    @if (Auth::user()->Pegawai->role != 'Direktur')
     <li class="menu-label">Jadwal dan Absen</li>
     <li>
         <a href="javascript:;" class="has-arrow">
@@ -234,9 +250,10 @@
             <li> <a href="{{ route('jadwal-saya.show', Auth::user()->pegawai->id_pegawai) }}"><i class="bi bi-circle"></i>List Penukaran Jadwal</a></li>
         </ul>
     </li>
-  
+    @endif
 
-    @if (Auth::user()->Pegawai->role == 'HRD')
+    
+    @if (Auth::user()->Pegawai->role == 'HRD' || Auth::user()->Pegawai->role == 'Direktur')
     <li>
         <a href="javascript:;" class="has-arrow">
             <div class="parent-icon"><i class="lni lni-checkbox"></i>
@@ -245,11 +262,15 @@
         </a>
         <ul>
             <li> <a href="{{ route('laporan-absensi.index') }}"><i class="bi bi-circle"></i>Laporan Absensi</a>
+            @if (Auth::user()->Pegawai->role != 'Direktur')
             <li> <a href="{{ route('absen-manual.index') }}"><i class="bi bi-circle"></i>Absen Pegawai</a>
+            @endif
+           
         </ul>
     </li>
     @endif
 
+    @if (Auth::user()->Pegawai->role != 'Direktur')
     <li>
         <a href="javascript:;" class="has-arrow">
             <div class="parent-icon"><i class="lni lni-write"></i>
@@ -260,8 +281,9 @@
             <li> <a href="{{ route('pengajuan-cuti.index') }}"><i class="bi bi-circle"></i>Pengajuan Cuti</a>
         </ul>
     </li>
+    @endif
 
-    
+    @if (Auth::user()->Pegawai->role !='Direktur')
     <li class="menu-label">Mutasi</li>
     <li>
         <a class="has-arrow" href="javascript:;">
@@ -283,13 +305,17 @@
             @endif
         </ul>
     </li>
+    @endif
+  
   
 
 
     @if (Auth::user()->Pegawai->role == 'Pegawai')
     <li class="menu-label">Penilaian</li>
-    @else
+    @elseif (Auth::user()->Pegawai->role == 'HRD')
     <li class="menu-label">Penilaian dan Pelanggaran</li>
+    @elseif (Auth::user()->Pegawai->role == 'Direktur')
+    
     @endif
 
     <li>
@@ -299,13 +325,13 @@
             <div class="menu-title">Penilaian Pegawai</div>
         </a>
         <ul>
-            @if (Auth::user()->Pegawai->role == 'HRD' || Auth::user()->Pegawai->role == 'Kepala Unit')
+            @if (Auth::user()->Pegawai->role == 'HRD' || Auth::user()->Pegawai->role == 'Kepala Unit' || Auth::user()->Pegawai->role == 'Direktur')
             <li> <a href="{{ route('penilaian-pegawai.index') }}"><i class="bi bi-circle"></i>Penilaian</a></li>
             @endif
             <li> <a href="{{ route('nilai-saya.index') }}"><i class="bi bi-circle"></i>Nilai Saya</a></li>
         </ul>
     </li>
-    @if (Auth::user()->Pegawai->role == 'HRD' || Auth::user()->Pegawai->role == 'Kepala Unit')
+    @if (Auth::user()->Pegawai->role == 'HRD' || Auth::user()->Pegawai->role == 'Kepala Unit' || Auth::user()->Pegawai->role == 'Direktur')
     <li>
         <a class="has-arrow" href="javascript:;">
             <div class="parent-icon"><i class="lni lni-ban"></i>
@@ -317,7 +343,7 @@
         </ul>
     </li>
     @endif
-    @if (Auth::user()->Pegawai->role == 'HRD')
+    @if (Auth::user()->Pegawai->role == 'HRD' || Auth::user()->Pegawai->role == 'Direktur')
     <li class="menu-label">Menu Approval</li>
     <li>
         <a class="has-arrow" href="javascript:;">
@@ -326,16 +352,17 @@
             <div class="menu-title">Approval</div>
         </a>
         <ul>
-            <li> <a href="{{ route('approval-cuti.index') }}"><i class="bi bi-circle"></i>Approval Cuti</a>
-            <li> <a href="{{ route('approval-penilaian.index') }}"><i class="bi bi-circle"></i>Approval Penilaian</a>
-            </li>
+            @if (Auth::user()->Pegawai->role =='HRD')
+                <li> <a href="{{ route('approval-cuti.index') }}"><i class="bi bi-circle"></i>Approval Cuti</a>
+                <li> <a href="{{ route('approval-penilaian.index') }}"><i class="bi bi-circle"></i>Approval Penilaian</a></li>
+            @elseif (Auth::user()->Pegawai->role == 'Direktur')
+
+            @endif
+          
 
         </ul>
     </li>
     @endif
-
-
-
 
     <li class="menu-label">Logout</li>
     <li>

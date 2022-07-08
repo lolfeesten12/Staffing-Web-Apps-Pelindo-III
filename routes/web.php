@@ -19,6 +19,9 @@ use App\Http\Controllers\MasterData\MasterPelanggaranController;
 use App\Http\Controllers\MasterData\MasterSanksiController;
 use App\Http\Controllers\MasterData\MasterShiftController;
 use App\Http\Controllers\MasterData\MasterUnitKerjaController;
+use App\Http\Controllers\Mutasi\ApprovalMutasiJabatanController;
+use App\Http\Controllers\Mutasi\ApprovalMutasiPangkatController;
+use App\Http\Controllers\Mutasi\ApprovalUsulanMutasiController;
 use App\Http\Controllers\Mutasi\MutasiInternalController;
 use App\Http\Controllers\Mutasi\MutasiJabatanController;
 use App\Http\Controllers\Mutasi\MutasiPangkatController;
@@ -74,11 +77,12 @@ Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', [App\Http\Controllers\User\ProfileController::class, 'index']);
-    Route::get('/dashboard', [App\Http\Controllers\DashboardHRDController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [App\Http\Controllers\DashboardHRDController::class, 'index'])->middleware(['hrd&direktur'])->name('dashboard');
+    Route::get('/dashboardunit', [App\Http\Controllers\DashboardHRDController::class, 'indexunit'])->middleware(['gabunganunit'])->name('dashboardunit');
     Route::get('/absen/{id}', [App\Http\Controllers\Absensi\AbsensiController::class, 'index']);
     Route::resource('absen', AbsensiController::class);
  
-
+    
     // USER
     Route::prefix('User')
         ->group(function () {
@@ -89,7 +93,7 @@ Route::group(['middleware' => 'auth'], function () {
     
     // MASTER DATA
     Route::prefix('Masterdata')
-        ->middleware(['hrd'])
+        ->middleware(['hrd&direktur'])
         ->group(function () {
             Route::resource('unit-kerja', MasterUnitKerjaController::class);
             Route::resource('pangkat', MasterPangkatController::class);
@@ -150,8 +154,16 @@ Route::group(['middleware' => 'auth'], function () {
             Route::post('approval-penilaian/{id_penilaian}/set-status', [App\Http\Controllers\Penilaian\ApprovalPenilaianController::class, 'Status'])->name('approval-penilaian-status');
         });
 
+    Route::prefix('Approval')
+        ->middleware(['direktur'])
+        ->group(function () {
+            Route::resource('approval-mutasi', ApprovalUsulanMutasiController::class);
+            Route::resource('approval-mutasi-pangkat', ApprovalMutasiPangkatController::class);
+            Route::resource('approval-mutasi-jabatan', ApprovalMutasiJabatanController::class);
+        });
+
     Route::prefix('Laporan')
-        ->middleware(['hrd'])
+        ->middleware(['hrd&direktur'])
         ->group(function () {
             Route::resource('laporan-absensi', LaporanAbsensiController::class);
             Route::resource('absen-manual', AbsenManualController::class);
@@ -161,7 +173,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::prefix('Mutasi')
     ->group(function () {
         Route::resource('usulan-mutasi', UsulanMutasiController::class);
-        Route::get('usulan-mutasi/getpegawai/{id}', [App\Http\Controllers\Mutasi\UsulanMutasiController::class, 'GetUnit'])->name('pegawai-unit');
+        Route::get('usulan-mutasi/getpegawai/{id}', [App\Http\Controllers\Mutasi\UsulanMutasiController::class, 'GetUnit']);
         Route::resource('mutasi', MutasiPegawaiController::class);
         
 
@@ -171,6 +183,7 @@ Route::group(['middleware' => 'auth'], function () {
       
         // MUTASI JABATAN
         Route::resource('usulan-jabatan', UsulanJabatanController::class);
+        Route::get('usulan-jabatan/getpegawai-jabatan/{id}', [App\Http\Controllers\Mutasi\UsulanJabatanController::class, 'GetJabatan']);
         Route::resource('mutasi-jabatan', MutasiJabatanController::class);
     });
         
@@ -186,14 +199,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     // REQUIREMENT
     Route::prefix('Requirement')
-        ->middleware(['hrd'])
+        ->middleware(['hrd&direktur'])
         ->group(function () {
             Route::resource('pengumuman', PengumumanController::class);
-        });
-
-    Route::prefix('Requirement')
-        ->middleware(['hrd'])
-        ->group(function () {
             Route::get('/hasil_seleksi', [App\Http\Controllers\WebRequirement\CalonPegawaiController::class, 'HasilSeleksi'])->name('calon-pegawai-hasil');
             Route::get('/download_cv/{file_cv}', [App\Http\Controllers\WebRequirement\CalonPegawaiController::class, 'getFile'])->name('calon-pegawai-cv');
             Route::get('/download_pendukung/{file_pendukung}', [App\Http\Controllers\WebRequirement\CalonPegawaiController::class, 'getFilePendukung'])->name('calon-pegawai-pendukung');
@@ -209,7 +217,7 @@ Route::group(['middleware' => 'auth'], function () {
         });
 
     Route::prefix('Pelatihan')
-        ->middleware(['hrd'])
+        ->middleware(['hrd&direktur'])
         ->group(function () {
             Route::resource('program-pelatihan', ProgramPelatihanController::class);
             Route::get('/peserta-program/{id_pelatihan}', [App\Http\Controllers\Pelatihan\ProgramPelatihanController::class, 'Peserta'])->name('program-pelatihan-peserta');

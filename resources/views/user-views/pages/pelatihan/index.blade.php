@@ -21,9 +21,12 @@ Program Pelatihan
                     </ol>
                 </nav>
             </div>
+            @if (Auth::user()->Pegawai->role != 'Direktur')
             <div class="ms-auto">
                 <a href="{{ route('program-pelatihan.create') }}" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Tambah Data Pelatihan" class="btn btn-sm btn-primary">Tambah Data</a>
             </div>
+            @endif
+           
         </div>
         <hr>
         @if(session('messageberhasil'))
@@ -90,12 +93,15 @@ Program Pelatihan
                                                 <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
                                                 style="width: 70px;">Status Wajib</th>
+                                                @if (Auth::user()->Pegawai->role != 'Direktur')
                                                 <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
                                                 style="width: 70px;">Status</th>
-                                            <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
+                                                <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Salary: activate to sort column ascending"
                                                 style="width: 70px;">Action</th>
+                                                @endif
+                                          
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -115,6 +121,7 @@ Program Pelatihan
                                                 <span class="badge bg-light-success text-success w-100">Wajib</span>
                                                 @endif
                                             </td>
+                                            @if (Auth::user()->Pegawai->role != 'Direktur')
                                             <td class="text-center">
                                                 @if ($item->status == 'Selesai')
                                                 <span class="badge bg-light-success text-success w-100">Telah Selesai</span>
@@ -125,6 +132,7 @@ Program Pelatihan
                                                     
                                                 @endif
                                             </td>
+                                           
                                             <td class="text-center">
                                                 <a href="{{ route('program-pelatihan.show',$item->id_pelatihan) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Detail Data Pelatihan"
                                                     class="btn btn-sm btn-secondary"><i class="lni lni-eye"></i></a>
@@ -135,6 +143,8 @@ Program Pelatihan
                                                     data-bs-target="#Modalhapus-{{ $item->id_pelatihan }}"><i
                                                         class="bi bi-trash-fill"></i></a>
                                             </td>
+                                            @endif
+                                            
                                         </tr>
                                         @empty
 

@@ -95,8 +95,9 @@ class UsulanMutasiController extends Controller
     public function edit($id)
     {
         $item = UsulanMutasi::with('Pegawai')->find($id);
+        $unit = MasterUnitKerja::get();
         $pegawai = MasterPegawai::get();
-        return view('user-views.pages.mutasi.mutasi.usulan.edit', compact('item','pegawai'));
+        return view('user-views.pages.mutasi.mutasi.usulan.edit', compact('item','pegawai','unit'));
     }
 
     /**
@@ -109,9 +110,19 @@ class UsulanMutasiController extends Controller
     public function update(Request $request, $id)
     {
         $usulan = UsulanMutasi::find($id);
-        $usulan->id_pegawai = $request->id_pegawai;
         $usulan->alasan_usulan = $request->alasan_usulan;
-        $usulan->jenis_mutasi = $request->jenis_mutasi;
+        $usulan->id_divisi_tujuan = $request->id_divisi_tujuan;
+        $usulan->nomor_surat = $request->nomor_surat;
+        $usulan->tanggal_surat = $request->tanggal_surat;
+        if($request->file){
+            $imagePath = $request->file('file');
+            $file_surat = $imagePath->getClientOriginalName();
+            $imagePath->move(public_path().'/Resume/', $file_surat); 
+            $data[] = $file_surat;
+            $usulan->file = $file_surat;
+        }
+        
+
         $usulan->update();
 
         return redirect()->route('usulan-mutasi.index')->with('messageberhasil','Data Usulan Berhasil Diedit');

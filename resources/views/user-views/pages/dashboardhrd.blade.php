@@ -7,8 +7,6 @@ Dashboard
 
 @section('content')
 
-
-
 <main class="page-content">
     <div class="col py-2">
         <div class="card radius-15">
@@ -157,6 +155,24 @@ Dashboard
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 row-cols-xxl-4">
         <div class="col">
             <div class="card radius-10">
+                @if (Auth::user()->Pegawai->role == 'Direktur')
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="">
+                            <p class="mb-1">Pengajuan Mutasi Internal</p>
+                            <h5 class="mb-0 text-info">{{ $jumlah_cuti }} Orang</h5>
+                        </div>
+                        <div class="ms-auto fs-2 text-primary">
+                            <i class="lni lni-graph"></i>
+                        </div>
+                    </div>
+                    <hr class="my-2">
+                        <small class="mb-0"><span>Total Data Cuti Bulan ini</span></small><br>
+                        <small class="mb-0"><i class="bi bi-arrow-up"></i> <span>Pending +{{ $jumlah_cuti_pending }}</span></small><br>
+                        <small class="mb-0"><i class="bi bi-arrow-up"></i> <span>Approved +{{ $jumlah_cuti_terima }}</span></small><br>
+                        <small class="mb-0"><i class="bi bi-arrow-up"></i> <span>Not Approved +{{ $jumlah_cuti_tolak }}</span></small>
+                </div>
+                @else
                 <div class="card-body">
                     <div class="d-flex align-items-center">
                         <div class="">
@@ -173,6 +189,8 @@ Dashboard
                         <small class="mb-0"><i class="bi bi-arrow-up"></i> <span>Approved +{{ $jumlah_cuti_terima }}</span></small><br>
                         <small class="mb-0"><i class="bi bi-arrow-up"></i> <span>Not Approved +{{ $jumlah_cuti_tolak }}</span></small>
                 </div>
+                @endif
+              
             </div>
         </div>
         <div class="col">

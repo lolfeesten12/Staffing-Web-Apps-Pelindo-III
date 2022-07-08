@@ -14,6 +14,7 @@ use App\Models\WebRequirement\Orientasi;
 use App\Models\WebRequirement\Pengumuman;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardHRDController extends Controller
 {
@@ -53,5 +54,14 @@ class DashboardHRDController extends Controller
         
 
         ));
+    }
+
+    public function indexunit()
+    {
+        $haritext = Carbon::today()->toDayDateTimeString();
+        $jumlah_pegawai = MasterPegawai::where('id_unit_kerja', Auth::user()->Pegawai->UnitKerja->id_unit_kerja)->count();
+        $pegawai_unit = MasterPegawai::where('id_unit_kerja', Auth::user()->Pegawai->UnitKerja->id_unit_kerja)->get();
+
+        return view('user-views.pages.dashboardunit', compact('haritext','jumlah_pegawai','pegawai_unit'));
     }
 }
