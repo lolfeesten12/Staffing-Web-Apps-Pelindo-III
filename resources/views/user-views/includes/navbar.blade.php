@@ -292,8 +292,8 @@
             <div class="menu-title">Mutasi Pegawai</div>
         </a>
         <ul>
-            @if (Auth::user()->Pegawai->role == 'Pegawai')
-                <li> <a href="{{ route('mutasi.index') }}"><i class="bi bi-circle"></i>Pengumuman Mutasi</a>
+            @if (Auth::user()->Pegawai->role == 'Pegawai' || Auth::user()->Pegawai->role == 'Kepala Unit' || Auth::user()->Pegawai->role == 'Direktur Unit')
+                <li> <a href="{{ route('mutasi.pegawai') }}"><i class="bi bi-circle"></i>Pengumuman Mutasi</a>
             @endif
             @if (Auth::user()->Pegawai->role == 'HRD')
                 <li> <a href="{{ route('usulan-mutasi.index') }}"><i class="bi bi-circle"></i>Usulan Mutasi</a>

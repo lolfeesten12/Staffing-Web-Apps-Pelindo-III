@@ -160,9 +160,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::resource('approval-mutasi', ApprovalUsulanMutasiController::class);
             Route::post('approval-mutasi/{id}/set-status', [App\Http\Controllers\Mutasi\ApprovalUsulanMutasiController::class, 'Status'])->name('status-approval-mutasi');
             Route::resource('approval-mutasi-pangkat', ApprovalMutasiPangkatController::class);
-            Route::post('approval-mutasi-pangkat/{id}/set-status', [App\Http\Controllers\Mutasi\ApprovalMutasiPangkatController::class, 'Status'])->name('status-approval-pangkat');
             Route::resource('approval-mutasi-jabatan', ApprovalMutasiJabatanController::class);
-            Route::post('approval-mutasi-jabatan/{id}/set-status', [App\Http\Controllers\Mutasi\ApprovalMutasiJabatanController::class, 'Status'])->name('status-approval-jabatan');
         });
 
     Route::prefix('Laporan')
@@ -174,11 +172,13 @@ Route::group(['middleware' => 'auth'], function () {
         });
 
     Route::prefix('Mutasi')
+    ->middleware(['hrd'])
     ->group(function () {
         Route::resource('usulan-mutasi', UsulanMutasiController::class);
         Route::get('usulan-mutasi/getpegawai/{id}', [App\Http\Controllers\Mutasi\UsulanMutasiController::class, 'GetUnit']);
         Route::resource('mutasi', MutasiPegawaiController::class);
-        
+
+        Route::get('/download_sk/{file_sk}', [App\Http\Controllers\Mutasi\MutasiPegawaiController::class, 'getFile'])->name('sk-mutasi');
 
         // MUTASI PANGKAT
         Route::resource('usulan-pangkat', UsulanPangkatController::class);
@@ -190,6 +190,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('mutasi-jabatan', MutasiJabatanController::class);
     });
         
+    Route::prefix('Pengumuman')
+    ->group(function(){
+        Route::get('mutasi/pegawai', [App\Http\Controllers\Mutasi\Pegawai\PegumumanMutasiController::class, 'pegawai'])->name('mutasi.pegawai');
+    });
 
     Route::prefix('Penilaian')
         ->group(function () {

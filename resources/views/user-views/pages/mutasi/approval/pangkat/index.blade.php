@@ -2,7 +2,7 @@
 
 
 @section('name')
-Usulan Mutasi Jabatan
+Approval Mutasi Pangkat
 @endsection
 
 @section('content')
@@ -11,7 +11,7 @@ Usulan Mutasi Jabatan
 <main class="page-content">
     <div class="container-fluid">
         <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-            <div class="breadcrumb-title pe-3">Usulan Mutasi Jabatan</div>
+            <div class="breadcrumb-title pe-3">Approval Mutasi Pangkat</div>
             <div class="ps-3">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb mb-0 p-0">
@@ -21,43 +21,9 @@ Usulan Mutasi Jabatan
                     </ol>
                 </nav>
             </div>
-            <div class="ms-auto">
-                {{-- <a href="" class="btn btn-sm btn-primary" type="button" data-bs-toggle="modal"
-                    data-bs-target="#Modaltambah">
-                    Tambah Data
-                </a> --}}
-                <a href="{{ route('usulan-jabatan.create') }}" data-bs-toggle="tooltip" data-bs-placement="top"
-                title=""
-                data-bs-original-title="Tambah Data Usulan" class="btn btn-sm btn-primary">Tambah Data</a>
-            </div>
         </div>
         <hr>
-        @if(session('messageberhasil'))
-        <div
-            class="alert border-0 border-success border-start border-4 bg-light-success alert-dismissible fade show py-2">
-            <div class="d-flex align-items-center">
-                <div class="fs-3 text-success"><i class="bi bi-check-circle-fill"></i>
-                </div>
-                <div class="ms-3">
-                    <div class="text-success"> {{ session('messageberhasil') }}</div>
-                </div>
-            </div>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        @endif
-        @if(session('messagehapus'))
-        <div
-            class="alert border-0 border-danger border-start border-4 bg-light-danger alert-dismissible fade show py-2">
-            <div class="d-flex align-items-center">
-                <div class="fs-3 text-danger"><i class="bi bi-check-circle-fill"></i>
-                </div>
-                <div class="ms-3">
-                    <div class="text-danger"> {{ session('messagehapus') }}</div>
-                </div>
-            </div>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        @endif
+      
     </div>
 
     <div class="container-fluid">
@@ -89,10 +55,10 @@ Usulan Mutasi Jabatan
                                                 style="width: 150px;">Pegawai</th>
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
-                                                style="width: 80px;">Jabatan Pegawai</th>
+                                                style="width: 80px;">Pangkat Asal</th>
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
-                                                style="width: 80px;">Jabatan Tujuan</th>
+                                                style="width: 80px;">Pangkat Tujuan</th>
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
                                                 style="width: 70px;">Status Acc</th>
@@ -109,48 +75,33 @@ Usulan Mutasi Jabatan
                                             <td>{{ $item->tanggal_surat }}</td>
                                             <td>{{ $item->jenis_mutasi }}</td>
                                             <td>{{ $item->Pegawai->nama_pegawai }}</td>
-                                            <td>{{ $item->Pegawai->Jabatan->nama_jabatan}}</td>
-                                           <td>{{ $item->Jabatan->nama_jabatan }}</td>
-                                            <td class="text-center">
+                                            <td>{{ $item->Pegawai->Pangkat->nama_pangkat}}, {{ $item->Pegawai->Pangkat->golongan }}</td>
+                                            <td>{{ $item->Pangkat->nama_pangkat }}, {{ $item->Pangkat->golongan }}</td>
+                                            <td>
                                                 @if ($item->status_approval == 'Terima')
-                                                <span class="badge bg-light-success text-success w-100">Disetujui,SK Mutasi <br>Diproses</span>
+                                                <span class="badge bg-light-success text-success w-100">Diterima</span>
                                                 @elseif ($item->status_approval == 'Tolak')
                                                 <span class="badge bg-light-danger text-danger w-100">Ditolak</span>
-                                                @elseif ($item->status_approval == 'Dimutasi')
-                                                <span class="badge bg-light-primary text-primary w-100">Telah Dimutasi</span>
                                                 @else
                                                 <span class="badge bg-light-info text-info w-100">Diproses</span>
                                                 @endif
                                             </td>
                                             <td class="text-center">
-                                                @if ($item->status_approval == 'Terima')
-                                                <a href="{{ route('mutasi-jabatan.index',$item->id_usulan) }}" 
-                                                    class="btn btn-sm btn-primary me-2">Proses SK</a>
-                                                    <a href="{{ route('usulan-jabatan.show',$item->id_usulan) }}"
-                                                        data-bs-toggle="tooltip" data-bs-placement="top" title=""
-                                                        data-bs-original-title="Detail Data Usulan"
-                                                        class="btn btn-sm btn-secondary"><i class="lni lni-eye"></i></a>
-                                                @elseif ($item->status_approval == 'Dimutasi')
-                                                <span class="badge bg-light-primary text-primary w-100">Telah Dimutasi</span>
-                                                <a href="{{ route('usulan-jabatan.show',$item->id_usulan) }}"
-                                                    data-bs-toggle="tooltip" data-bs-placement="top" title=""
-                                                    data-bs-original-title="Detail Data Usulan"
-                                                    class="btn btn-sm btn-secondary"><i class="lni lni-eye"></i></a>
+                                                @if ($item->status_approval == 'Terima' || $item->status_approval == 'Tolak')
+                                                <a href="{{ route('approval-mutasi-pangkat.show',$item->id_usulan) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Detail Data Usulan"
+                                                    class="btn btn-sm btn-primary"><i class="lni lni-eye"></i></a>
                                                 @else
-                                                <a href="{{ route('usulan-jabatan.show',$item->id_usulan) }}"
-                                                    data-bs-toggle="tooltip" data-bs-placement="top" title=""
-                                                    data-bs-original-title="Detail Data Usulan"
-                                                    class="btn btn-sm btn-secondary"><i class="lni lni-eye"></i></a>
-                                                <a href="{{ route('usulan-jabatan.edit',$item->id_usulan) }}"
-                                                    data-bs-toggle="tooltip" data-bs-placement="top" title=""
-                                                    data-bs-original-title="Edit Data Usulan"
-                                                    class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i></a>
+                                                <a href="{{ route('approval-mutasi-pangkat.show',$item->id_usulan) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Detail Data Usulan"
+                                                    class="btn btn-sm btn-primary"><i class="lni lni-eye"></i></a>
+                                                <a href="javascript:;" class="btn btn-sm btn-success"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#ModalTerima-{{ $item->id_usulan }}"><i class="lni lni-checkmark"></i></a>
                                                 <a href="javascript:;" class="btn btn-sm btn-danger"
                                                     data-bs-toggle="modal"
-                                                    data-bs-target="#Modalhapus-{{ $item->id_usulan }}"><i
-                                                        class="bi bi-trash-fill"></i></a>
+                                                    data-bs-target="#ModalTolak-{{ $item->id_usulan }}"><i class="lni lni-close"></i></a>
                                                 @endif
-                                            </td>                                         
+                                              
+                                            </td>
                                         </tr>
                                         @empty
 
@@ -167,31 +118,65 @@ Usulan Mutasi Jabatan
 </main>
 
 
-
 @forelse ($usulan as $item)
-<div class="modal fade" id="Modalhapus-{{ $item->id_usulan }}" data-backdrop="static" tabindex="-1" role="dialog"
+<div class="modal fade" id="ModalTerima-{{ $item->id_usulan }}" data-backdrop="static" tabindex="-1" role="dialog"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content bg-danger">
-            <div class="modal-header">
-                <h5 class="modal-title text-white">Hapus Data Usulan</h5>
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-light-success text-success">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Konfirmasi Setujui Data Usulan Mutasi Pangkat</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="{{ route('usulan-jabatan.destroy', $item->id_usulan) }}" method="POST" class="d-inline">
+            <form action="{{ route('status-approval-mutasi', $item->id_usulan) }}?status_approval=Terima" method="POST" class="d-inline">
                 @csrf
-                @method('delete')
-                <div class="modal-body text-white">
-                    Apakah Anda Yakin Menghapus Data Usulan Jabatan ini ?</div>
+                <div class="modal-body">
+                    <div class="form-group">Apakah Anda Yakin Menyetujui Mutasi Pangkat Pegawai {{ $item->Pegawai->nama_pegawai }}, dengan nomor surat {{ $item->nomor_surat }}?</div>
+                    <div class="col-12 mt-2">
+                        <label class="small mb-1" for="keterangan_approval">Keterangan Approval</label>
+                        <textarea class="form-control" id="text" type="keterangan_approval" name="keterangan_approval"
+                            value="{{ old('keterangan_approval') }}"></textarea>
+                    </div>
+                </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-dark">Ya! Hapus</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button class="btn btn-success" type="submit">Ya! Approve</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 @empty
+@endforelse
 
+@forelse ($usulan as $item)
+<div class="modal fade" id="ModalTolak-{{ $item->id_usulan }}" data-backdrop="static" tabindex="-1" role="dialog"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-light-danger text-danger">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Konfirmasi Tolak Data Usulan Mutasi Pangkat</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{ route('status-approval-mutasi', $item->id_usulan) }}?status_approval=Tolak" method="POST" class="d-inline">
+                @csrf
+                <div class="modal-body">
+                    <div class="form-group">Apakah Anda Yakin Menolak Mutasi Pangkat Pegawai {{ $item->Pegawai->nama_pegawai }}, dengan nomor surat {{ $item->nomor_surat }}?</div>
+                    <div class="col-12 mt-2">
+                        <label class="small mb-1" for="keterangan_approval">Keterangan Approval</label>
+                        <textarea class="form-control" id="text" type="keterangan_approval" name="keterangan_approval"
+                            value="{{ old('keterangan_approval') }}"></textarea>
+                    </div>
+                </div>
+
+                <div class="modal-footer ">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button class="btn btn-danger" type="submit">Ya! Tolak</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@empty
 @endforelse
 
 

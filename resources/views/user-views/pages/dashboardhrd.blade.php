@@ -160,7 +160,7 @@ Dashboard
                     <div class="d-flex align-items-center">
                         <div class="">
                             <p class="mb-1">Pengajuan Mutasi Internal</p>
-                            <h5 class="mb-0 text-info">{{ $jumlah_cuti }} Orang</h5>
+                            <h5 class="mb-0 text-info">{{ $internal }} Orang</h5>
                         </div>
                         <div class="ms-auto fs-2 text-primary">
                             <i class="lni lni-graph"></i>
@@ -168,9 +168,10 @@ Dashboard
                     </div>
                     <hr class="my-2">
                         <small class="mb-0"><span>Total Data Cuti Bulan ini</span></small><br>
-                        <small class="mb-0"><i class="bi bi-arrow-up"></i> <span>Pending +{{ $jumlah_cuti_pending }}</span></small><br>
-                        <small class="mb-0"><i class="bi bi-arrow-up"></i> <span>Approved +{{ $jumlah_cuti_terima }}</span></small><br>
-                        <small class="mb-0"><i class="bi bi-arrow-up"></i> <span>Not Approved +{{ $jumlah_cuti_tolak }}</span></small>
+                        <small class="mb-0"><i class="bi bi-arrow-up"></i> <span>Pending +{{ $internal_pending }}</span></small><br>
+                        <small class="mb-0"><i class="bi bi-arrow-up"></i> <span>Approved +{{ $internal_terima }}</span></small><br>
+                        <small class="mb-0"><i class="bi bi-arrow-up"></i> <span>Not Approved +{{ $internal_tolak }}</span></small>
+                        <small class="mb-0"><i class="bi bi-arrow-up"></i> <span>Dimutasi +{{ $internal_dimutasi }}</span></small>
                 </div>
                 @else
                 <div class="card-body">
@@ -199,7 +200,7 @@ Dashboard
                     <div class="d-flex align-items-center">
                         <div class="">
                             <p class="mb-1">Pengajuan Promosi</p>
-                            <h5 class="mb-0 text-info">{{ $jumlah_orientasi_belum }} Orang</h5>
+                            <h5 class="mb-0 text-info">{{ $promosi }} Orang</h5>
                         </div>
                         <div class="ms-auto fs-2 text-primary">
                             <i class="lni lni-graph"></i>
@@ -207,9 +208,8 @@ Dashboard
                     </div>
                     <hr class="my-2">
                         <small class="mb-0"><span>Total Data Promosi Bulan ini</span></small><br>
-                        <small class="mb-0"><i class="bi bi-arrow-up"></i> <span>Pending +{{ $jumlah_orientasi_telah }}</span></small><br>
-                        <small class="mb-0"><i class="bi bi-arrow-up"></i> <span>Approved +{{ $jumlah_orientasi_telah }}</span></small><br>
-                        <small class="mb-0"><i class="bi bi-arrow-up"></i> <span>Not Approved +{{ $jumlah_orientasi_telah }}</span></small>
+                        <small class="mb-0"><i class="bi bi-arrow-up"></i> <span>Promosi Pangkat +{{ $promosi_pangkat }} </span></small><br>
+                        <small class="mb-0"><i class="bi bi-arrow-up"></i> <span>Promosi Jabatan +{{ $promosi_jabatan }}</span></small><br>
                 </div>
             </div>
         </div>
@@ -219,7 +219,7 @@ Dashboard
                     <div class="d-flex align-items-center">
                         <div class="">
                             <p class="mb-1">Pengajuan Demosi</p>
-                            <h5 class="mb-0 text-info">{{ $jumlah_orientasi_belum }} Orang</h5>
+                            <h5 class="mb-0 text-info">{{ $demosi }} Orang</h5>
                         </div>
                         <div class="ms-auto fs-2 text-primary">
                             <i class="lni lni-graph"></i>
@@ -227,9 +227,8 @@ Dashboard
                     </div>
                     <hr class="my-2">
                         <small class="mb-0"><span>Total Data Demosi Bulan ini</span></small><br>
-                        <small class="mb-0"><i class="bi bi-arrow-up"></i> <span>Pending +{{ $jumlah_orientasi_telah }}</span></small><br>
-                        <small class="mb-0"><i class="bi bi-arrow-up"></i> <span>Approved +{{ $jumlah_orientasi_telah }}</span></small><br>
-                        <small class="mb-0"><i class="bi bi-arrow-up"></i> <span>Not Approved +{{ $jumlah_orientasi_telah }}</span></small>
+                        <small class="mb-0"><i class="bi bi-arrow-up"></i> <span>Demosi Pangkat +{{ $demosi_pangkat }}</span></small><br>
+                        <small class="mb-0"><i class="bi bi-arrow-up"></i> <span>Demosi Jabatan +{{ $demosi_jabatan }}</span></small><br>
 
                 </div>
             </div>
@@ -240,7 +239,7 @@ Dashboard
                     <div class="d-flex align-items-center">
                         <div class="">
                             <p class="mb-1">Pengajuan Resign</p>
-                            <h5 class="mb-0 text-info">{{ $jumlah_orientasi_belum }} Orang</h5>
+                            <h5 class="mb-0 text-info">{{ $resign }} Orang</h5>
                         </div>
                         <div class="ms-auto fs-2 text-primary">
                             <i class="lni lni-graph"></i>
@@ -248,9 +247,10 @@ Dashboard
                     </div>
                     <hr class="my-2">
                         <small class="mb-0"><span>Total Data Resign Bulan ini</span></small><br>
-                        <small class="mb-0"><i class="bi bi-arrow-up"></i> <span>Pending +{{ $jumlah_orientasi_telah }}</span></small><br>
-                        <small class="mb-0"><i class="bi bi-arrow-up"></i> <span>Approved +{{ $jumlah_orientasi_telah }}</span></small><br>
-                        <small class="mb-0"><i class="bi bi-arrow-up"></i> <span>Not Approved +{{ $jumlah_orientasi_telah }}</span></small>
+                        <small class="mb-0"><i class="bi bi-arrow-up"></i> <span>Pending +{{ $resign_pending }}</span></small><br>
+                        <small class="mb-0"><i class="bi bi-arrow-up"></i> <span>Approved +{{ $resign_terima }}</span></small><br>
+                        <small class="mb-0"><i class="bi bi-arrow-up"></i> <span>Not Approved +{{ $resign_tolak }}</span></small>
+                        <small class="mb-0"><i class="bi bi-arrow-up"></i> <span>Dimutasi +{{ $resign_dimutasi }}</span></small>
                 </div>
             </div>
         </div>

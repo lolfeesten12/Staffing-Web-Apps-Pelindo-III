@@ -112,15 +112,31 @@ Usulan Mutasi Pangkat
                                             <td>{{ $item->Pegawai->Pangkat->nama_pangkat}}, {{ $item->Pegawai->Pangkat->golongan }}</td>
                                            <td>{{ $item->Pangkat->nama_pangkat }}, {{ $item->Pangkat->golongan }}</td>
                                             <td class="text-center">
-                                                @if ($item->status == 'Terima')
-                                                <span class="badge bg-light-success text-success w-100">Dimutasi</span>
-                                                @elseif ($item->status == 'Tolak')
+                                                @if ($item->status_approval == 'Terima')
+                                                <span class="badge bg-light-success text-success w-100">Disetujui,SK Mutasi <br>Diproses</span>
+                                                @elseif ($item->status_approval == 'Tolak')
                                                 <span class="badge bg-light-danger text-danger w-100">Ditolak</span>
+                                                @elseif ($item->status_approval == 'Dimutasi')
+                                                <span class="badge bg-light-primary text-primary w-100">Telah Dimutasi</span>
                                                 @else
                                                 <span class="badge bg-light-info text-info w-100">Diproses</span>
                                                 @endif
                                             </td>
                                             <td class="text-center">
+                                                @if ($item->status_approval == 'Terima')
+                                                <a href="{{ route('mutasi-pangkat.index',$item->id_usulan) }}" 
+                                                    class="btn btn-sm btn-primary me-2">Proses SK</a>
+                                                <a href="{{ route('usulan-pangkat.show',$item->id_usulan) }}"
+                                                    data-bs-toggle="tooltip" data-bs-placement="top" title=""
+                                                    data-bs-original-title="Detail Data Usulan"
+                                                    class="btn btn-sm btn-secondary"><i class="lni lni-eye"></i></a>
+                                                @elseif ($item->status_approval == 'Dimutasi')
+                                                <span class="badge bg-light-primary text-primary w-100">Telah Dimutasi</span>
+                                                <a href="{{ route('usulan-pangkat.show',$item->id_usulan) }}"
+                                                    data-bs-toggle="tooltip" data-bs-placement="top" title=""
+                                                    data-bs-original-title="Detail Data Usulan"
+                                                    class="btn btn-sm btn-secondary"><i class="lni lni-eye"></i></a>
+                                                @else
                                                 <a href="{{ route('usulan-pangkat.show',$item->id_usulan) }}"
                                                     data-bs-toggle="tooltip" data-bs-placement="top" title=""
                                                     data-bs-original-title="Detail Data Usulan"
@@ -133,7 +149,10 @@ Usulan Mutasi Pangkat
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#Modalhapus-{{ $item->id_usulan }}"><i
                                                         class="bi bi-trash-fill"></i></a>
+    
+                                                @endif
                                             </td>
+                                          
                                         </tr>
                                         @empty
 

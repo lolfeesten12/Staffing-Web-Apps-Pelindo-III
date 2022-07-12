@@ -7,6 +7,7 @@ use App\Models\MasterData\MasterOrientasi;
 use App\Models\MasterData\MasterPegawai;
 use App\Models\MasterData\MasterShift;
 use App\Models\MasterData\MasterUnitKerja;
+use App\Models\Mutasi\UsulanMutasi;
 use App\Models\Pelatihan\ProgramPelatihan;
 use App\Models\Riwayat\RiwayatCuti;
 use App\Models\WebRequirement\CalonPegawai;
@@ -44,13 +45,36 @@ class DashboardHRDController extends Controller
         $jumlah_cuti_terima = RiwayatCuti::where('status_acc','Terima')->whereMonth('created_at', Carbon::now()->month)->count();
         $jumlah_cuti_tolak = RiwayatCuti::where('status_acc','Tolak')->whereMonth('created_at', Carbon::now()->month)->count();
 
+        $internal = UsulanMutasi::where('jenis_mutasi','Mutasi Internal')->count();
+        $internal_pending = UsulanMutasi::where('jenis_mutasi','Mutasi Internal')->where('status_approval','Pending')->whereMonth('created_at', Carbon::now()->month)->count();
+        $internal_terima = UsulanMutasi::where('jenis_mutasi','Mutasi Internal')->where('status_approval','Terima')->whereMonth('created_at', Carbon::now()->month)->count();
+        $internal_tolak = UsulanMutasi::where('jenis_mutasi','Mutasi Internal')->where('status_approval','Tolak')->whereMonth('created_at', Carbon::now()->month)->count();
+        $internal_dimutasi = UsulanMutasi::where('jenis_mutasi','Mutasi Internal')->where('status_approval','Dimutasi')->whereMonth('created_at', Carbon::now()->month)->count();
+
+        $promosi = UsulanMutasi::where('jenis_mutasi','Promosi Pangkat')->where('jenis_mutasi','Promosi Jabatan')->where('status_approval','Pending')->count();
+        $promosi_pangkat =UsulanMutasi::where('jenis_mutasi','Promosi Pangkat')->where('status_approval','Pending')->whereMonth('created_at', Carbon::now()->month)->count();
+        $promosi_jabatan = UsulanMutasi::where('jenis_mutasi','Promosi Jabatan')->where('status_approval','Pending')->whereMonth('created_at', Carbon::now()->month)->count();
+
+        $demosi = UsulanMutasi::where('jenis_mutasi','Demosi Pangkat')->where('jenis_mutasi','Demosi Jabatan')->where('status_approval','Pending')->count();
+        $demosi_pangkat = UsulanMutasi::where('jenis_mutasi','Demosi Pangkat')->where('status_approval','Pending')->whereMonth('created_at', Carbon::now()->month)->count();
+        $demosi_jabatan = UsulanMutasi::where('jenis_mutasi','Demosi Jabatan')->where('status_approval','Pending')->whereMonth('created_at', Carbon::now()->month)->count();
+
+        $resign = UsulanMutasi::where('jenis_mutasi','Resign')->count();
+        $resign_pending = UsulanMutasi::where('jenis_mutasi','Resign')->where('status_approval','Pending')->whereMonth('created_at', Carbon::now()->month)->count();
+        $resign_terima = UsulanMutasi::where('jenis_mutasi','Resign')->where('status_approval','Terima')->whereMonth('created_at', Carbon::now()->month)->count();
+        $resign_tolak = UsulanMutasi::where('jenis_mutasi','Resign')->where('status_approval','Tolak')->whereMonth('created_at', Carbon::now()->month)->count();
+        $resign_dimutasi = UsulanMutasi::where('jenis_mutasi','Resign')->where('status_approval','Dimutasi')->whereMonth('created_at', Carbon::now()->month)->count();
+
 
         return view('user-views.pages.dashboardhrd', compact(
             'jumlah_pegawai','jumlah_unit','jumlah_jabatan','jumlah_shift_kerja',
             'jumlah_orientasi_belum','jumlah_orientasi_telah','jumlah_pelatihan_aktif',
             'jumlah_pelatihan_wajib','jumlah_lowongan','jumlah_lowongan_hari',
             'jumlah_pelamar','jumlah_pelamar_hari','hari','haritext',
-            'jumlah_cuti','jumlah_cuti_pending','jumlah_cuti_terima','jumlah_cuti_tolak'
+            'jumlah_cuti','jumlah_cuti_pending','jumlah_cuti_terima','jumlah_cuti_tolak',
+            'internal','internal_pending','internal_terima','internal_tolak','internal_dimutasi',
+            'promosi','promosi_pangkat','promosi_jabatan','demosi','demosi_pangkat','demosi_jabatan',
+            'resign','resign_pending','resign_terima','resign_tolak','resign_dimutasi'
         
 
         ));

@@ -27,7 +27,11 @@ class UsulanMutasi extends Model
         'nomor_surat',
         'status_approval',
         'file',
-        'keterangan_approval'
+        'keterangan_approval',
+        'nomor_sk',
+        'tanggal_sk',
+        'id_pejabat',
+        'file_sk'
     ];
 
     protected $hidden = [
@@ -40,6 +44,11 @@ class UsulanMutasi extends Model
     public function Pegawai()
     {
         return $this->belongsTo(MasterPegawai::class, 'id_pegawai', 'id_pegawai');
+    }
+
+    public function Pejabat()
+    {
+        return $this->belongsTo(MasterPegawai::class, 'id_pejabat', 'id_pegawai');
     }
 
     public function Pengusul()
@@ -60,5 +69,25 @@ class UsulanMutasi extends Model
     public function Pangkat()
     {
         return $this->belongsTo(MasterPangkat::class, 'id_pangkat_tujuan', 'id_pangkat');
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('status_approval', '=', 'Dimutasi')->orWhere('status_approval','=','Terima');
+    }
+
+    public function scopePangkat($query)
+    {
+        return $query->where('jenis_mutasi', '=', 'Promosi Pangkat')->orWhere('jenis_mutasi','=','Demosi Pangkat');
+    }
+
+    public function scopeInternal($query)
+    {
+        return $query->where('jenis_mutasi', '=', 'Mutasi Internal')->orWhere('jenis_mutasi','=','Resign');
+    }
+
+    public function scopeJabatan($query)
+    {
+        return $query->where('jenis_mutasi', '=', 'Promosi Jabatan')->orWhere('jenis_mutasi','=','Demosi Jabatan');
     }
 }

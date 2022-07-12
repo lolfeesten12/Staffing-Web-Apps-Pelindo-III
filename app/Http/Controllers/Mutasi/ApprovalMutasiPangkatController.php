@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Mutasi;
 
 use App\Http\Controllers\Controller;
+use App\Models\Mutasi\UsulanMutasi;
 use Illuminate\Http\Request;
 
 class ApprovalMutasiPangkatController extends Controller
@@ -14,7 +15,8 @@ class ApprovalMutasiPangkatController extends Controller
      */
     public function index()
     {
-        //
+        $usulan = UsulanMutasi::where('jenis_mutasi','Promosi Pangkat')->orWhere('jenis_mutasi','Demosi Pangkat')->get();
+        return view('user-views.pages.mutasi.approval.pangkat.index', compact('usulan'));
     }
 
     /**
@@ -46,7 +48,8 @@ class ApprovalMutasiPangkatController extends Controller
      */
     public function show($id)
     {
-        //
+        $item = UsulanMutasi::find($id);
+        return view('user-views.pages.mutasi.approval.pangkat.detail', compact('item'));
     }
 
     /**

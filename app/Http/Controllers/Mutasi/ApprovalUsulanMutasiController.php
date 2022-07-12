@@ -30,7 +30,7 @@ class ApprovalUsulanMutasiController extends Controller
         $item->keterangan_approval = $request->keterangan_approval;
         $item->save();
 
-        return redirect()->route('approval-mutasi.index');
+        return redirect()->back()->with('messageberhasil','Data Mutasi Telah Diproses');
     }
     /**
      * Show the form for creating a new resource.

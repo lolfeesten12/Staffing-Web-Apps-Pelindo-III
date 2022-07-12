@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\Mutasi;
 
 use App\Http\Controllers\Controller;
+use App\Models\MasterData\MasterPegawai;
+use App\Models\Mutasi\MutasiPegawai;
+use App\Models\Mutasi\UsulanMutasi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MutasiPegawaiController extends Controller
 {
@@ -14,7 +18,12 @@ class MutasiPegawaiController extends Controller
      */
     public function index()
     {
-        //
+      
+
+        $mutasi = UsulanMutasi::active()->Internal()->get();
+ 
+
+        return view('user-views.pages.mutasi.mutasi.mutasi.index', compact('mutasi'));
     }
 
     /**
@@ -69,7 +78,35 @@ class MutasiPegawaiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if($request->file_sk){
+            $imagePath = $request->file('file_sk');
+            $file_surat = $imagePath->getClientOriginalName();
+            $imagePath->move(public_path().'/Resume/', $file_surat); 
+            $data[] = $file_surat; 
+        }
+
+        $item = UsulanMutasi::find($id);
+        $item->nomor_sk = $request->nomor_sk;
+        $item->tanggal_sk = $request->tanggal_sk;
+        $item->id_pejabat = Auth::user()->Pegawai->id_pegawai;
+        $item->file_sk = $file_surat;
+        $item->status_approval = 'Dimutasi';
+        $item->save();
+
+        $pegawai = MasterPegawai::where('id_pegawai', $item->id_pegawai)->first();
+        if($item->jenis_mutasi == 'Resign'){
+            $pegawai->status_aktif == 'Tidak Aktif';
+        }elseif($item->jenis_mutasi == 'Mutasi Internal'){
+            $pegawai->id_unit_kerja = $item->id_divisi_tujuan;
+        }
+        $pegawai->save();
+
+        return redirect()->back()->with('messageberhasil','SK Pegawai Berhasil Diproses, Pegawai telah Dimutasi');
+    }
+    public function getFile($file_sk)
+    {
+        $file_path = public_path('Resume/'.$file_sk);
+        return response()->download($file_path);
     }
 
     /**
