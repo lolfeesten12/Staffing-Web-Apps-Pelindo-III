@@ -2,7 +2,7 @@
 
 
 @section('name')
-Tambah Penilaian Pegawai
+Penilaian Diri Pegawai
 @endsection
 
 @section('content')
@@ -11,14 +11,13 @@ Tambah Penilaian Pegawai
 <main class="page-content">
     <div class="container-fluid">
         <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-            <div class="breadcrumb-title pe-3">Penilaian Pegawai</div>
+            <div class="breadcrumb-title pe-3">Penilaian Diri Pegawai</div>
             <div class="ps-3">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb mb-0 p-0">
                         <li class="breadcrumb-item"><a href="javascript:;"><i class="lni lni-database"></i></a>
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">Tambah Penilaian
-                            {{ $pegawai->nama_pegawai }}</li>
+                        <li class="breadcrumb-item active" aria-current="page">Penilaian</li>
                     </ol>
                 </nav>
             </div>
@@ -59,8 +58,7 @@ Tambah Penilaian Pegawai
                                 <div class="row g-3">
                                     <div class="col-6">
                                         <div class="row">
-                                            <label for="inputEnterYourName" class="col-sm-3 col-form-label">Nama
-                                                Penilai</label>
+                                            <label for="inputEnterYourName" class="col-sm-3 col-form-label">Nama Pegawai</label>
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control" id="inputEnterYourName" name="id_penilai"
                                                     placeholder="Enter Your Name"
@@ -74,37 +72,21 @@ Tambah Penilaian Pegawai
                                                 Penilai</label>
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control" id="inputEnterYourName"
-                                                    placeholder="Enter Your Name" value="{{ $hrd->nama_pegawai }}"
+                                                    placeholder="Enter Your Name" value=""
                                                     readonly>
                                                     <input type="text" class="form-control" id="inputEnterYourName" name="id_atasan_penilai"
-                                                    placeholder="Enter Your Name" value="{{ $hrd->id_pegawai }}" style="display: none"
+                                                    placeholder="Enter Your Name" value="" style="display: none"
                                                     readonly>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-4">
-                                        <label class="small mb-1 mr-1" for="id_pegawai">Pegawai</label>
-                                        <input class="form-control" type="text"
-                                            value="{{ $pegawai->nama_pegawai }}" readonly />
-                                            <input class="form-control" id="id_pegawai" type="text" name="id_pegawai" style="display: none"
-                                            value="{{ $pegawai->id_pegawai }}" readonly />
-                                    </div>
-                                    <div class="col-4">
-                                        <label class="small mb-1 mr-1" for="periode_mulai">Periode Mulai</label><span
+                                        <label class="small mb-1 mr-1" for="periode">Periode</label><span
                                             class="mr-4 mb-3" style="color: red">*</span>
-                                        <input class="form-control" id="periode_mulai" type="month" name="periode_mulai"
-                                            placeholder="Input Tanggal Lahir" value="{{ old('periode_mulai') }}"
-                                            class="form-control @error('periode_mulai') is-invalid @enderror" />
-                                        @error('periode_mulai')<div class="text-danger small mb-1">{{ $message }}
-                                        </div> @enderror
-                                    </div>
-                                    <div class="col-4">
-                                        <label class="small mb-1 mr-1" for="periode_akhir">Periode Akhir</label><span
-                                            class="mr-4 mb-3" style="color: red">*</span>
-                                        <input class="form-control" id="periode_akhir" type="month" name="periode_akhir"
-                                            placeholder="Input Tanggal Lahir" value="{{ old('periode_akhir') }}"
-                                            class="form-control @error('periode_akhir') is-invalid @enderror" />
-                                        @error('periode_akhir')<div class="text-danger small mb-1">{{ $message }}
+                                        <input class="form-control" id="periode" type="month" name="periode"
+                                            placeholder="Input Tanggal Lahir" value="{{ $nilai->periode }}"
+                                            class="form-control @error('periode') is-invalid @enderror" />
+                                        @error('periode')<div class="text-danger small mb-1">{{ $message }}
                                         </div> @enderror
                                     </div>
                                 </div>
@@ -124,8 +106,6 @@ Tambah Penilaian Pegawai
                                     Keterangan:<br><span style="color: grey">Skala Nilai 1 - 100</span></br>
                                 </div>
                             </div>
-                            
-
                             <div class="row g-3">
                                 <div class="col-3">
                                     <label class="small mb-1 mr-1" for="nilai_tanggung_jawab">Tanggung Jawab</label><span class="mr-4 mb-3" style="color: red">*</span>
@@ -184,6 +164,7 @@ Tambah Penilaian Pegawai
                                     @error('nilai_sikap')<div class="text-danger small mb-1">{{ $message }}
                                     </div> @enderror
                                 </div>
+                                @if (Auth::user()->Pegawai->role != 'Pegawai')
                                 <div class="col-3">
                                     <label class="small mb-1 mr-1" for="nilai_kepemimpinan">Kepemimpinan</label><span
                                         class="mr-4 mb-3" style="color: red">*</span>
@@ -194,6 +175,10 @@ Tambah Penilaian Pegawai
                                     @error('nilai_kepemimpinan')<div class="text-danger small mb-1">{{ $message }}
                                     </div> @enderror
                                 </div>
+                                @else
+
+                                @endif
+                               
                                 <div class="col-3">
                                     <label class="small mb-1 mr-1">Klik untuk menjumlahkan nilai</label><span
                                         class="mr-4 mb-3" style="color: red">*</span><br>
@@ -228,10 +213,6 @@ Tambah Penilaian Pegawai
                                     @error('catatan_penilaian')<div class="text-danger small mb-1">{{ $message }}
                                     </div> @enderror
                                 </div>
-                                
-
-
-
                                 <div class="col-12">
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">

@@ -145,7 +145,7 @@ Calon Pegawai
                                                 @endif
                                             </td>
                                                 
-                                                @if (Auth::user()->Pegawai->Role == 'Direktur')
+                                                @if (Auth::user()->Pegawai->role == 'HRD')
                                                 <td class="text-center">
                                                     <a href="{{ route('calon-pegawai.show',$item->id_calon_pegawai) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Detail Calon Pegawai"
                                                         class="btn btn-sm btn-secondary"><i class="lni lni-eye"></i></a>

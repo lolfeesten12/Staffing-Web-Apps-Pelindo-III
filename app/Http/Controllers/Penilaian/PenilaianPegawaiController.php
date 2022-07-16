@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Penilaian;
 use App\Http\Controllers\Controller;
 use App\Models\MasterData\MasterPegawai;
 use App\Models\Penilaian\Nilai;
+use App\Models\Penilaian\PeriodePenilaian;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -44,6 +45,22 @@ class PenilaianPegawaiController extends Controller
    
        return view('user-views.pages.penilaian.penilaianpegawai.list-nilai', compact('nilai','pegawai'));
     }
+
+    public function StorePeriode(Request $request)
+    {
+        $year = date('Y', strtotime($request->periode));
+        $getnilai = Nilai::where('id_pegawai', Auth::user()->Pegawai->id_pegawai)->where('periode', $year)->first();
+
+        if(empty($getnilai)){
+            $nilai = new Nilai;
+            $nilai->periode = $year;
+            $nilai->save();
+            
+            return view('user-views.pages.penilaian.penilaianpegawai.create');
+        }else{
+            return redirect()->back()->with('messagegagal','Error!, Periode Tersebut Sudah Dinilai');
+        }
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -51,7 +68,7 @@ class PenilaianPegawaiController extends Controller
      */
     public function create()
     {
-        
+        return view('user-views.pages.penilaian.penilaianpegawai.create');
     }
 
     /**
@@ -123,16 +140,18 @@ class PenilaianPegawaiController extends Controller
      */
     public function edit($id)
     {
-        $pegawai = MasterPegawai::find($id);
-        if(Auth::user()->Pegawai->role == 'HRD'){
-            // MASIH ERROR
-            $hrd = MasterPegawai::where('role','=','Direktur Unit')->first();
-        }elseif(Auth::user()->Pegawai->role == 'Kepala Unit'){
-            $hrd = MasterPegawai::where('role','=','Direktur Unit')->where('id_unit_kerja','=', Auth::user()->Pegawai->id_unit_kerja)->first();
-        }
+        // $pegawai = MasterPegawai::find($id);
+        // if(Auth::user()->Pegawai->role == 'HRD'){
+        //     $hrd = MasterPegawai::where('role','=','Direktur Unit')->first();
+        // }elseif(Auth::user()->Pegawai->role == 'Kepala Unit'){
+        //     $hrd = MasterPegawai::where('role','=','Direktur Unit')->where('id_unit_kerja','=', Auth::user()->Pegawai->id_unit_kerja)->first();
+        // }
        
         
-        return view('user-views.pages.penilaian.penilaianpegawai.create', compact('pegawai','hrd'));
+        // return view('user-views.pages.penilaian.penilaianpegawai.create', compact('pegawai','hrd'));
+
+        $nilai = Nilai::find($id);
+        return view('user-views.pages.penilaian.penilaianpegawai.create', compact('nilai'));
     }
 
     /**

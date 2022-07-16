@@ -36,6 +36,7 @@ use App\Http\Controllers\Pelatihan\ProgramPelatihanController;
 use App\Http\Controllers\Penilaian\ApprovalPenilaianController;
 use App\Http\Controllers\Penilaian\NilaiSayaController;
 use App\Http\Controllers\Penilaian\PenilaianPegawaiController;
+use App\Http\Controllers\Penilaian\PeriodePenilaianController;
 use App\Http\Controllers\Riwayat\RiwayatCutiController;
 use App\Http\Controllers\Riwayat\RiwayatPelanggaranController;
 use App\Http\Controllers\Riwayat\RiwayatPendidikanController;
@@ -57,6 +58,7 @@ use App\Models\Absensi\Absensi;
 use App\Models\MasterData\MasterOrientasi;
 use App\Models\MasterData\MasterPangkat;
 use App\Models\Pelatihan\ProgramPelatihan;
+use App\Models\Penilaian\PeriodePenilaian;
 use App\Models\Riwayat\RiwayatPendidikan;
 use Illuminate\Support\Facades\Auth;
 
@@ -78,6 +80,7 @@ Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', [App\Http\Controllers\User\ProfileController::class, 'index']);
     Route::get('/dashboard', [App\Http\Controllers\DashboardHRDController::class, 'index'])->middleware(['hrd&direktur'])->name('dashboard');
+    Route::post('/dashboard/role', [App\Http\Controllers\DashboardHRDController::class, 'role'])->name('pindah-role');
     Route::get('/dashboardunit', [App\Http\Controllers\DashboardHRDController::class, 'indexunit'])->middleware(['gabunganunit'])->name('dashboardunit');
     Route::get('/absen/{id}', [App\Http\Controllers\Absensi\AbsensiController::class, 'index']);
     Route::resource('absen', AbsensiController::class);
@@ -198,6 +201,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::prefix('Penilaian')
         ->group(function () {
             Route::resource('penilaian-pegawai', PenilaianPegawaiController::class);
+            Route::post('penilaian-pegawai/periode', [App\Http\Controllers\Penilaian\PenilaianPegawaiController::class, 'StorePeriode'])->name('store-periode-nilai');
+            Route::resource('periode-nilai', PeriodePenilaianController::class)->middleware(['hrd&direktur']);
             Route::get('list-penilaian/{id_pegawai}', [App\Http\Controllers\Penilaian\PenilaianPegawaiController::class, 'DetailNilai'])->name('penilaian-list');
             Route::resource('nilai-saya', NilaiSayaController::class);
             Route::put('Nilai/{id_penilaian}/Tanggapan', [App\Http\Controllers\Penilaian\NilaiSayaController::class, 'Tanggapan'])->name('nilai-tanggapan');
@@ -216,6 +221,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::resource('calon-pegawai', CalonPegawaiController::class);
             Route::resource('peserta-orientasi', OrientasiCalonController::class);
             Route::post('peserta-orientasi/{id_calon_pegawai}/sertifikat', [App\Http\Controllers\WebRequirement\OrientasiCalonController::class, 'Sertifikat'])->name('perserta-orientasi-seritifikat');
+            Route::post('peserta-orientasi/filters', [App\Http\Controllers\WebRequirement\OrientasiCalonController::class, 'filter'])->name('orientasi-reset');
         });
 
     Route::prefix('Pelanggaran')

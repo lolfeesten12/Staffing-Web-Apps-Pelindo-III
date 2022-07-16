@@ -43,10 +43,6 @@
                                     <img class="rounded-circle" width="54" height="54"
                                         src="{{ asset('/profile/'.Auth::user()->pegawai['avatar']) }}" alt="">
                                     @endif
-
-                                    {{-- <img src="{{ url('assets/images/avatars/avatar-1.png') }}" alt=""
-                                    class="rounded-circle"
-                                    width="54" height="54"> --}}
                                     <div class="ms-3">
                                         <h6 class="mb-0 dropdown-user-name">Halo,
                                             {{ Auth::user()->Pegawai->nama_panggilan }}</h6>
@@ -75,6 +71,18 @@
                                 </div>
                             </a>
                         </li>
+                        @if (Auth::user()->Pegawai->id_jabatan == '5' || Auth::user()->Pegawai->id_jabatan == '9' )
+                        <li>
+                            <button class="dropdown-item" data-bs-toggle="modal"
+                            data-bs-target="#ModalPindahRoleHRD">
+                               <div class="d-flex align-items-center">
+                                 <div class=""><i class="bi bi-gear-fill"></i></div>
+                                 <div class="ms-3"><span>Ganti Role</span></div>
+                               </div>
+                             </button>
+                          </li>
+                        @endif
+
                         <li>
                             <hr class="dropdown-divider">
                         </li>
@@ -325,10 +333,11 @@
             <div class="menu-title">Penilaian Pegawai</div>
         </a>
         <ul>
-            @if (Auth::user()->Pegawai->role == 'HRD' || Auth::user()->Pegawai->role == 'Kepala Unit' || Auth::user()->Pegawai->role == 'Direktur')
-            <li> <a href="{{ route('penilaian-pegawai.index') }}"><i class="bi bi-circle"></i>Penilaian</a></li>
+            @if (Auth::user()->Pegawai->role == 'HRD' || Auth::user()->Pegawai->role == 'Direktur')
+            <li> <a href="{{ route('periode-nilai.index') }}"><i class="bi bi-circle"></i>Periode Penilaian</a></li>
             @endif
-            <li> <a href="{{ route('nilai-saya.index') }}"><i class="bi bi-circle"></i>Nilai Saya</a></li>
+            <li> <a href="{{ route('penilaian-pegawai.index') }}"><i class="bi bi-circle"></i>Penilaian</a></li>
+            {{-- <li> <a href="{{ route('nilai-saya.index') }}"><i class="bi bi-circle"></i>Penilaian</a></li> --}}
         </ul>
     </li>
     @if (Auth::user()->Pegawai->role == 'HRD' || Auth::user()->Pegawai->role == 'Kepala Unit' || Auth::user()->Pegawai->role == 'Direktur')
@@ -378,3 +387,34 @@
     </li>
     </ul>
 </aside>
+
+<div class="modal fade" id="ModalPindahRoleHRD" data-backdrop="static" tabindex="-1" role="dialog"
+aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Ganti Role</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form action="{{ route('pindah-role') }}" method="POST">
+            @csrf
+            <div class="modal-body">
+                <select class="form-select" aria-label="Default select example" name="role" type="text" id="role" required>
+                    <option selected="{{ Auth::user()->Pegawai->role }}">{{ Auth::user()->Pegawai->role }}</option>
+                    <option value="HRD">HRD</option>
+                    <option value="Direktur">Direktur</option>
+                    <option value="Direktur Unit">Direktur Unit</option>
+                    <option value="Kepala HRD">Kepala HRD</option>
+                    <option value="Kepala Unit">Kepala Unit</option>
+                    <option value="Manager Unit">Manager Unit</option>
+                    <option value="Pegawai">Pegawai</option>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="Submit" class="btn btn-primary">Ganti Role</button>
+            </div>
+        </form>
+    </div>
+</div>
+</div>

@@ -17,19 +17,37 @@ class OrientasiCalonController extends Controller
      */
     public function index(Request $request)
     {
-        $peserta = CalonPegawai::with([
+        $tes = CalonPegawai::with([
             'PesertaOrientasi.MasterOrientasi',
         ])->where('status_calon', '=', 'Diterima')->get();
 
+      
+        $peserta = CalonPegawai::leftjoin('tb_peserta_orientasi','tb_calon_pegawai.id_calon_pegawai','tb_peserta_orientasi.id_calon_pegawai')
+        ->join('tb_master_orientasi','tb_peserta_orientasi.id_orientasi','tb_master_orientasi.id_orientasi')
+        ->where('status_calon','=','Diterima');
+ 
+  
+        if($request->from){
+            $peserta->where('status_orientasi', '=', $request->from);
+        }
 
-        // if($request->from){
-        //     $tes->where('status_orientasi', '=', $request->from);
-        // }
+        $peserta = $peserta->get();
 
-        // $peserta = $tes->get();
+        return view('user-views.pages.requirement.orientasi.index', compact('peserta','tes'));
+    }
 
-        // $peserta = CalonPegawai::with('PesertaOrientasi.MasterOrientasi')->where('status_calon', '=', 'Diterima')
-        // ->get();
+    public function filter(Request $request)
+    {
+        $peserta = CalonPegawai::join('tb_peserta_orientasi','tb_calon_pegawai.id_calon_pegawai','tb_peserta_orientasi.id_calon_pegawai')
+        ->join('tb_master_orientasi','tb_peserta_orientasi.id_orientasi','tb_master_orientasi.id_orientasi')
+        ->where('status_calon','=','Diterima')->get();
+
+        
+        if($request->from){
+            $peserta->where('status_orientasi', '=', $request->from);
+        }
+
+        $peserta = $peserta->get();
 
         return view('user-views.pages.requirement.orientasi.index', compact('peserta'));
     }

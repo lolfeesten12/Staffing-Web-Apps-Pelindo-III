@@ -88,4 +88,21 @@ class DashboardHRDController extends Controller
 
         return view('user-views.pages.dashboardunit', compact('haritext','jumlah_pegawai','pegawai_unit'));
     }
+
+    public function role(Request $request)
+    {
+        $pegawai = MasterPegawai::where('id_pegawai', Auth::user()->Pegawai->id_pegawai)->first();
+        $pegawai->role = $request->role;
+        $pegawai->save();
+
+        if($request->role == 'Pegawai'){
+            return redirect()->route('profile.index');
+        }elseif($request->role == 'Kepala Unit' || $request->role == 'Manager Unit'){
+            return redirect()->route('dashboardunit');
+        }else{
+            return redirect()->route('dashboard');
+        }
+
+        
+    }
 }

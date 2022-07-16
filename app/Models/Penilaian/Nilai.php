@@ -15,11 +15,11 @@ class Nilai extends Model
 
     protected $fillable = [
         'no_penilaian',
+        'id_periode',
         'id_pegawai',
         'id_penilai',
         'id_atasan_penilai',
-        'periode_mulai',
-        'periode_akhir',
+        'periode',
         'tanggal_buat',
         'tanggal_terima',
         'nilai_tanggung_jawab',
@@ -61,6 +61,11 @@ class Nilai extends Model
     public function AtasanPenilai()
     {
         return $this->belongsTo(MasterPegawai::class, 'id_atasan_penilai', 'id_pegawai');
+    }
+
+    public function Periode()
+    {
+        return $this->belongsTo(PeriodePenilaian::class, 'id_periode', 'id_periode');
     }
 
     public static function getId()

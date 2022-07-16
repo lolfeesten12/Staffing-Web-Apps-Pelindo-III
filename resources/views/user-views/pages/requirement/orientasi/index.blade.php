@@ -22,29 +22,6 @@ Atur Orientasi
                 </nav>
             </div>
         </div>
-        <div class="col-12 col-xl-auto mt-4">
-            <span id="total_records"></span>
-            <p></p>
-            <form id="form1">
-                <div class="row input-daterange">
-                    <div class="col-md-5">
-                        <label class="small">Filter berdasarkan status terlaksana</label>
-                        <select name="filter" id="filter" class="form-select">
-                            <option value="">Pilih Status Pelaksanaan</option>
-                            <option value="Belum Terlaksana">Belum Terlaksana</option>
-                            <option value="Telah Terlaksana">Telah Terlaksana</option>
-                        </select>
-                            {{-- <input type="date" name="from_date" id="from_date"
-                                class="form-control form-control-sm" placeholder="From Date" /> --}}
-                        
-                    </div>
-                    <div class="col-md-2">
-                        <button type="button" name="filter" onclick="filter_status(event)"
-                            class="btn btn-sm btn-primary px-4 mt-4">Filter</button>
-                    </div>
-                </div>
-            </form>
-        </div>
         <hr>
         @if(session('messageberhasil'))
         <div
@@ -77,84 +54,192 @@ Atur Orientasi
     <div class="container-fluid">
         <div class="card">
             <div class="card-body">
-                <div class="table-responsive">
-                    <div id="example_wrapper" class="dataTables_wrapper dt-bootstrap5">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <table id="example" class="table table-striped table-bordered dataTable"
-                                    style="width: 100%;" role="grid" aria-describedby="example_info">
-                                    <thead>
-                                        <tr role="row">
-                                            <th class="sorting_asc" tabindex="0" aria-controls="example" rowspan="1"
-                                                colspan="1" aria-sort="ascending"
-                                                aria-label="Name: activate to sort column descending"
-                                                style="width: 100px;">No.</th>
-                                            <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
-                                                colspan="1" aria-label="Position: activate to sort column ascending"
-                                                style="width: 170px;">Nama Pelamar</th>
-                                            <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
-                                                colspan="1" aria-label="Position: activate to sort column ascending"
-                                                style="width: 80px;">Pendidikan Terakhir</th>
-                                            <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
-                                                colspan="1" aria-label="Position: activate to sort column ascending"
-                                                style="width: 80px;">Jurusan</th>
-                                            <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
-                                                colspan="1" aria-label="Position: activate to sort column ascending"
-                                                style="width: 70px;">Periode Orientasi</th>
-                                            <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
-                                                colspan="1" aria-label="Position: activate to sort column ascending"
-                                                style="width: 70px;">No. Sertifikat</th>
-                                                <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
-                                                colspan="1" aria-label="Position: activate to sort column ascending"
-                                                style="width: 70px;">Status Orientasi</th>
-                                                @if (Auth::user()->Pegawai->role != 'Direktur')
-                                                <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
-                                                colspan="1" aria-label="Salary: activate to sort column ascending"
-                                                style="width: 70px;">Action</th>
+                <ul class="nav nav-tabs nav-primary" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link active" data-bs-toggle="tab" href="#primaryhome" role="tab" aria-selected="true">
+                            <div class="d-flex align-items-center">
+                                <div class="tab-icon"><i class="bx bx-home font-18 me-1"></i></div>
+                                <div class="tab-title">Calon Peserta Orientasi</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" data-bs-toggle="tab" href="#primaryprofile" role="tab" aria-selected="false">
+                            <div class="d-flex align-items-center">
+                                <div class="tab-icon"><i class="bx bx-user-pin font-18 me-1"></i></div>
+                                <div class="tab-title">Periode Belum Diatur</div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content py-3">
+                    <div class="tab-pane fade show active" id="primaryhome" role="tabpanel">
+                        <div class="col-12 col-xl-auto mt-2 mb-4">
+                            <span id="total_records"></span>
+                            <p></p>
+                            <form id="form1">
+                                @csrf
+                                <div class="row input-daterange">
+                                    <div class="col-md-5">
+                                        <label class="small">Filter berdasarkan status terlaksana</label>
+                                        <select name="filter" id="filter" class="form-select">
+                                            <option value="">Pilih Status Pelaksanaan</option>
+                                            <option value="Belum Terlaksana">Belum Terlaksana</option>
+                                            <option value="Sudah Terlaksana">Sudah Terlaksana</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type="button" name="filter" onclick="filter_status(event)"
+                                            class="btn btn-sm btn-primary px-4 mt-4">Filter</button>
+                                        <button type="button" onclick="reset(event)"
+                                            class="btn btn-sm btn-secondary px-4 mt-4">Reset</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="table-responsive">
+                            <div id="example_wrapper" class="dataTables_wrapper dt-bootstrap5">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <table id="example" class="table table-striped table-bordered dataTable"
+                                            style="width: 100%;" role="grid" aria-describedby="example_info">
+                                            <thead>
+                                                <tr role="row">
+                                                    <th class="sorting_asc" tabindex="0" aria-controls="example" rowspan="1"
+                                                        colspan="1" aria-sort="ascending"
+                                                        aria-label="Name: activate to sort column descending"
+                                                        style="width: 100px;">No.</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
+                                                        colspan="1" aria-label="Position: activate to sort column ascending"
+                                                        style="width: 170px;">Nama Pelamar</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
+                                                        colspan="1" aria-label="Position: activate to sort column ascending"
+                                                        style="width: 80px;">Pendidikan Terakhir</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
+                                                        colspan="1" aria-label="Position: activate to sort column ascending"
+                                                        style="width: 80px;">Jurusan</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
+                                                        colspan="1" aria-label="Position: activate to sort column ascending"
+                                                        style="width: 70px;">Periode Orientasi</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
+                                                        colspan="1" aria-label="Position: activate to sort column ascending"
+                                                        style="width: 70px;">No. Sertifikat</th>
+                                                        <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
+                                                        colspan="1" aria-label="Position: activate to sort column ascending"
+                                                        style="width: 70px;">Status Orientasi</th>
+                                                        @if (Auth::user()->Pegawai->role != 'Direktur')
+                                                        <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
+                                                        colspan="1" aria-label="Salary: activate to sort column ascending"
+                                                        style="width: 70px;">Action</th>
+                                                        @endif
+                                                   
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @forelse ($peserta as $item)
+                                                <tr role="row" class="odd">
+                                                    <th scope="row" class="small" class="sorting_1">{{ $loop->iteration}}.</th>
+                                                    <td>{{ $item->nama_lengkap }}</td>
+                                                    <td class="text-center">{{ $item->pendidikan_terakhir }}</td>
+                                                    <td class="text-center">{{ $item->jurusan }}</td>
+                                                    <td>{{ $item->periode_orientasi ?? 'Belum Ditentukan' }}</td>
+                                                    <td>{{ $item->no_sertifikat ?? 'Belum Ditentukan'}}</td>
+                                                    <td>{{ $item->status_orientasi ?? 'Belum Ditentukan' }}</td>
+                                                    @if (Auth::user()->Pegawai->role != 'Direktur')
+                                                    <td class="text-center">
+                                                        <a href="javascript:;" class="btn btn-sm btn-secondary"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#Modaldetail-{{ $item->id_calon_pegawai }}"><i
+                                                                class="lni lni-eye"></i></a>
+                                                        @if ($item->status_orientasi == 'Belum Terlaksana')
+                                                        <a href="javascript:;" class="btn btn-sm btn-success"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#Modalsertifikat-{{ $item->id_calon_pegawai }}"><i
+                                                            class="lni lni-certificate"></i></a>
+                                                        @endif
+                                                      
+                                                    </td>
+                                                    @endif
+                                                   
+                                                </tr>
+                                                @empty
+        
+                                                @endforelse
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="primaryprofile" role="tabpanel">
+                        <div class="table-responsive">
+                            <div id="example_wrapper" class="dataTables_wrapper dt-bootstrap5">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <table id="example2" class="table table-striped table-bordered dataTable"
+                                            style="width: 100%;" role="grid" aria-describedby="example_info">
+                                            <thead>
+                                                <tr role="row">
+                                                    <th class="sorting_asc" tabindex="0" aria-controls="example" rowspan="1"
+                                                        colspan="1" aria-sort="ascending"
+                                                        aria-label="Name: activate to sort column descending"
+                                                        style="width: 100px;">No.</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
+                                                        colspan="1" aria-label="Position: activate to sort column ascending"
+                                                        style="width: 170px;">Nama Pelamar</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
+                                                        colspan="1" aria-label="Position: activate to sort column ascending"
+                                                        style="width: 80px;">Pendidikan Terakhir</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
+                                                        colspan="1" aria-label="Position: activate to sort column ascending"
+                                                        style="width: 80px;">Jurusan</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
+                                                        colspan="1" aria-label="Position: activate to sort column ascending"
+                                                        style="width: 70px;">Periode Orientasi</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
+                                                        colspan="1" aria-label="Position: activate to sort column ascending"
+                                                        style="width: 70px;">No. Sertifikat</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
+                                                        colspan="1" aria-label="Position: activate to sort column ascending"
+                                                        style="width: 70px;">Status Orientasi</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
+                                                        colspan="1" aria-label="Salary: activate to sort column ascending"
+                                                        style="width: 70px;">Atur Periode</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @forelse ($tes as $item)
+                                                @if ($item->PesertaOrientasi == null)
+                                                <tr role="row" class="odd">
+                                                    <th scope="row" class="small" class="sorting_1">{{ $loop->iteration}}.</th>
+                                                    <td>{{ $item->nama_lengkap }}</td>
+                                                    <td class="text-center">{{ $item->pendidikan_terakhir }}</td>
+                                                    <td class="text-center">{{ $item->jurusan }}</td>
+                                                    <td>{{ $item->PesertaOrientasi->MasterOrientasi->periode_orientasi ?? 'Belum Ditentukan' }}
+                                                    </td>
+                                                    <td>{{ $item->PesertaOrientasi->no_sertifikat ?? 'Belum Ditentukan'}}</td>
+                                                    <td>{{ $item->PesertaOrientasi->MasterOrientasi->status_orientasi ?? 'Belum Ditentukan' }}</td>
+                                                    <td class="text-center">
+                                                        <a href="javascript:;" class="btn btn-sm btn-secondary"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#Modaldetail-{{ $item->id_calon_pegawai }}"><i
+                                                                class="lni lni-eye"></i></a>
+                                                        <a href="{{ route('peserta-orientasi.edit',$item->id_calon_pegawai) }}"
+                                                            data-bs-toggle="tooltip" data-bs-placement="top" title=""
+                                                            data-bs-original-title="Atur Periode Orientasi"
+                                                            class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i></a>
+                                                    </td>
+                                                </tr>
                                                 @endif
-                                           
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @forelse ($peserta as $item)
-                                        <tr role="row" class="odd">
-                                            <th scope="row" class="small" class="sorting_1">{{ $loop->iteration}}.</th>
-                                            <td>{{ $item->nama_lengkap }}</td>
-                                            <td class="text-center">{{ $item->pendidikan_terakhir }}</td>
-                                            <td class="text-center">{{ $item->jurusan }}</td>
-                                            <td>{{ $item->PesertaOrientasi->MasterOrientasi->periode_orientasi ?? 'Belum Ditentukan' }}
-                                            </td>
-                                            <td>{{ $item->PesertaOrientasi->no_sertifikat ?? 'Belum Ditentukan'}}</td>
-                                            <td>{{ $item->PesertaOrientasi->MasterOrientasi->status_orientasi ?? 'Belum Ditentukan' }}</td>
-                                            @if (Auth::user()->Pegawai->role != 'Direktur')
-                                            <td class="text-center">
-                                                <a href="javascript:;" class="btn btn-sm btn-secondary"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#Modaldetail-{{ $item->id_calon_pegawai }}"><i
-                                                        class="lni lni-eye"></i></a>
-                                                <a href="{{ route('peserta-orientasi.edit',$item->id_calon_pegawai) }}"
-                                                    data-bs-toggle="tooltip" data-bs-placement="top" title=""
-                                                    data-bs-original-title="Atur Periode Orientasi"
-                                                    class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i></a>
-                                                @if ($item->PesertaOrientasi == '' || $item->PesertaOrientasi == null)
-
-                                                @else
-                                                <a href="javascript:;" class="btn btn-sm btn-success"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#Modalsertifikat-{{ $item->id_calon_pegawai }}"><i
-                                                        class="lni lni-certificate"></i></a>
-                                                @endif
-
-
-                                            </td>
-                                            @endif
-                                           
-                                        </tr>
-                                        @empty
-
-                                        @endforelse
-                                    </tbody>
-                                </table>
+                                               
+                                                @empty
+        
+                                                @endforelse
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -283,7 +368,7 @@ Atur Orientasi
                         <div class="form-group">
                             <label class="small mb-1 mr-1" for="periode_orientasi">Periode Orientasi</label>
                             <input class="form-control" name="periode_orientasi" type="text" id="periode_orientasi"
-                                value="{{ $item->PesertaOrientasi->MasterOrientasi->periode_orientasi ?? 'Belum Ditentukan' }}"
+                                value="{{ $item->periode_orientasi ?? 'Belum Ditentukan' }}"
                                 readonly></input>
                         </div>
                     </div>
@@ -291,7 +376,7 @@ Atur Orientasi
                         <div class="form-group">
                             <label class="small mb-1 mr-1">Tanggal Orientasi</label>
                             <input class="form-control" type="text" id="tanggal_orientasi"
-                                value="{{ $item->PesertaOrientasi->MasterOrientasi->tanggal_orientasi ?? 'Belum Ditentukan' }}"
+                                value="{{ $item->tanggal_orientasi ?? 'Belum Ditentukan' }}"
                                 readonly></input>
                         </div>
                     </div>
@@ -299,12 +384,12 @@ Atur Orientasi
                 <div class="form-group mb-2">
                     <label class="small mb-1 mr-1">Nomor Sertifikat</label>
                     <input class="form-control" type="text" id="no_seritifikat"
-                        value="{{ $item->PesertaOrientasi->no_seritifikat ?? 'Belum Berjalan' }}" readonly></input>
+                        value="{{ $item->no_seritifikat ?? 'Belum Berjalan' }}" readonly></input>
                 </div>
                 <div class="form-group mb-2">
                     <label class="small mb-1 mr-1">Keterangan</label>
                     <input class="form-control" type="text" id="keterangan"
-                        value="{{ $item->PesertaOrientasi->keterangan ?? 'Belum Berjalan' }}" readonly></input>
+                        value="{{ $item->keterangan ?? 'Belum Berjalan' }}" readonly></input>
                 </div>
 
             </div>
@@ -325,6 +410,7 @@ Atur Orientasi
         event.preventDefault()
         var form1 = $('#form1')
         var filter = form1.find('select[name="filter"]').val()
+        console.log(filter)
         const Toast = Swal.mixin({
             toast: true,
             position: 'top-end',
@@ -343,9 +429,33 @@ Atur Orientasi
         })
 
         window.location.href = '/Requirement/peserta-orientasi?from=' + filter
+    }
+
+    function reset(){
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+
+        Toast.fire({
+            icon: 'info',
+            title: 'Mohon Tunggu, Sedang diproses ...'
+        })
+
+        window.location.href = '/Requirement/peserta-orientasi/filter?from=' + filter
 
     }
 
 </script>
 
 @endsection
+
+
+

@@ -47,4 +47,6 @@ class CalonPegawai extends Model
     {
         return $this->belongsTo(Orientasi::class, 'id_calon_pegawai', 'id_calon_pegawai');
     }
+
+    
 }

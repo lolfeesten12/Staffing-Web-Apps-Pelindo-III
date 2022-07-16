@@ -21,6 +21,10 @@ Penilaian Pegawai
                     </ol>
                 </nav>
             </div>
+            <div class="ms-auto">
+                <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                data-bs-target="#Modaltambah">Tambah Penilaian Diri</button>
+            </div>
             
         </div>
         <hr>
@@ -106,6 +110,37 @@ Penilaian Pegawai
         </div>
     </div>
 </main>
+
+<div class="modal fade" id="Modaltambah" data-backdrop="static" tabindex="-1" role="dialog"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Tambah Penilaian Diri Pegawai</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{ route('store-periode-nilai') }}" method="POST">
+                @csrf
+                <div class="modal-body">
+                    <label class="small mb-1">Pilih Periode Penilaian</label>
+                    <hr>
+                    </hr>
+                    <div class="form-group">
+                        <label class="small mb-1 mr-1" for="periode">Periode Penilaian</label><span class="mr-4 mb-3"
+                            style="color: red">*</span>
+                        <input class="form-control" name="periode" type="month" id="periode"
+                            placeholder="Input Periode Penilaian" value="{{ old('periode') }}" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="Submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 
 
 @endsection
