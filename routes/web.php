@@ -35,6 +35,7 @@ use App\Http\Controllers\Pelatihan\AllPelatihanWebController;
 use App\Http\Controllers\Pelatihan\ProgramPelatihanController;
 use App\Http\Controllers\Penilaian\ApprovalPenilaianController;
 use App\Http\Controllers\Penilaian\NilaiSayaController;
+use App\Http\Controllers\Penilaian\PenilaianDiriController;
 use App\Http\Controllers\Penilaian\PenilaianPegawaiController;
 use App\Http\Controllers\Penilaian\PeriodePenilaianController;
 use App\Http\Controllers\Riwayat\RiwayatCutiController;
@@ -200,10 +201,12 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::prefix('Penilaian')
         ->group(function () {
+            Route::resource('penilaian-diri', PenilaianDiriController::class);
+            Route::post('penilaian-diri/periode', [App\Http\Controllers\Penilaian\PenilaianDiriController::class, 'StorePeriode'])->name('store-periode-nilai');
             Route::resource('penilaian-pegawai', PenilaianPegawaiController::class);
-            Route::post('penilaian-pegawai/periode', [App\Http\Controllers\Penilaian\PenilaianPegawaiController::class, 'StorePeriode'])->name('store-periode-nilai');
-            Route::resource('periode-nilai', PeriodePenilaianController::class)->middleware(['hrd&direktur']);
-            Route::get('list-penilaian/{id_pegawai}', [App\Http\Controllers\Penilaian\PenilaianPegawaiController::class, 'DetailNilai'])->name('penilaian-list');
+            Route::post('approval-nilai/{id_penilaian}/set-status', [App\Http\Controllers\Penilaian\PenilaianPegawaiController::class, 'Status'])->name('penilaian-status');
+            Route::get('/download_skp/{file_skp}', [App\Http\Controllers\Penilaian\PenilaianPegawaiController::class, 'getFile'])->name('penilaian-file-skp');
+            Route::get('list-penilaian/{id_pegawai}', [App\Http\Controllers\Penilaian\PenilaianDiriController::class, 'DetailNilai'])->name('penilaian-list');
             Route::resource('nilai-saya', NilaiSayaController::class);
             Route::put('Nilai/{id_penilaian}/Tanggapan', [App\Http\Controllers\Penilaian\NilaiSayaController::class, 'Tanggapan'])->name('nilai-tanggapan');
             Route::put('Nilai/{id_penilaian}/Sesuai', [App\Http\Controllers\Penilaian\NilaiSayaController::class, 'Sesuai'])->name('nilai-sesuai');

@@ -23,7 +23,7 @@ Penilaian Pegawai
                 </nav>
             </div>
             <div class="ms-auto">
-                <a href="{{ route('penilaian-pegawai.edit', $pegawai->id_pegawai) }}" data-bs-toggle="tooltip"
+                <a href="{{ route('penilaian-diri.edit', $pegawai->id_pegawai) }}" data-bs-toggle="tooltip"
                     data-bs-placement="top" title="" data-bs-original-title="Tambah Data Nilai"
                     class="btn btn-sm btn-primary">Tambah Data</a>
             </div>
@@ -148,7 +148,7 @@ Penilaian Pegawai
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#Modaldetail-{{ $item->id_penilaian }}"><i
                                                     class="lni lni-eye"></i></a>
-                                                <a href="{{ route('penilaian-pegawai.show',$item->id_penilaian) }}"
+                                                <a href="{{ route('penilaian-diri.show',$item->id_penilaian) }}"
                                                     data-bs-toggle="tooltip" data-bs-placement="top" title=""
                                                     data-bs-original-title="Edit Data Pegawai"
                                                     class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i></a>
@@ -165,7 +165,7 @@ Penilaian Pegawai
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#Modaldetail-{{ $item->id_penilaian }}"><i
                                                     class="lni lni-eye"></i></a>
-                                                <a href="{{ route('penilaian-pegawai.show',$item->id_penilaian) }}"
+                                                <a href="{{ route('penilaian-diri.show',$item->id_penilaian) }}"
                                                     data-bs-toggle="tooltip" data-bs-placement="top" title=""
                                                     data-bs-original-title="Edit Data Pegawai"
                                                     class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i></a>
@@ -398,7 +398,7 @@ Penilaian Pegawai
                 <h5 class="modal-title text-white">Hapus Data Penilaian</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="{{ route('penilaian-pegawai.destroy', $item->id_penilaian) }}" method="POST" class="d-inline">
+            <form action="{{ route('penilaian-diri.destroy', $item->id_penilaian) }}" method="POST" class="d-inline">
                 @csrf
                 @method('delete')
                 <div class="modal-body text-white">

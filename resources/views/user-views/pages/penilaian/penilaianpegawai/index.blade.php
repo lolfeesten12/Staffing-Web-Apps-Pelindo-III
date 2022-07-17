@@ -21,11 +21,6 @@ Penilaian Pegawai
                     </ol>
                 </nav>
             </div>
-            <div class="ms-auto">
-                <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
-                data-bs-target="#Modaltambah">Tambah Penilaian Diri</button>
-            </div>
-            
         </div>
         <hr>
         @if(session('messageberhasil'))
@@ -73,28 +68,87 @@ Penilaian Pegawai
                                                 style="width: 100px;">No.</th>
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
-                                                style="width: 170px;">Nama Pegawai</th>
+                                                style="width: 40px;">Periode Penilaian</th>
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
-                                                style="width: 80px;">Jabatan</th>
+                                                style="width: 40px;">Pegawai</th>
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
-                                                style="width: 80px;">Unit Kerja</th>
+                                                style="width: 40px;">Jabatan</th>
+                                            <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
+                                                colspan="1" aria-label="Position: activate to sort column ascending"
+                                                style="width: 70px;">Pangkat & Golongan</th>
+                                            <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
+                                                colspan="1" aria-label="Position: activate to sort column ascending"
+                                                style="width: 40px;">Tanggal Penilaian</th>
+                                            <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
+                                                colspan="1" aria-label="Position: activate to sort column ascending"
+                                                style="width: 80px;">Nilai Rata Rata</th>
+                                            <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
+                                                colspan="1" aria-label="Position: activate to sort column ascending"
+                                                style="width: 80px;">Nilai SKP</th>
+                                            <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
+                                                colspan="1" aria-label="Position: activate to sort column ascending"
+                                                style="width: 80px;">File SKP</th>
+                                            <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
+                                                colspan="1" aria-label="Position: activate to sort column ascending"
+                                                style="width: 80px;">Status</th>
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Salary: activate to sort column ascending"
                                                 style="width: 70px;">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @forelse ($pegawai as $item)
+                                        @forelse ($nilai as $item)
                                         <tr role="row" class="odd">
                                             <th scope="row" class="small" class="sorting_1">{{ $loop->iteration}}.</th>
-                                            <td>{{ $item->nama_pegawai }}</td>
-                                            <td>{{ $item->Jabatan->nama_jabatan }}</td>
-                                            <td>{{ $item->UnitKerja->unit_kerja }}</td>
+                                            <td>{{ $item->periode }}</td>
+                                            <td>{{ $item->Pegawai->nama_pegawai }}</td>
+                                            <td>{{ $item->Pegawai->Jabatan->nama_jabatan }}</td>
+                                            <td>{{ $item->Pegawai->Pangkat->nama_pangkat }},
+                                                {{ $item->Pegawai->Pangkat->golongan }}</td>
+                                            <td>{{ $item->tanggal_buat }}</td>
+                                            <td>{{ $item->nilai_rata2 }}</td>
+                                            <td>{{ $item->nilai_skp ?? "Belum Dinilai" }}</td>
                                             <td class="text-center">
-                                                <a href="{{ route('penilaian-list',$item->id_pegawai) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Penilaian Pegawai"
-                                                    class="btn btn-sm btn-primary">Mulai Penilaian</a>
+                                                @if ($item->file_skp != null)
+                                                <a href="{{ route('penilaian-file-skp',$item->file_skp) }}"
+                                                    class="btn btn-sm btn-info mr-2"><i
+                                                        class="lni lni-download"></i></a>
+                                                @else
+                                                <div class="fs-3 text-success">
+                                                    <i class="bi bi-x-circle-fill"></i>
+                                                </div>
+                                                @endif
+                                            </td>
+                                            <td class="text-center">
+                                                @if ($item->status_acc == 'Approved')
+                                                <span class="badge bg-light-success text-success w-100">Diterima</span>
+                                                @elseif ($item->status_acc == 'Not Approved')
+                                                <span class="badge bg-light-danger text-danger w-100">Ditolak</span>
+                                                @elseif ($item->status_acc == 'Ditanggapi' || $item->status_acc ==
+                                                'Keberatan')
+                                                <span
+                                                    class="badge bg-light-info text-info w-100">{{ $item->status_acc }}</span>
+                                                @else
+                                                <span class="badge bg-light-info text-info w-100">Diproses</span>
+                                                @endif
+                                            </td>
+                                            <td class="text-center">
+                                                <a href="{{ route('penilaian-pegawai.show',$item->id_penilaian) }}"
+                                                    data-bs-toggle="tooltip" data-bs-placement="top" title=""
+                                                    data-bs-original-title="Detail Data Penilaian"
+                                                    class="btn btn-sm btn-secondary"><i class="lni lni-eye"></i></a>
+                                                @if ($item->status_acc == 'Pending')
+                                                    <a href="javascript:;" class="btn btn-sm btn-success"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#ModalTerima-{{ $item->id_penilaian }}"><i
+                                                            class="lni lni-checkmark"></i></a>
+                                                    <a href="javascript:;" class="btn btn-sm btn-danger"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#ModalTolak-{{ $item->id_penilaian }}"><i
+                                                            class="lni lni-close"></i></a>
+                                                @endif
                                             </td>
                                         </tr>
                                         @empty
@@ -111,35 +165,7 @@ Penilaian Pegawai
     </div>
 </main>
 
-<div class="modal fade" id="Modaltambah" data-backdrop="static" tabindex="-1" role="dialog"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Tambah Penilaian Diri Pegawai</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form action="{{ route('store-periode-nilai') }}" method="POST">
-                @csrf
-                <div class="modal-body">
-                    <label class="small mb-1">Pilih Periode Penilaian</label>
-                    <hr>
-                    </hr>
-                    <div class="form-group">
-                        <label class="small mb-1 mr-1" for="periode">Periode Penilaian</label><span class="mr-4 mb-3"
-                            style="color: red">*</span>
-                        <input class="form-control" name="periode" type="month" id="periode"
-                            placeholder="Input Periode Penilaian" value="{{ old('periode') }}" required />
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="Submit" class="btn btn-primary">Save changes</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+
 
 
 

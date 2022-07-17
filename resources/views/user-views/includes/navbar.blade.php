@@ -333,11 +333,12 @@
             <div class="menu-title">Penilaian Pegawai</div>
         </a>
         <ul>
-            @if (Auth::user()->Pegawai->role == 'HRD' || Auth::user()->Pegawai->role == 'Direktur')
-            <li> <a href="{{ route('periode-nilai.index') }}"><i class="bi bi-circle"></i>Periode Penilaian</a></li>
+            <li> <a href="{{ route('penilaian-diri.index') }}"><i class="bi bi-circle"></i>Penilaian Diri</a></li>
+            @if (Auth::user()->Pegawai->role != 'Pegawai')
+            <li> <a href="{{ route('penilaian-pegawai.index') }}"><i class="bi bi-circle"></i>Penilaian Pegawai</a></li>
             @endif
-            <li> <a href="{{ route('penilaian-pegawai.index') }}"><i class="bi bi-circle"></i>Penilaian</a></li>
-            {{-- <li> <a href="{{ route('nilai-saya.index') }}"><i class="bi bi-circle"></i>Penilaian</a></li> --}}
+           
+          
         </ul>
     </li>
     @if (Auth::user()->Pegawai->role == 'HRD' || Auth::user()->Pegawai->role == 'Kepala Unit' || Auth::user()->Pegawai->role == 'Direktur')

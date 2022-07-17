@@ -49,7 +49,7 @@ Edit Penilaian Pegawai
                     </div>
                     <div class="card-body">
                         <div class="border p-3 rounded">
-                            <form action="{{ route('penilaian-pegawai.update', $item->id_penilaian) }}" method="POST" id="form1"
+                            <form action="{{ route('penilaian-diri.update', $item->id_penilaian) }}" method="POST" id="form1"
                                 enctype="multipart/form-data">
                                 @method('PUT')
                                 @csrf
