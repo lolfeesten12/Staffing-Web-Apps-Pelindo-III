@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Penilaian;
 
 use App\Http\Controllers\Controller;
 use App\Models\Penilaian\Nilai;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,10 +17,8 @@ class PenilaianPegawaiController extends Controller
      */
     public function index()
     {
-        $nilai = Nilai::where('id_penilai', Auth::user()->Pegawai->id_pegawai)->get();
-
+        $nilai = Nilai::where('id_penilai', Auth::user()->Pegawai->id_pegawai)->where('aktif_status','Aktif')->get();
         return view('user-views.pages.penilaian.penilaianpegawai.index', compact('nilai'));
-
     }
 
     public function getFile($file_skp)
@@ -30,7 +29,17 @@ class PenilaianPegawaiController extends Controller
 
     public function Status(Request $request, $id)
     {
-        # code...
+        $request->validate([
+            'status_acc' => 'required|in:Approved,Not Approved,Pending'
+        ]);
+
+        $item = Nilai::findOrFail($id);
+        $item->status_acc = $request->status_acc;
+        $item->tanggal_tanggapan = Carbon::now();
+        $item->tanggapan_penilai = $request->tanggapan_penilai;
+        $item->save();
+        
+        return redirect()->route('penilaian-pegawai.index')->with('messageberhasil','Data Penilaian Diri Pegawai Berhasil Diproses');
     }
 
     /**
@@ -63,7 +72,7 @@ class PenilaianPegawaiController extends Controller
     public function show($id)
     {
         $nilai = Nilai::with('Pegawai','Penilai','AtasanPenilai')->find($id);
-        return view('user-views.pages.penilaian.penilaiandiri.detail', compact('nilai'));
+        return view('user-views.pages.penilaian.penilaianpegawai.detail', compact('nilai'));
     }
 
     /**

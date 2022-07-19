@@ -75,7 +75,7 @@ Detail Penilaian Diri Pegawai
                                 </div>
                                 <div class="col-12">
                                     <div class="row">
-                                        <label class="col-sm-3 ">Pangkat dan Golongan</label>
+                                        <label class="col-sm-3 ">Pangkat</label>
                                         <div class="col-sm-9">:
                                             {{ $nilai->Pegawai->Pangkat->nama_pangkat }}/{{ $nilai->Pegawai->Pangkat->golongan }}
                                         </div>
@@ -109,7 +109,7 @@ Detail Penilaian Diri Pegawai
                                 </div>
                                 <div class="col-12">
                                     <div class="row">
-                                        <label class="col-sm-3 ">Pangkat dan Golongan</label>
+                                        <label class="col-sm-3 ">Pangkat</label>
                                         <div class="col-sm-9">:
                                             {{ $nilai->Penilai->Pangkat->nama_pangkat }}/{{ $nilai->Penilai->Pangkat->golongan }}
                                         </div>
@@ -144,7 +144,7 @@ Detail Penilaian Diri Pegawai
                                 </div>
                                 <div class="col-12">
                                     <div class="row">
-                                        <label class="col-sm-3 ">Pangkat dan Golongan</label>
+                                        <label class="col-sm-3 ">Pangkat</label>
                                         <div class="col-sm-9">:
                                             {{ $nilai->AtasanPenilai->Pangkat->nama_pangkat }}/{{ $nilai->AtasanPenilai->Pangkat->golongan }}
                                         </div>
@@ -165,14 +165,14 @@ Detail Penilaian Diri Pegawai
 
                         <div class="border p-3 rounded mt-4">
                             <div class="row">
-                                <div class="col-2">
+                                <div class="col-4">
                                     <h5>Nilai Pegawai</h5>
                                     <hr>
                                 </div>
-                                <div class="col-8">
+                                <div class="col-5">
 
                                 </div>
-                                <div class="col-2">
+                                <div class="col-3">
                                     Keterangan:<br><span style="color: grey">Skala Nilai 1 - 100</span></br>
                                 </div>
                             </div>
@@ -217,7 +217,11 @@ Detail Penilaian Diri Pegawai
                                 @else
 
                                 @endif
-
+                                <div class="col-3">
+                                    <label class="small mb-1 mr-1">Nilai SKP</label>
+                                    <input class="form-control" type="text" value="{{ $nilai->nilai_skp }}"
+                                        readonly>
+                                </div>
                                 <div class="col-6">
                                     <label class="small mb-1 mr-1">Nilai Total</label>
                                     <input class="form-control" type="text" value="{{ $nilai->nilai_total }}" readonly>
@@ -231,8 +235,28 @@ Detail Penilaian Diri Pegawai
                                         Penilaian</label>
                                     <textarea class="form-control" type="text" readonly>{{ $nilai->catatan_penilaian }}</textarea>
                                 </div>
+                                <div class="col-12 mt-4">
+                                    <h5>Status Pengesahan Penilaian</h5>
+                                    <hr>
+                                </div>
+                                <div class="col-4">
+                                    <label class="small mb-1 mr-1">Status Approval</label>
+                                    <input class="form-control" type="text" value="{{ $nilai->status_acc }}" readonly>
+                                </div>
+                                <div class="col-4">
+                                    <label class="small mb-1 mr-1">Tanggal Tanggapan Penilai</label>
+                                    <input class="form-control" type="text" value="{{ $nilai->tanggal_tanggapan }}" readonly>
+                                </div>
+                                <div class="col-4">
+                                    <label class="small mb-1 mr-1">Tanggal Disahkan</label>
+                                    <input class="form-control" type="text" value="{{ $nilai->tanggal_disahkan ?? "Belum Disahkan" }}" readonly>
+                                </div>
                                 <div class="col-12">
-                                    <a href="{{ route('penilaian-pegawai.index') }}" class="btn btn-primary px-4" type="button">Kembali</a>
+                                    <label class="small mb-1 mr-1" >Tanggapan Penilai</label>
+                                    <textarea class="form-control" type="text" readonly>{{ $nilai->tanggapan_penilai }}</textarea>
+                                </div>
+                                <div class="col-12">
+                                    <a href="{{ route('penilaian-diri.index') }}" class="btn btn-primary px-4" type="button">Kembali</a>
                                 </div>
                                 </form>
                             </div>

@@ -353,6 +353,7 @@
         </ul>
     </li>
     @endif
+    
     @if (Auth::user()->Pegawai->role == 'HRD' || Auth::user()->Pegawai->role == 'Direktur')
     <li class="menu-label">Menu Approval</li>
     <li>
@@ -364,7 +365,6 @@
         <ul>
             @if (Auth::user()->Pegawai->role =='HRD')
                 <li> <a href="{{ route('approval-cuti.index') }}"><i class="bi bi-circle"></i>Approval Cuti</a>
-                <li> <a href="{{ route('approval-penilaian.index') }}"><i class="bi bi-circle"></i>Approval Penilaian</a></li>
             @elseif (Auth::user()->Pegawai->role == 'Direktur')
                 <li> <a href="{{ route('approval-mutasi.index') }}"><i class="bi bi-circle"></i>Mutasi</a>
                 <li> <a href="{{ route('approval-mutasi-pangkat.index') }}"><i class="bi bi-circle"></i>Mutasi Pangkat</a>
@@ -373,6 +373,19 @@
         </ul>
     </li>
     @endif
+
+    @if (Auth::user()->Pegawai->role == 'Direktur' || Auth::user()->Pegawai->role == 'Direktur Unit' || Auth::user()->Pegawai->role == 'Manager Unit')
+    <li class="menu-label">Pengesahan Nilai</li>
+    <li>
+        <a href="{{ route('approval-penilaian.index') }}">
+          <div class="parent-icon"><i class="lni lni-checkmark-circle"></i>
+          </div>
+          <div class="menu-title">Pengesahan Nilai</div>
+        </a>
+      </li>
+        
+    @endif
+
 
     <li class="menu-label">Logout</li>
     <li>

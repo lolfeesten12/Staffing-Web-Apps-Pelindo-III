@@ -154,8 +154,7 @@ Route::group(['middleware' => 'auth'], function () {
         ->group(function () {
             Route::resource('approval-cuti', ApprovalCutiController::class);
             Route::post('approval-cuti/{id_riwayat_cuti}/set-status', [App\Http\Controllers\Cuti\ApprovalCutiController::class, 'Status'])->name('approval-cuti-status');
-            Route::resource('approval-penilaian', ApprovalPenilaianController::class);
-            Route::post('approval-penilaian/{id_penilaian}/set-status', [App\Http\Controllers\Penilaian\ApprovalPenilaianController::class, 'Status'])->name('approval-penilaian-status');
+            
         });
 
     Route::prefix('Approval')
@@ -165,6 +164,13 @@ Route::group(['middleware' => 'auth'], function () {
             Route::post('approval-mutasi/{id}/set-status', [App\Http\Controllers\Mutasi\ApprovalUsulanMutasiController::class, 'Status'])->name('status-approval-mutasi');
             Route::resource('approval-mutasi-pangkat', ApprovalMutasiPangkatController::class);
             Route::resource('approval-mutasi-jabatan', ApprovalMutasiJabatanController::class);
+        });
+
+    Route::prefix('Pengesahan')
+        ->middleware('pengesahnilai')
+        ->group(function () {
+            Route::resource('approval-penilaian', ApprovalPenilaianController::class);
+            Route::post('approval-penilaian/{id_penilaian}/set-status', [App\Http\Controllers\Penilaian\ApprovalPenilaianController::class, 'Status'])->name('approval-penilaian-status');
         });
 
     Route::prefix('Laporan')
@@ -205,11 +211,8 @@ Route::group(['middleware' => 'auth'], function () {
             Route::post('penilaian-diri/periode', [App\Http\Controllers\Penilaian\PenilaianDiriController::class, 'StorePeriode'])->name('store-periode-nilai');
             Route::resource('penilaian-pegawai', PenilaianPegawaiController::class);
             Route::post('approval-nilai/{id_penilaian}/set-status', [App\Http\Controllers\Penilaian\PenilaianPegawaiController::class, 'Status'])->name('penilaian-status');
+
             Route::get('/download_skp/{file_skp}', [App\Http\Controllers\Penilaian\PenilaianPegawaiController::class, 'getFile'])->name('penilaian-file-skp');
-            Route::get('list-penilaian/{id_pegawai}', [App\Http\Controllers\Penilaian\PenilaianDiriController::class, 'DetailNilai'])->name('penilaian-list');
-            Route::resource('nilai-saya', NilaiSayaController::class);
-            Route::put('Nilai/{id_penilaian}/Tanggapan', [App\Http\Controllers\Penilaian\NilaiSayaController::class, 'Tanggapan'])->name('nilai-tanggapan');
-            Route::put('Nilai/{id_penilaian}/Sesuai', [App\Http\Controllers\Penilaian\NilaiSayaController::class, 'Sesuai'])->name('nilai-sesuai');
         });
 
     // REQUIREMENT

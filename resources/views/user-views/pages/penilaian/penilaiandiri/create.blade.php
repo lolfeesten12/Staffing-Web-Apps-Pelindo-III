@@ -79,7 +79,7 @@ Penilaian Diri Pegawai
                                     </div>
                                     <div class="col-12">
                                         <div class="row">
-                                            <label class="col-sm-3 ">Pangkat dan Golongan</label>
+                                            <label class="col-sm-3 ">Pangkat</label>
                                             <div class="col-sm-9">:
                                                 {{ Auth::user()->Pegawai->Pangkat->nama_pangkat }}/{{ Auth::user()->Pegawai->Pangkat->golongan }}
                                             </div>
@@ -115,7 +115,7 @@ Penilaian Diri Pegawai
                                     </div>
                                     <div class="col-12">
                                         <div class="row">
-                                            <label class="col-sm-3 ">Pangkat dan Golongan</label>
+                                            <label class="col-sm-3 ">Pangkat</label>
                                             <div class="col-sm-9">:
                                                 {{ $penilai->Pangkat->nama_pangkat }}/{{ $penilai->Pangkat->golongan }}
                                             </div>
@@ -153,7 +153,7 @@ Penilaian Diri Pegawai
                                     </div>
                                     <div class="col-12">
                                         <div class="row">
-                                            <label class="col-sm-3 ">Pangkat dan Golongan</label>
+                                            <label class="col-sm-3 ">Pangkat</label>
                                             <div class="col-sm-9">:
                                                 {{ $atasanpenilai->Pangkat->nama_pangkat }}/{{ $atasanpenilai->Pangkat->golongan }}
                                             </div>
@@ -174,15 +174,13 @@ Penilaian Diri Pegawai
 
                         <div class="border p-3 rounded mt-4">
                             <div class="row">
-                                <div class="col-2">
-                                    <h5>Nilai Pegawai</h5>
-
-                                    <hr>
+                                <div class="col-4">
+                                    <h5>Nilai Pegawai</h5><hr>
                                 </div>
-                                <div class="col-8">
+                                <div class="col-5">
 
                                 </div>
-                                <div class="col-2">
+                                <div class="col-3">
                                     Keterangan:<br><span style="color: grey">Skala Nilai 1 - 100</span></br>
                                 </div>
                             </div>
@@ -261,7 +259,7 @@ Penilaian Diri Pegawai
                                 @endif
 
                                 <div class="col-3">
-                                    <label class="small mb-1 mr-1">Klik untuk menjumlahkan nilai</label><span
+                                    <label class="small mb-1 mr-1">Klik menjumlahkan nilai</label><span
                                         class="mr-4 mb-3" style="color: red">*</span><br>
                                     <button class="btn btn-sm btn-primary" onclick="hitung()" type="button"
                                         id="button_nilai">Mulai Penilaian</button></br>
@@ -295,7 +293,17 @@ Penilaian Diri Pegawai
                                     @error('catatan_penilaian')<div class="text-danger small mb-1">{{ $message }}
                                     </div> @enderror
                                 </div>
-                                <div class="col-12">
+                                <div class="col-6">
+                                    <label class="small mb-1 mr-1" for="nilai_skp">Nilai SKP</label><span class="mr-4 mb-3" style="color: red">*</span>
+                                    <input class="form-control" id="nilai_skp" type="number"
+                                        name="nilai_skp" placeholder="Input Nilai SKP"
+                                        value="{{ old('nilai_skp') }}" min="1" max="100"
+                                        class="form-control @error('nilai_skp') is-invalid @enderror" />
+                                    @error('nilai_skp')<div class="text-danger small mb-1">
+                                        {{ $message }}
+                                    </div> @enderror
+                                </div>
+                                <div class="col-6">
                                     <label class="small mb-1 mr-1" for="file_skp">File SKP</label><span
                                         class="mr-4 mb-3" style="color: red">*</span>
                                     <input class="form-control" id="file_skp" type="file" name="file_skp"

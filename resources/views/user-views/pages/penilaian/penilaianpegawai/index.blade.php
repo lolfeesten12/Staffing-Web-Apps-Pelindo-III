@@ -6,8 +6,6 @@ Penilaian Pegawai
 @endsection
 
 @section('content')
-
-
 <main class="page-content">
     <div class="container-fluid">
         <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
@@ -123,13 +121,12 @@ Penilaian Pegawai
                                             </td>
                                             <td class="text-center">
                                                 @if ($item->status_acc == 'Approved')
-                                                <span class="badge bg-light-success text-success w-100">Diterima</span>
+                                                <span class="badge bg-light-success text-success w-100">Diterima, Belum Disahkan</span>
                                                 @elseif ($item->status_acc == 'Not Approved')
                                                 <span class="badge bg-light-danger text-danger w-100">Ditolak</span>
-                                                @elseif ($item->status_acc == 'Ditanggapi' || $item->status_acc ==
-                                                'Keberatan')
+                                                @elseif ($item->status_acc == 'Disahkan')
                                                 <span
-                                                    class="badge bg-light-info text-info w-100">{{ $item->status_acc }}</span>
+                                                    class="badge bg-light-info text-info w-100">Telah Disahkan</span>
                                                 @else
                                                 <span class="badge bg-light-info text-info w-100">Diproses</span>
                                                 @endif
@@ -140,14 +137,12 @@ Penilaian Pegawai
                                                     data-bs-original-title="Detail Data Penilaian"
                                                     class="btn btn-sm btn-secondary"><i class="lni lni-eye"></i></a>
                                                 @if ($item->status_acc == 'Pending')
-                                                    <a href="javascript:;" class="btn btn-sm btn-success"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#ModalTerima-{{ $item->id_penilaian }}"><i
-                                                            class="lni lni-checkmark"></i></a>
-                                                    <a href="javascript:;" class="btn btn-sm btn-danger"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#ModalTolak-{{ $item->id_penilaian }}"><i
-                                                            class="lni lni-close"></i></a>
+                                                <a href="javascript:;" class="btn btn-sm btn-success"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#ModalTerima-{{ $item->id_penilaian }}"><i class="lni lni-checkmark"></i></a>
+                                            <a href="javascript:;" class="btn btn-sm btn-danger"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#ModalTolak-{{ $item->id_penilaian }}"><i class="lni lni-close"></i></a>
                                                 @endif
                                             </td>
                                         </tr>
@@ -166,7 +161,66 @@ Penilaian Pegawai
 </main>
 
 
+@forelse ($nilai as $tes)
+<div class="modal fade" id="ModalTerima-{{ $tes->id_penilaian }}" data-backdrop="static" tabindex="-1" role="dialog"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-light-success text-success">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Konfirmasi Setujui Data Penilaian Diri Pegawai</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{ route('penilaian-status', $tes->id_penilaian) }}?status_acc=Approved" method="POST" class="d-inline">
+                @csrf
+                <div class="modal-body">
+                    <div class="form-group">Apakah Anda Yakin Menyetujui Penilaian Diri Pegawai Atas Nama {{ $item->Pegawai->nama_pegawai }} ?</div>
+                    <div class="col-12 mt-2">
+                        <label class="small mb-1" for="tanggapan_penilai">Tanggapan Terhadap Nilai</label>
+                        <textarea class="form-control" id="text" type="tanggapan_penilai" name="tanggapan_penilai"
+                            value="{{ old('tanggapan_penilai') }}"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button class="btn btn-success" type="submit">Ya! Approve</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@empty
+@endforelse
 
+@forelse ($nilai as $item)
+<div class="modal fade" id="ModalTolak-{{ $item->id_penilaian }}" data-backdrop="static" tabindex="-1" role="dialog"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-light-danger text-danger">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Konfirmasi Tolak Data Penilaian Diri Pegawai</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{ route('penilaian-status', $item->id_penilaian) }}?status_acc=Not Approved" method="POST" class="d-inline">
+                @csrf
+                <div class="modal-body">
+                    <div class="form-group">Apakah Anda Yakin Menolak Penilaian Diri Pegawai Atas Nama {{ $item->Pegawai->nama_pegawai }} ?</div>
+                    <div class="col-12 mt-2">
+                        <label class="small mb-1" for="tanggapan_penilai">Tanggapan Terhadap Nilai</label>
+                        <textarea class="form-control" id="text" type="tanggapan_penilai" name="tanggapan_penilai"
+                            value="{{ old('tanggapan_penilai') }}"></textarea>
+                    </div>
+                </div>
+
+                <div class="modal-footer ">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button class="btn btn-danger" type="submit">Ya! Tolak</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@empty
+@endforelse
 
 
 @endsection

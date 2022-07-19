@@ -105,13 +105,14 @@ Penilaian Diri Pegawai
                                             <td>{{ $item->nilai_skp ?? "Belum Dinilai" }}</td>
                                             <td class="text-center">
                                                 @if ($item->status_acc == 'Approved')
-                                                    <span class="badge bg-light-success text-success w-100">Diterima</span>
+                                                <span class="badge bg-light-success text-success w-100">Diterima, Belum Disahkan</span>
                                                 @elseif ($item->status_acc == 'Not Approved')
-                                                    <span class="badge bg-light-danger text-danger w-100">Ditolak</span>
-                                                @elseif ($item->status_acc == 'Ditanggapi' || $item->status_acc == 'Keberatan')
-                                                    <span class="badge bg-light-info text-info w-100">{{ $item->status_acc }}</span>
+                                                <span class="badge bg-light-danger text-danger w-100">Ditolak</span>
+                                                @elseif ($item->status_acc == 'Disahkan')
+                                                <span
+                                                    class="badge bg-light-info text-info w-100">Telah Disahkan</span>
                                                 @else
-                                                    <span class="badge bg-light-info text-info w-100">Diproses</span>
+                                                <span class="badge bg-light-info text-info w-100">Diproses</span>
                                                 @endif
                                             </td>
                                             <td class="text-center">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Penilaian;
 use App\Http\Controllers\Controller;
 use App\Models\Penilaian\Nilai;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ApprovalPenilaianController extends Controller
 {
@@ -15,8 +16,26 @@ class ApprovalPenilaianController extends Controller
      */
     public function index()
     {
-        // $nilai = Nilai::with('Pegawai','Penilai','AtasanPenilai')->get();
-        $nilai = Nilai::with('Pegawai','Penilai','AtasanPenilai')->groupBy('periode_mulai','periode_akhir','status_acc')->selectRaw('periode_mulai, periode_akhir, status_acc, COUNT(id_penilaian) as jumlah_pegawai')->get();
+        // $nilai = Nilai::with('Pegawai','Penilai','AtasanPenilai')->groupBy('periode_mulai','periode_akhir','status_acc')->selectRaw('periode_mulai, periode_akhir, status_acc, COUNT(id_penilaian) as jumlah_pegawai')->get();
+        if(Auth::user()->Pegawai->role == 'Direktur'){
+            $nilai = Nilai::where('id_pengesah', Auth::user()->Pegawai->id_pegawai)
+            ->where('aktif_status', 'Aktif')
+            ->where('status_acc','Approved')->OrWhere('status_acc','Disahkan')        
+            ->get();
+   
+        }elseif(Auth::user()->Pegawai->role == 'Direktur Unit'){
+            $nilai = Nilai::where('id_pengesah',Auth::user()->Pegawai->id_pegawai)
+            ->where('aktif_status','Aktif')
+            ->where('status_acc','Approved')->OrWhere('status_acc','Disahkan')
+            ->get();
+
+        }elseif(Auth::user()->Pegawai->role == 'Manager Unit'){
+            $nilai = Nilai::where('id_unit_kerja', Auth::user()->Pegawai->id_unit_kerja)
+            ->where('aktif_status','Aktif')
+            ->where('status_acc','Approved')->OrWhere('status_acc','Disahkan')
+            ->get();
+        }
+
         return view('user-views.pages.penilaian.approvalnilai.index', compact('nilai'));
     }
 
@@ -47,10 +66,9 @@ class ApprovalPenilaianController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($periode_mulai)
+    public function show($id)
     {
-        $nilai = Nilai::with('Pegawai','Penilai','AtasanPenilai')->where('periode_mulai', $periode_mulai)->get();
-        // return $nilai
+        $nilai = Nilai::with('Pegawai','Penilai','AtasanPenilai')->find($id);
         return view('user-views.pages.penilaian.approvalnilai.detail', compact('nilai'));
 
 
@@ -82,14 +100,14 @@ class ApprovalPenilaianController extends Controller
     public function Status(Request $request, $id)
     {
         $request->validate([
-            'status_acc' => 'required|in:Approved,Not Approved,Pending'
+            'status_acc' => 'required|in:Approved,Not Approved,Pending,Disahkan'
         ]);
 
         $item = Nilai::findOrFail($id);
         $item->status_acc = $request->status_acc;
         $item->save();
         
-        return redirect()->route('approval-penilaian.show', $item->periode_mulai);
+        return redirect()->route('approval-penilaian.index')->with('messageberhasil','Data Penilaian Pegawai Berhasil Disahkan');
     }
 
     /**

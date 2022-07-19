@@ -22,33 +22,22 @@ class PenilaianDiriController extends Controller
 
     public function index()
     {
-       $nilai = Nilai::where('id_pegawai', Auth::user()->Pegawai->id_pegawai)->where('status_aktif','Aktif')->get();
+       $nilai = Nilai::where('id_pegawai', Auth::user()->Pegawai->id_pegawai)->where('aktif_status','Aktif')->get();
        
        return view('user-views.pages.penilaian.penilaiandiri.index', compact('nilai'));
     }
 
-    public function DetailNilai($id_pegawai)
-    {
-       $nilai = Nilai::with('Pegawai','Penilai','AtasanPenilai')
-       ->join('tb_master_pegawai','tb_penilaian_kerja.id_pegawai','tb_master_pegawai.id_pegawai')
-       ->where('tb_penilaian_kerja.id_pegawai','=', $id_pegawai)
-       ->get();
-
-       $pegawai = MasterPegawai::where('id_pegawai', '=', $id_pegawai)->first();
-   
-       return view('user-views.pages.penilaian.penilaiandiri.list-nilai', compact('nilai','pegawai'));
-    }
 
     public function StorePeriode(Request $request)
     {
       
-        $getnilai = Nilai::where('id_pegawai', Auth::user()->Pegawai->id_pegawai)->where('periode', $request->periode)->where('status_aktif', 'Aktif')->first();
+        $getnilai = Nilai::where('id_pegawai', Auth::user()->Pegawai->id_pegawai)->where('periode', $request->periode)->where('aktif_status', 'Aktif')->first();
 
         if(empty($getnilai)){
             $nilai = new Nilai;
             $nilai->periode = $request->periode;
             $nilai->id_pegawai = Auth::user()->Pegawai->id_pegawai;
-            $nilai->status_aktif = 'Tidak Aktif';
+            $nilai->aktif_status = 'Tidak Aktif';
             $nilai->save();
             
             return redirect()->route('penilaian-diri.edit', $nilai->id_penilaian);
@@ -186,6 +175,7 @@ class PenilaianDiriController extends Controller
         $nilai->nilai_kerjasama = $request->nilai_kerjasama;
         $nilai->nilai_sikap = $request->nilai_sikap;
         $nilai->file_skp = $files;
+        $nilai->nilai_skp = $request->nilai_skp;
         $nilai->tanggal_buat = Carbon::now();
 
         if(Auth::user()->Pegawai->role != 'Pegawai'){
@@ -205,7 +195,7 @@ class PenilaianDiriController extends Controller
         $periode = date("m",strtotime($nilai->periode));
         $no_penilaian = 'PD'.'/'.$periode.'/'.$nilai->Pegawai->id_pegawai.'/'.$idbaru;
         $nilai->no_penilaian = $no_penilaian;
-        $nilai->status_aktif = 'Aktif';
+        $nilai->aktif_status = 'Aktif';
         $nilai->update();
 
         return redirect()->route('penilaian-diri.index')->with('messageberhasil','Data Penilaian Diri Pegawai Berhasil Ditambahkan');

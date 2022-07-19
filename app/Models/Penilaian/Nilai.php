@@ -31,13 +31,12 @@ class Nilai extends Model
         'nilai_rata2',
         'nilai_total',
         'catatan_penilaian',
-        'keberatan',
-        'tanggal_keberatan',
         'tanggapan_penilai',
         'tanggal_tanggapan',
-        'tanggal_setuju',
+        'tanggal_disahkan',
         'status_acc',
         'file_skp',
+        'aktif_status'
     ];
 
     protected $hidden = [

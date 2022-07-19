@@ -69,5 +69,6 @@ class Kernel extends HttpKernel
         'gabungan' => \App\Http\Middleware\IsGabungan::class,
         'hrd&direktur' => \App\Http\Middleware\IsGabunganHRDdanDirektur::class,
         'gabunganunit' => \App\Http\Middleware\IsGabunganUnit::class,
+        'pengesahnilai' => \App\Http\Middleware\IsPengesahNilai::class,
     ];
 }
