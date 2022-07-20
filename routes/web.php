@@ -16,6 +16,7 @@ use App\Http\Controllers\MasterData\MasterOrientasiController;
 use App\Http\Controllers\MasterData\MasterPangkatController;
 use App\Http\Controllers\MasterData\MasterPegawaiController;
 use App\Http\Controllers\MasterData\MasterPelanggaranController;
+use App\Http\Controllers\MasterData\MasterPenempatanController;
 use App\Http\Controllers\MasterData\MasterSanksiController;
 use App\Http\Controllers\MasterData\MasterShiftController;
 use App\Http\Controllers\MasterData\MasterUnitKerjaController;
@@ -109,6 +110,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::resource('sanksi', MasterSanksiController::class);
             Route::resource('pelanggaran', MasterPelanggaranController::class);
             Route::resource('orientasi', MasterOrientasiController::class);
+            Route::resource('penempatan', MasterPenempatanController::class);
         });
 
     // RIWAYAT PEGAWAI
@@ -198,6 +200,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('usulan-jabatan', UsulanJabatanController::class);
         Route::get('usulan-jabatan/getpegawai-jabatan/{id}', [App\Http\Controllers\Mutasi\UsulanJabatanController::class, 'GetJabatan']);
         Route::resource('mutasi-jabatan', MutasiJabatanController::class);
+        
     });
         
     Route::prefix('Pengumuman')

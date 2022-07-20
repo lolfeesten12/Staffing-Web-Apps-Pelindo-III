@@ -195,7 +195,22 @@ Create Master Pegawai
                                             <span class="text-muted">Accept Picture in PNG, JPG, JPEG Format </span>
                                         </div>
                                     </div>
-                                    <div class="col-12">
+                                     <div class="col-4">
+                                        <label class="small mb-1 mr-1" for="id_penempatan">Penempatan</label><span
+                                            class="mr-4 mb-3" style="color: red">*</span>
+                                        <select class="form-select" name="id_penempatan" id="id_penempatan"
+                                            value="{{ old('id_penempatan') }}"
+                                            class="form-control @error('id_penempatan') is-invalid @enderror">
+                                            <option>Pilih Penempatan</option>
+                                            @foreach ($penempatan as $item)
+                                            <option value="{{ $item->id_penempatan }}">{{ $item->nama_penempatan }}
+                                            </option>
+                                            @endforeach
+                                        </select>
+                                        @error('id_penempatan')<div class="text-danger small mb-1">{{ $message }}
+                                        </div> @enderror
+                                    </div>
+                                    <div class="col-8">
                                         <label class="small mb-1 mr-1" for="alamat">Alamat Lengkap</label><span
                                             class="mr-4 mb-3" style="color: red">*</span>
                                         <textarea class="form-control" id="alamat" type="text" rows="3" cols="4"

@@ -58,7 +58,7 @@ Mutasi
                     <div id="example_wrapper" class="dataTables_wrapper dt-bootstrap5">
                         <div class="row">
                             <div class="col-sm-12">
-                                <table id="example" class="table table-striped table-bordered dataTable"
+                                <table id="example2" class="table table-striped table-bordered dataTable"
                                     style="width: 100%;" role="grid" aria-describedby="example_info">
                                     <thead>
                                         <tr role="row">
@@ -66,12 +66,15 @@ Mutasi
                                                 colspan="1" aria-sort="ascending"
                                                 aria-label="Name: activate to sort column descending"
                                                 style="width: 100px;">No.</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
+                                                colspan="1" aria-label="Position: activate to sort column ascending"
+                                                style="width: 80px;">No Surat</th>
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
                                                 style="width: 80px;">Jenis Mutasi</th>
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
-                                                style="width: 80px;">Unit Tujuan</th>
+                                                style="width: 80px;">Unit/Penempatan Tujuan</th>
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
                                                 style="width: 150px;">Pegawai</th>
@@ -101,6 +104,8 @@ Mutasi
                                             <td class="text-center">
                                                 @if ($item->jenis_mutasi == 'Mutasi Internal')
                                                     {{ $item->Unit->unit_kerja }}
+                                                @elseif ($item->jenis_mutasi == 'Mutasi Eksternal')
+                                                    {{ $item->Penempatan->nama_penempatan }}
                                                 @else
                                                     {{ "Resign" }}
                                                 @endif

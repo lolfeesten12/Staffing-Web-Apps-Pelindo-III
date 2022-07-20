@@ -162,6 +162,7 @@
                 <li> <a href="{{ route('pelanggaran.index') }}"><i class="bi bi-circle"></i>Pelanggaran</a></li>
                 <li> <a href="{{ route('sanksi.index') }}"><i class="bi bi-circle"></i>Sanksi</a></li>
                 <li> <a href="{{ route('orientasi.index') }}"><i class="bi bi-circle"></i>Orientasi</a></li>
+                <li> <a href="{{ route('penempatan.index') }}"><i class="bi bi-circle"></i>Penempatan</a></li>
             </ul>
         </li>
         @if (Auth::user()->Pegawai->role == 'Direktur')
@@ -217,7 +218,8 @@
                 <li> <a href="{{ route('prestasi.index') }}"><i class="bi bi-circle"></i>Riwayat Prestasi</a></li>
                 <li> <a href="{{ route('cuti.index') }}"><i class="bi bi-circle"></i>Riwayat Cuti</a></li>
                 <li> <a href="{{ route('riwayatpelanggaran.index') }}"><i class="bi bi-circle"></i>Riwayat Pelanggaran</a></li>
-                <li> <a href="{{ route('riwayatsanksi.index') }}"><i class="bi bi-circle"></i>Riwayat Sanksi</a></li>    
+                <li> <a href="{{ route('riwayatsanksi.index') }}"><i class="bi bi-circle"></i>Riwayat Sanksi</a></li>
+                <li> <a href="{{ route('riwayatsanksi.index') }}"><i class="bi bi-circle"></i>Riwayat Mutasi</a></li>        
             </ul>
         </li>
         @endif

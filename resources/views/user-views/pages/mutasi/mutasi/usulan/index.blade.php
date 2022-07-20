@@ -87,12 +87,15 @@ Usulan Mutasi
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
                                                 style="width: 150px;">Pegawai</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
+                                                colspan="1" aria-label="Position: activate to sort column ascending"
+                                                style="width: 80px;">Penempatan</th>
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
                                                 style="width: 80px;">Unit Asal</th>
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
-                                                style="width: 80px;">Unit Tujuan</th>
+                                                style="width: 80px;">Unit/Penempatan Tujuan</th>
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
                                                 style="width: 70px;">Status Acc</th>
@@ -109,11 +112,14 @@ Usulan Mutasi
                                             <td>{{ $item->tanggal_surat }}</td>
                                             <td>{{ $item->jenis_mutasi }}</td>
                                             <td>{{ $item->Pegawai->nama_pegawai }}</td>
+                                            <td>{{ $item->Pegawai->Penempatan->nama_penempatan }}</td>
                                             <td>{{ $item->Pegawai->UnitKerja->unit_kerja}}</td>
-                                            @if ($item->Unit == null)
+                                            @if ($item->jenis_mutasi == 'Resign')
                                                 <td>Resign</td>
-                                            @else
+                                            @elseif ($item->jenis_mutasi == 'Mutasi Internal')
                                                 <td>{{ $item->Unit->unit_kerja }}</td>
+                                            @elseif ($item->jenis_mutasi == 'Mutasi Eksternal')
+                                                <td>{{ $item->Penempatan->nama_penempatan }} {{ $item->Penempatan->regional }}</td>
                                             @endif
                                           
                                             <td class="text-center">

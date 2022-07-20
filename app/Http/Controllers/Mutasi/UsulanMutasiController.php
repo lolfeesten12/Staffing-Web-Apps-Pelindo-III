@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Mutasi;
 
 use App\Http\Controllers\Controller;
 use App\Models\MasterData\MasterPegawai;
+use App\Models\MasterData\MasterPenempatan;
 use App\Models\MasterData\MasterUnitKerja;
 use App\Models\Mutasi\UsulanMutasi;
 use Illuminate\Http\Request;
@@ -18,7 +19,7 @@ class UsulanMutasiController extends Controller
      */
     public function index()
     {
-        $usulan = UsulanMutasi::with('Pegawai')->where('jenis_mutasi','Mutasi Internal')->orWhere('jenis_mutasi', 'Resign')->get();
+        $usulan = UsulanMutasi::with('Pegawai')->where('jenis_mutasi','Mutasi Internal')->orWhere('jenis_mutasi', 'Resign')->orWhere('jenis_mutasi','Mutasi Eksternal')->get();
         $pegawai = MasterPegawai::get();
         $unit = MasterUnitKerja::get();
 
@@ -41,8 +42,9 @@ class UsulanMutasiController extends Controller
     {
         $pegawai = MasterPegawai::get();
         $unit = MasterUnitKerja::get();
+        $penempatan = MasterPenempatan::get();
 
-        return view('user-views.pages.mutasi.mutasi.usulan.create', compact('pegawai','unit'));
+        return view('user-views.pages.mutasi.mutasi.usulan.create', compact('pegawai','unit','penempatan'));
         
     }
 
@@ -63,7 +65,11 @@ class UsulanMutasiController extends Controller
         $usulan = new UsulanMutasi();
         $usulan->id_pegawai = $request->id_pegawai;
         $usulan->jenis_mutasi = $request->jenis_mutasi;
-        $usulan->id_divisi_tujuan = $request->id_divisi_tujuan;
+        if($request->jenis_mutasi == 'Mutasi Internal'){
+            $usulan->id_divisi_tujuan = $request->id_divisi_tujuan;
+        }else if($request->jenis_mutasi == 'Mutasi Eksternal'){
+            $usulan->id_penempatan = $request->id_penempatan;
+        }
         $usulan->nomor_surat = $request->nomor_surat;
         $usulan->tanggal_surat = $request->tanggal_surat;
         $usulan->alasan_usulan = $request->alasan_usulan;
@@ -111,7 +117,11 @@ class UsulanMutasiController extends Controller
     {
         $usulan = UsulanMutasi::find($id);
         $usulan->alasan_usulan = $request->alasan_usulan;
-        $usulan->id_divisi_tujuan = $request->id_divisi_tujuan;
+        if($request->jenis_mutasi == 'Mutasi Internal'){
+            $usulan->id_divisi_tujuan = $request->id_divisi_tujuan;
+        }elseif($request->jenis_mutasi == 'Mutasi Eksternal'){
+            $usulan->id_penempatan = $request->id_penempatan;
+        }
         $usulan->nomor_surat = $request->nomor_surat;
         $usulan->tanggal_surat = $request->tanggal_surat;
         if($request->file){
@@ -121,8 +131,6 @@ class UsulanMutasiController extends Controller
             $data[] = $file_surat;
             $usulan->file = $file_surat;
         }
-        
-
         $usulan->update();
 
         return redirect()->route('usulan-mutasi.index')->with('messageberhasil','Data Usulan Berhasil Diedit');

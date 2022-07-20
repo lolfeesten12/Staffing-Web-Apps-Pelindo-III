@@ -76,10 +76,12 @@ Approval Mutasi
                                             <td>{{ $item->jenis_mutasi }}</td>
                                             <td>{{ $item->Pegawai->nama_pegawai }}</td>
                                             <td>{{ $item->Pegawai->UnitKerja->unit_kerja}}</td>
-                                            @if ($item->Unit == null)
+                                            @if ($item->jenis_mutasi == 'Resign')
                                                 <td>Resign</td>
-                                            @else
+                                            @elseif ($item->jenis_mutasi == 'Mutasi Internal')
                                                 <td>{{ $item->Unit->unit_kerja }}</td>
+                                            @elseif ($item->jenis_mutasi == 'Mutasi Eksternal')
+                                                <td>{{ $item->Penempatan->nama_penempatan }} {{ $item->Penempatan->regional }}</td>
                                             @endif
                                           
                                             <td>

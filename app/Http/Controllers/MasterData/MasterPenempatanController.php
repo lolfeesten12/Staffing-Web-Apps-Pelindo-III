@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Mutasi;
+namespace App\Http\Controllers\MasterData;
 
 use App\Http\Controllers\Controller;
-use App\Models\Mutasi\UsulanMutasi;
+use App\Models\MasterData\MasterPenempatan;
 use Illuminate\Http\Request;
 
-class ApprovalUsulanMutasiController extends Controller
+class MasterPenempatanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,29 +15,15 @@ class ApprovalUsulanMutasiController extends Controller
      */
     public function index()
     {
-        $usulan = UsulanMutasi::where('jenis_mutasi','Mutasi Internal')->orWhere('jenis_mutasi','Resign')->orWhere('jenis_mutasi','Mutasi Eksternal')->get();
-        return view('user-views.pages.mutasi.approval.mutasi.index', compact('usulan'));
+        $penempatan = MasterPenempatan::get();
+        return view('user-views.pages.masterdata.penempatan', compact('penempatan'));
     }
 
-    public function Status(Request $request, $id)
-    {
-        // $request->validate([
-        //     'status' => 'required|in:Terima,Tolak,Pending'
-        // ]);
-
-        $item = UsulanMutasi::find($id);
-        $item->status_approval = $request->status_approval;
-        $item->keterangan_approval = $request->keterangan_approval;
-        $item->save();
-
-        return redirect()->back()->with('messageberhasil','Data Mutasi Telah Diproses');
-    }
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    
     public function create()
     {
         //
@@ -51,7 +37,13 @@ class ApprovalUsulanMutasiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $penempatan = new MasterPenempatan();
+        $penempatan->nama_penempatan = $request->nama_penempatan;
+        $penempatan->regional = $request->regional;
+        $penempatan->jenis_kantor = $request->jenis_kantor;
+        $penempatan->save();
+
+        return redirect()->back()->with('messageberhasil','Data Penempatan Berhasil Ditambahkan');
     }
 
     /**
@@ -62,8 +54,7 @@ class ApprovalUsulanMutasiController extends Controller
      */
     public function show($id)
     {
-        $item = UsulanMutasi::find($id);
-        return view('user-views.pages.mutasi.approval.mutasi.detail', compact('item'));
+        //
     }
 
     /**
@@ -86,7 +77,13 @@ class ApprovalUsulanMutasiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $penempatan = MasterPenempatan::find($id);
+        $penempatan->nama_penempatan = $request->nama_penempatan;
+        $penempatan->regional = $request->regional;
+        $penempatan->jenis_kantor = $request->jenis_kantor;
+        $penempatan->update();
+
+        return redirect()->back()->with('messageberhasil','Data Penempatan Berhasil Diedit');
     }
 
     /**
@@ -97,6 +94,9 @@ class ApprovalUsulanMutasiController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $penempatan = MasterPenempatan::find($id);
+        $penempatan->delete();
+
+        return redirect()->back()->with('messagehapus','Data Penempatan Berhasil dihapus');
     }
 }

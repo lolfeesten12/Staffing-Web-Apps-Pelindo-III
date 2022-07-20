@@ -5,6 +5,7 @@ namespace App\Models\Mutasi;
 use App\Models\MasterData\MasterJabatan;
 use App\Models\MasterData\MasterPangkat;
 use App\Models\MasterData\MasterPegawai;
+use App\Models\MasterData\MasterPenempatan;
 use App\Models\MasterData\MasterUnitKerja;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -31,7 +32,8 @@ class UsulanMutasi extends Model
         'nomor_sk',
         'tanggal_sk',
         'id_pejabat',
-        'file_sk'
+        'file_sk',
+        'id_penempatan'
     ];
 
     protected $hidden = [
@@ -44,6 +46,11 @@ class UsulanMutasi extends Model
     public function Pegawai()
     {
         return $this->belongsTo(MasterPegawai::class, 'id_pegawai', 'id_pegawai');
+    }
+
+    public function Penempatan()
+    {
+        return $this->belongsTo(MasterPenempatan::class, 'id_penempatan', 'id_penempatan');
     }
 
     public function Pejabat()
@@ -83,7 +90,7 @@ class UsulanMutasi extends Model
 
     public function scopeInternal($query)
     {
-        return $query->where('jenis_mutasi', '=', 'Mutasi Internal')->orWhere('jenis_mutasi','=','Resign');
+        return $query->where('jenis_mutasi', '=', 'Mutasi Internal')->orWhere('jenis_mutasi','=','Resign')->orWhere('jenis_mutasi','=','Mutasi Eksternal');
     }
 
     public function scopeJabatan($query)

@@ -35,6 +35,7 @@ class MasterPegawai extends Model
         'kota_asal',
         'foto_pegawai',
         'role',
+        'id_penempatan'
     ];
 
     protected $hidden = [
@@ -47,6 +48,11 @@ class MasterPegawai extends Model
     public function Jabatan()
     {
         return $this->belongsTo(MasterJabatan::class, 'id_jabatan', 'id_jabatan')->withTrashed();;
+    }
+
+    public function Penempatan()
+    {
+        return $this->belongsTo(MasterPenempatan::class, 'id_penempatan', 'id_penempatan');
     }
 
     public function Pangkat()

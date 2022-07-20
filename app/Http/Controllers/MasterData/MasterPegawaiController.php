@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\MasterData\MasterJabatan;
 use App\Models\MasterData\MasterPangkat;
 use App\Models\MasterData\MasterPegawai;
+use App\Models\MasterData\MasterPenempatan;
 use App\Models\MasterData\MasterUnitKerja;
 use App\Models\User;
 use Carbon\Carbon;
@@ -37,8 +38,9 @@ class MasterPegawaiController extends Controller
         $jabatan = MasterJabatan::get();
         $unit = MasterUnitKerja::get();
         $pangkat = MasterPangkat::get();
+        $penempatan = MasterPenempatan::get();
 
-        return view('user-views.pages.masterdata.pegawai.create',compact('jabatan','unit','pangkat'));
+        return view('user-views.pages.masterdata.pegawai.create',compact('jabatan','unit','pangkat','penempatan'));
     }
 
     /**
@@ -61,6 +63,7 @@ class MasterPegawaiController extends Controller
         $pegawai->id_jabatan = $request->id_jabatan;
         $pegawai->id_unit_kerja = $request->id_unit_kerja;
         $pegawai->id_pangkat = $request->id_pangkat;
+        $pegawai->id_penempatan = $request->id_penempatan;
         $pegawai->nama_pegawai = $request->nama_pegawai;
         $pegawai->nama_panggilan = $request->nama_panggilan;
         $pegawai->nik_pegawai = $request->nik_pegawai;
@@ -147,6 +150,7 @@ class MasterPegawaiController extends Controller
             $pegawai = MasterPegawai::find($id);
             $pegawai->id_jabatan = $request->id_jabatan;
             $pegawai->id_unit_kerja = $request->id_unit_kerja;
+            $pegawai->id_penempatan = $request->id_penempatan;
             $pegawai->id_pangkat = $request->id_pangkat;
             $pegawai->nama_pegawai = $request->nama_pegawai;
             $pegawai->nama_panggilan = $request->nama_panggilan;
@@ -170,6 +174,7 @@ class MasterPegawaiController extends Controller
             $pegawai = MasterPegawai::find($id);
             $pegawai->id_jabatan = $request->id_jabatan;
             $pegawai->id_unit_kerja = $request->id_unit_kerja;
+            $pegawai->id_penempatan = $request->id_penempatan;
             $pegawai->id_pangkat = $request->id_pangkat;
             $pegawai->nama_pegawai = $request->nama_pegawai;
             $pegawai->nama_panggilan = $request->nama_panggilan;

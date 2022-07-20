@@ -5,6 +5,7 @@ namespace App\Http\Controllers\WebRequirement;
 use App\Http\Controllers\Controller;
 use App\Models\MasterData\MasterJabatan;
 use App\Models\MasterData\MasterPegawai;
+use App\Models\MasterData\MasterPenempatan;
 use App\Models\MasterData\MasterUnitKerja;
 use App\Models\User;
 use App\Models\WebRequirement\CalonPegawai;
@@ -24,7 +25,8 @@ class CalonPegawaiController extends Controller
         $calon = CalonPegawai::with('Pengumuman')->get();
         $jabatan = MasterJabatan::get();
         $unit_kerja = MasterUnitKerja::get();
-        return view('user-views.pages.requirement.calonpegawai.index',compact('calon','jabatan','unit_kerja'));
+        $penempatan = MasterPenempatan::get();
+        return view('user-views.pages.requirement.calonpegawai.index',compact('calon','jabatan','unit_kerja','penempatan'));
     }
 
     public function HasilSeleksi()
@@ -133,6 +135,7 @@ class CalonPegawaiController extends Controller
             $tes->role = $request->role;
             $tes->id_jabatan = $request->id_jabatan;
             $tes->id_unit_kerja = $request->id_unit_kerja;
+            $tes->id_penempatan = $request->id_penempatan;
             $tes->save();
 
             $pass = $item->nama_panggilan . '1234';

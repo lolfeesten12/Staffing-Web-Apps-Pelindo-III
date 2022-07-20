@@ -46,8 +46,11 @@ Tambah Data Usulan
                                             <input class="mr-1" value="Resign" type="radio" name="jenis_mutasi" checked> Resign
                                         </div>
                                         <div class="col-md-4">
-                                            <input class="mr-1" value="Internal" type="radio" name="jenis_mutasi"> Internal
-                                        </div>    
+                                            <input class="mr-1" value="Mutasi Internal" type="radio" name="jenis_mutasi"> Mutasi Internal
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input class="mr-1" value="Mutasi Eksternal" type="radio" name="jenis_mutasi"> Mutasi Eksternal
+                                        </div>        
                                     </div>
                                     <div class="col-6">
                                         <label class="form-label mr-1" for="nomor_surat">Nomor Surat</label><span class="mr-4 mb-3"
@@ -91,7 +94,7 @@ Tambah Data Usulan
                                     </div>
 
 
-                                    <div id="Resign" style="display:none">
+                                    <div id="Internal" style="display:none">
                                         <div class="col-12">
                                             <label class="small mb-1 mr-1" for="id_divisi_tujuan">Unit Kerja Tujuan</label><span
                                                 class="mr-4 mb-3" style="color: red">*</span>
@@ -105,6 +108,24 @@ Tambah Data Usulan
                                                 @endforeach
                                             </select>
                                             @error('id_divisi_tujuan')<div class="text-danger small mb-1">{{ $message }}
+                                            </div> @enderror
+                                        </div>
+                                    </div>
+
+                                    <div id="Eksternal" style="display:none">
+                                        <div class="col-12">
+                                            <label class="small mb-1 mr-1" for="id_penempatan">Penempatan Tujuan</label><span
+                                                class="mr-4 mb-3" style="color: red">*</span>
+                                            <select class="form-select" name="id_penempatan" id="id_penempatan"
+                                                value="{{ old('id_penempatan') }}"
+                                                class="form-control @error('id_penempatan') is-invalid @enderror">
+                                                <option>Pilih Penempatan Tujuan</option>
+                                                @foreach ($penempatan as $tempat)
+                                                <option value="{{ $tempat->id_penempatan }}">{{ $tempat->nama_penempatan }}
+                                                </option>
+                                                @endforeach
+                                            </select>
+                                            @error('id_penempatan')<div class="text-danger small mb-1">{{ $message }}
                                             </div> @enderror
                                         </div>
                                     </div>
@@ -173,9 +194,14 @@ Tambah Data Usulan
             var value = $("input[name='jenis_mutasi']:checked").val();
 
             if (value == 'Resign') {
-                $('#Resign').hide()
-            } else {
-                $('#Resign').show()
+                $('#Internal').hide()
+                $('#Eksternal').hide()
+            } else if(value == 'Mutasi Internal') {
+                $('#Internal').show()
+                $('#Eksternal').hide()
+            } else if(value == 'Mutasi Eksternal'){
+                $('#Eksternal').show()
+                $('#Internal').hide()
             }
 
 
