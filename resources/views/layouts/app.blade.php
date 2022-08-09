@@ -30,8 +30,9 @@
         {{-- <script src="{{ url('/node_modules/sweetalert2/dist/sweetalert2.all.min.js') }}"></script> --}}
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/main.min.js"></script>
-        
         @include('sweetalert::alert')
+        
+        
         
         {{-- @stack('prepend-style')
         @include('user-views.includes.style')
@@ -43,9 +44,10 @@
 
     <!--start wrapper-->
     <div class="wrapper">
-
+       
         <!--start content-->
         <main class="authentication-content">
+            
             @yield('content')
         </main>
 

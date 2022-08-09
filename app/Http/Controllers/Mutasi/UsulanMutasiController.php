@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Mutasi;
 use App\Http\Controllers\Controller;
 use App\Models\MasterData\MasterPegawai;
 use App\Models\MasterData\MasterPenempatan;
+use App\Models\MasterData\MasterSubUnit;
 use App\Models\MasterData\MasterUnitKerja;
 use App\Models\Mutasi\UsulanMutasi;
 use Illuminate\Http\Request;
@@ -28,21 +29,20 @@ class UsulanMutasiController extends Controller
             ->where('jenis_mutasi','Mutasi Internal')
             ->orWhere('jenis_mutasi', 'Resign')->orWhere('jenis_mutasi','Mutasi Eksternal')
             ->orWhere('jenis_mutasi','Pemecatan')->get();
-            
             $usulan = $tes->where('id_unit_kerja','=', Auth::user()->Pegawai->id_unit_kerja)->where('id_sub_unit','=', Auth::user()->Pegawai->id_sub_unit);
-        }else{
-            $anjay = UsulanMutasi::join('tb_master_pegawai','tb_usulan_mutasi.id_pegawai','tb_master_pegawai.id_pegawai')
+        }elseif(Auth::user()->Pegawai->role == 'Manager Unit' || Auth::user()->Pegawai->role == 'Direktur Unit'){
+            $tes = UsulanMutasi::join('tb_master_pegawai','tb_usulan_mutasi.id_pegawai','tb_master_pegawai.id_pegawai')
             ->where('jenis_mutasi','Mutasi Internal')
             ->orWhere('jenis_mutasi', 'Resign')->orWhere('jenis_mutasi','Mutasi Eksternal')
             ->orWhere('jenis_mutasi','Pemecatan')->get();
-            
-            $usulan = $anjay->where('id_unit_kerja','=', Auth::user()->Pegawai->id_unit_kerja);
+            $usulan = $tes->where('id_unit_kerja','=', Auth::user()->Pegawai->id_unit_kerja);
+        }else{
+            $anjay = UsulanMutasi::join('tb_master_pegawai','tb_usulan_mutasi.id_pegawai','tb_master_pegawai.id_pegawai')
+            ->where('jenis_mutasi', 'Resign')->orWhere('jenis_mutasi','Mutasi Eksternal')->get();
+            $usulan = $anjay->where('id_pegawai','=', Auth::user()->Pegawai->id_pegawai);
         }
         
-        $pegawai = MasterPegawai::get();
-        $unit = MasterUnitKerja::get();
-
-        return view('user-views.pages.mutasi.mutasi.usulan.index', compact('usulan','pegawai','unit'));
+        return view('user-views.pages.mutasi.mutasi.usulan.index', compact('usulan'));
     }
 
     public function GetUnit($id)
@@ -59,11 +59,24 @@ class UsulanMutasiController extends Controller
      */
     public function create()
     {
-        $pegawai = MasterPegawai::get();
-        $unit = MasterUnitKerja::get();
-        $penempatan = MasterPenempatan::get();
-
-        return view('user-views.pages.mutasi.mutasi.usulan.create', compact('pegawai','unit','penempatan'));
+        if(Auth::user()->Pegawai->role == 'Kepala Unit' || Auth::user()->Pegawai->role == 'Manager Unit' || Auth::user()->Pegawai->role == 'Direktur Unit'){
+            $pegawai = MasterPegawai::where('id_unit_kerja', Auth::user()->Pegawai->id_unit_kerja)->get();
+            $unit = MasterUnitKerja::where('id_unit_kerja', Auth::user()->Pegawai->id_unit_kerja)->get();
+            $sub = MasterSubUnit::where('id_unit_kerja', Auth::user()->Pegawai->id_unit_kerja)->get();
+            $unit_tujuan = MasterUnitKerja::get();
+            $sub_unit_tujuan = MasterSubUnit::get();
+            $penempatan = MasterPenempatan::get();
+            return view('user-views.pages.mutasi.mutasi.usulan.create', compact('pegawai','unit','penempatan','sub','unit_tujuan','sub_unit_tujuan'));
+        }else{
+            $pegawai = MasterPegawai::get();
+            $unit = MasterUnitKerja::get();
+            $sub = MasterSubUnit::get();
+            $penempatan = MasterPenempatan::get();
+            return view('user-views.pages.mutasi.mutasi.usulan.create', compact('pegawai','unit','penempatan','sub'));
+        }
+       
+       
+       
         
     }
 
@@ -84,11 +97,16 @@ class UsulanMutasiController extends Controller
         $usulan = new UsulanMutasi();
         $usulan->id_pegawai = $request->id_pegawai;
         $usulan->jenis_mutasi = $request->jenis_mutasi;
+
         if($request->jenis_mutasi == 'Mutasi Internal'){
             $usulan->id_divisi_tujuan = $request->id_divisi_tujuan;
+            $usulan->id_sub_unit_tujuan = $request->id_sub_unit_tujuan;
         }else if($request->jenis_mutasi == 'Mutasi Eksternal'){
             $usulan->id_penempatan = $request->id_penempatan;
+            $usulan->id_divisi_tujuan = $request->id_divisi_tujuan;
+            $usulan->id_sub_unit_tujuan = $request->id_sub_unit_tujuan;
         }
+        $usulan->id_pengusul = Auth::user()->Pegawai->id_pegawai;
         $usulan->nomor_surat = $request->nomor_surat;
         $usulan->tanggal_surat = $request->tanggal_surat;
         $usulan->alasan_usulan = $request->alasan_usulan;
@@ -119,10 +137,29 @@ class UsulanMutasiController extends Controller
      */
     public function edit($id)
     {
-        $item = UsulanMutasi::with('Pegawai')->find($id);
-        $unit = MasterUnitKerja::get();
-        $pegawai = MasterPegawai::get();
-        return view('user-views.pages.mutasi.mutasi.usulan.edit', compact('item','pegawai','unit'));
+       
+
+        if(Auth::user()->Pegawai->role == 'Kepala Unit' || Auth::user()->Pegawai->role == 'Manager Unit' || Auth::user()->Pegawai->role == 'Direktur Unit'){
+            $pegawai = MasterPegawai::where('id_unit_kerja', Auth::user()->Pegawai->id_unit_kerja)->get();
+            $unit = MasterUnitKerja::where('id_unit_kerja', Auth::user()->Pegawai->id_unit_kerja)->get();
+            $sub = MasterSubUnit::where('id_unit_kerja', Auth::user()->Pegawai->id_unit_kerja)->get();
+            $unit_tujuan = MasterUnitKerja::get();
+            $sub_unit_tujuan = MasterSubUnit::get();
+            $penempatan = MasterPenempatan::get();
+            $item = UsulanMutasi::with('Pegawai','Penempatan','Pengusul','Unit','SubUnit')->find($id);
+            return view('user-views.pages.mutasi.mutasi.usulan.edit', compact('item','pegawai','unit','penempatan','sub','unit_tujuan','sub_unit_tujuan'));
+        }else{
+            $pegawai = MasterPegawai::get();
+            $unit = MasterUnitKerja::get();
+            $sub = MasterSubUnit::get();
+            $penempatan = MasterPenempatan::get();
+            $item = UsulanMutasi::with('Pegawai','Penempatan','Pengusul','Unit','SubUnit')->find($id);
+            return view('user-views.pages.mutasi.mutasi.usulan.edit', compact('item','pegawai','unit','penempatan','sub'));
+        }
+
+        // $unit = MasterUnitKerja::get();
+        // $pegawai = MasterPegawai::get();
+        // return view('user-views.pages.mutasi.mutasi.usulan.edit', compact('item','pegawai','unit'));
     }
 
     /**
@@ -138,9 +175,13 @@ class UsulanMutasiController extends Controller
         $usulan->alasan_usulan = $request->alasan_usulan;
         if($request->jenis_mutasi == 'Mutasi Internal'){
             $usulan->id_divisi_tujuan = $request->id_divisi_tujuan;
+            $usulan->id_sub_unit_tujuan = $request->id_sub_unit_tujuan;
         }elseif($request->jenis_mutasi == 'Mutasi Eksternal'){
             $usulan->id_penempatan = $request->id_penempatan;
+            $usulan->id_divisi_tujuan = $request->id_divisi_tujuan;
+            $usulan->id_sub_unit_tujuan = $request->id_sub_unit_tujuan;
         }
+        $usulan->id_pengusul = Auth::user()->Pegawai->id_pegawai;
         $usulan->nomor_surat = $request->nomor_surat;
         $usulan->tanggal_surat = $request->tanggal_surat;
         if($request->file){

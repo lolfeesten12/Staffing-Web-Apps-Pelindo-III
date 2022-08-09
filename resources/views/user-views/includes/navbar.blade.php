@@ -226,7 +226,7 @@
                 <li> <a href="{{ route('cuti.index') }}"><i class="bi bi-circle"></i>Riwayat Cuti</a></li>
                 <li> <a href="{{ route('riwayatpelanggaran.index') }}"><i class="bi bi-circle"></i>Riwayat Pelanggaran</a></li>
                 <li> <a href="{{ route('riwayatsanksi.index') }}"><i class="bi bi-circle"></i>Riwayat Sanksi</a></li>
-                <li> <a href="{{ route('riwayatsanksi.index') }}"><i class="bi bi-circle"></i>Riwayat Mutasi</a></li>        
+                <li> <a href="{{ route('mutasi.pegawai') }}"><i class="bi bi-circle"></i>Riwayat Mutasi</a>     
             </ul>
         </li>
         @endif
@@ -309,17 +309,19 @@
             <div class="menu-title">Mutasi Pegawai</div>
         </a>
         <ul>
-            @if (Auth::user()->Pegawai->role == 'Pegawai' || Auth::user()->Pegawai->role == 'Kepala Unit' || Auth::user()->Pegawai->role == 'Direktur Unit')
-                <li> <a href="{{ route('mutasi.pegawai') }}"><i class="bi bi-circle"></i>Pengumuman Mutasi</a>
+            @if (Auth::user()->Pegawai->role == 'HRD' || Auth::user()->Pegawai->role == 'Kepala HRD' || Auth::user()->Pegawai->role == 'Kepala Unit' || Auth::user()->Pegawai->role == 'Manager Unit' || Auth::user()->Pegawai->role == 'Direktur Unit')
+            <li> <a href="{{ route('usulan-mutasi.index') }}"><i class="bi bi-circle"></i>Usulan Mutasi</a>
+            @else
+            <li> <a href="{{ route('usulan-mutasi.index') }}"><i class="bi bi-circle"></i>Resign</a>
             @endif
-            @if (Auth::user()->Pegawai->role == 'HRD' || Auth::user()->Pegawai->role == 'Kepala HRD' || Auth::user()->Pegawai->role == 'Kepala Unit' || Auth::user()->Pegawai->role == 'Manger Unit' || Auth::user()->Pegawai->role == 'Direktur Unit')
-                <li> <a href="{{ route('usulan-mutasi.index') }}"><i class="bi bi-circle"></i>Usulan Mutasi</a>
+            @if (Auth::user()->Pegawai->role == 'HRD' || Auth::user()->Pegawai->role == 'Kepala HRD' || Auth::user()->Pegawai->role == 'Kepala Unit' || Auth::user()->Pegawai->role == 'Manager Unit' || Auth::user()->Pegawai->role == 'Direktur Unit')
+                
                 <li> <a href="{{ route('usulan-pangkat.index') }}"><i class="bi bi-circle"></i>Usulan Mutasi Pangkat</a>
                 <li> <a href="{{ route('usulan-jabatan.index') }}"><i class="bi bi-circle"></i>Usulan Mutasi Jabatan</a>
             @endif
             @if (Auth::user()->Pegawai->role == 'HRD' || Auth::user()->Pegawai->role == 'Kepala HRD')
-                <li> <a href="{{ route('mutasi-pangkat.index') }}"><i class="bi bi-circle"></i>Mutasi Pangkat</a>
                 <li> <a href="{{ route('mutasi.index') }}"><i class="bi bi-circle"></i>Mutasi</a>
+                <li> <a href="{{ route('mutasi-pangkat.index') }}"><i class="bi bi-circle"></i>Mutasi Pangkat</a>
                 <li> <a href="{{ route('mutasi-jabatan.index') }}"><i class="bi bi-circle"></i>Mutasi Jabatan</a>
             @endif  
                 
@@ -333,7 +335,7 @@
 
     @if (Auth::user()->Pegawai->role == 'Pegawai')
     <li class="menu-label">Penilaian</li>
-    @elseif (Auth::user()->Pegawai->role == 'HRD')
+    @elseif (Auth::user()->Pegawai->role == 'HRD' || Auth::user()->Pegawai->role == 'Kepala HRD')
     <li class="menu-label">Penilaian dan Pelanggaran</li>
     @elseif (Auth::user()->Pegawai->role == 'Direktur')
     
@@ -354,7 +356,7 @@
           
         </ul>
     </li>
-    @if (Auth::user()->Pegawai->role == 'HRD' || Auth::user()->Pegawai->role == 'Kepala Unit' || Auth::user()->Pegawai->role == 'Direktur')
+    @if (Auth::user()->Pegawai->role == 'HRD' || Auth::user()->Pegawai->role == 'Kepala HRD' || Auth::user()->Pegawai->role == 'Kepala Unit' || Auth::user()->Pegawai->role == 'Direktur')
     <li>
         <a class="has-arrow" href="javascript:;">
             <div class="parent-icon"><i class="lni lni-ban"></i>

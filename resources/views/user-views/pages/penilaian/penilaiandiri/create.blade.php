@@ -113,6 +113,15 @@ Penilaian Diri Pegawai
                                             </div>
                                         </div>
                                     </div>
+                                    @if (Auth::user()->Pegawai->role == 'Pegawai')
+                                    <div class="col-12">
+                                        <div class="row">
+                                            <label class="col-sm-3 ">Sub Unit</label>
+                                            <div class="col-sm-9">: {{ $penilai->SubUnit->nama_sub_unit }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @endif
                                     <div class="col-12">
                                         <div class="row">
                                             <label class="col-sm-3 ">Pangkat</label>

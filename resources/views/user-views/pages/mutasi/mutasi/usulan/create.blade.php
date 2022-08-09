@@ -42,6 +42,7 @@ Tambah Data Usulan
                                     <hr>
                                     </hr>
                                     <div class="row mb-1 mt-2" id="radio1">
+                                        @if (Auth::user()->Pegawai->role != 'Pegawai')
                                         <div class="col-md-3">
                                             <input class="mr-1" value="Resign" type="radio" name="jenis_mutasi" checked> Resign
                                         </div>
@@ -54,6 +55,12 @@ Tambah Data Usulan
                                         <div class="col-md-3">
                                             <input class="mr-1" value="Pemecatan" type="radio" name="jenis_mutasi"> Pemecatan
                                         </div>        
+                                        @else
+                                        <div class="col-md-3">
+                                            <input class="mr-1" value="Resign" type="radio" name="jenis_mutasi" checked> Resign
+                                        </div>
+                                        @endif
+                                       
                                     </div>
                                     <div class="col-6">
                                         <label class="form-label mr-1" for="nomor_surat">Nomor Surat</label><span class="mr-4 mb-3"
@@ -67,6 +74,27 @@ Tambah Data Usulan
                                         <input type="date" class="form-control" placeholder="Input Tanggal Surat"
                                             name="tanggal_surat" value="{{ old('tanggal_surat') }}" required>
                                     </div>
+                                    @if (Auth::user()->Pegawai->role == 'Pegawai')
+                                    <div class="col-6">
+                                        <label class="small mb-1 mr-1" for="id_unit_kerja">Unit Kerja</label><span
+                                            class="mr-4 mb-3" style="color: red">*</span>
+                                        <select class="form-select" name="id_unit_kerja" id="id_unit_kerja"
+                                            value="{{ old('id_unit_kerja') }}"
+                                            class="form-control @error('id_unit_kerja') is-invalid @enderror">
+                                            <option value="{{ Auth::user()->Pegawai->UnitKerja->id_unit_kerja }}">{{ Auth::user()->Pegawai->UnitKerja->unit_kerja }}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="small mb-1 mr-1" for="id_pegawai">Pegawai</label><span
+                                            class="mr-4 mb-3" style="color: red">*</span>
+                                        <select class="form-select" name="id_pegawai" id="id_pegawai"
+                                            value="{{ old('id_pegawai') }}"
+                                            class="form-control @error('id_pegawai') is-invalid @enderror">
+                                            <option value="{{ Auth::user()->Pegawai->id_pegawai }}">{{ Auth::user()->Pegawai->nama_pegawai }}</option>
+                                        </select>
+                                    </div>
+
+                                    @else
                                     <div class="col-6">
                                         <label class="small mb-1 mr-1" for="id_unit_kerja">Unit Kerja</label><span
                                             class="mr-4 mb-3" style="color: red">*</span>
@@ -79,8 +107,6 @@ Tambah Data Usulan
                                             </option>
                                             @endforeach
                                         </select>
-                                        @error('id_unit_kerja')<div class="text-danger small mb-1">{{ $message }}
-                                        </div> @enderror
                                     </div>
                                     <div class="col-6">
                                         <label class="small mb-1 mr-1" for="id_pegawai">Pegawai</label><span
@@ -92,27 +118,55 @@ Tambah Data Usulan
                                         </select>
                                             <span class="small" style="font-size: 13px"
                                             style="color: rgb(117, 114, 114)">(Pilih Unit Kerja terlebih dahulu)</span>
-                                        @error('id_pegawai')<div class="text-danger small mb-1">{{ $message }}
-                                        </div> @enderror
                                     </div>
 
 
+                                    @endif
+                                    
                                     <div id="Internal" style="display:none">
-                                        <div class="col-12">
-                                            <label class="small mb-1 mr-1" for="id_divisi_tujuan">Unit Kerja Tujuan</label><span
-                                                class="mr-4 mb-3" style="color: red">*</span>
-                                            <select class="form-select" name="id_divisi_tujuan" id="id_divisi_tujuan"
-                                                value="{{ old('id_divisi_tujuan') }}"
-                                                class="form-control @error('id_divisi_tujuan') is-invalid @enderror">
-                                                <option>Pilih Unit Kerja Tujuan</option>
-                                                @foreach ($unit as $item)
-                                                <option value="{{ $item->id_unit_kerja }}">{{ $item->unit_kerja }}
-                                                </option>
-                                                @endforeach
-                                            </select>
-                                            @error('id_divisi_tujuan')<div class="text-danger small mb-1">{{ $message }}
-                                            </div> @enderror
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <label class="small mb-1 mr-1" for="id_divisi_tujuan">Unit Kerja Tujuan</label><span
+                                                    class="mr-4 mb-3" style="color: red">*</span>
+                                                <select class="form-select" name="id_divisi_tujuan" id="id_divisi_tujuan"
+                                                    value="{{ old('id_divisi_tujuan') }}"
+                                                    class="form-control @error('id_divisi_tujuan') is-invalid @enderror">
+                                                    <option>Pilih Unit Kerja Tujuan</option>
+                                                    @if (Auth::user()->Pegawai->role =='Kepala Unit' || Auth::user()->Pegawai->role == 'Manager Unit' || Auth::user()->Pegawai->role == 'Direktur Unit')
+                                                        @foreach ($unit_tujuan as $item)
+                                                            <option value="{{ $item->id_unit_kerja }}">{{ $item->unit_kerja }}</option>
+                                                        @endforeach
+                                                    @else
+                                                        @foreach ($unit as $item)
+                                                            <option value="{{ $item->id_unit_kerja }}">{{ $item->unit_kerja }}</option>
+                                                        @endforeach
+                                                    @endif
+                                                  
+                                                    
+                                                </select>
+                                            </div>
+                                            <div class="col-6">
+                                                <label class="small mb-1 mr-1" for="id_sub_unit_tujuan">Sub Unit Kerja Tujuan</label><span
+                                                    class="mr-4 mb-3" style="color: red">*</span>
+                                                <select class="form-select" name="id_sub_unit_tujuan" id="id_sub_unit_tujuan"
+                                                    value="{{ old('id_sub_unit_tujuan') }}"
+                                                    class="form-control @error('id_sub_unit_tujuan') is-invalid @enderror">
+                                                    <option>Pilih Sub Unit Kerja Tujuan</option>
+                                                    @if (Auth::user()->Pegawai->role =='Kepala Unit' || Auth::user()->Pegawai->role == 'Manager Unit' || Auth::user()->Pegawai->role == 'Direktur Unit')
+                                                        @foreach ($sub_unit_tujuan as $subs)
+                                                            <option value="{{ $subs->id_sub_unit }}">{{ $subs->nama_sub_unit }}</option>
+                                                        @endforeach
+                                                    @else
+                                                        @foreach ($sub as $subs)
+                                                            <option value="{{ $subs->id_sub_unit }}">{{ $subs->nama_sub_unit }}</option>
+                                                        @endforeach
+                                                    @endif
+                                                   
+                                                 
+                                                </select>
+                                            </div>
                                         </div>
+                                      
                                     </div>
 
                                     <div id="Eksternal" style="display:none">
@@ -204,7 +258,7 @@ Tambah Data Usulan
                 $('#Eksternal').hide()
             } else if(value == 'Mutasi Eksternal'){
                 $('#Eksternal').show()
-                $('#Internal').hide()
+                $('#Internal').show()
             } else if(value == 'Pemecatan'){
                 $('#Eksternal').hide()
                 $('#Internal').hide()

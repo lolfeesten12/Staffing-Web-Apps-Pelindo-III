@@ -100,9 +100,9 @@ Master Pegawai
                                         <tr role="row" class="odd">
                                             <th scope="row" class="small" class="sorting_1">{{ $loop->iteration}}.</th>
                                             <td>{{ $item->nama_pegawai }}</td>
-                                            <td>{{ $item->Jabatan->nama_jabatan }}</td>
-                                            <td>{{ $item->Pangkat->nama_pangkat }}, {{ $item->Pangkat->golongan }}</td>
-                                            <td>{{ $item->UnitKerja->unit_kerja }}</td>
+                                            <td>{{ $item->Jabatan->nama_jabatan ?? '' }}</td>
+                                            <td>{{ $item->Pangkat->nama_pangkat ?? '' }}, {{ $item->Pangkat->golongan ?? '' }}</td>
+                                            <td>{{ $item->UnitKerja->unit_kerja ?? '' }}</td>
                                             <td>{{ $item->SubUnit->nama_sub_unit ?? '' }}</td>
                                             <td>{{ $item->no_telp }}</td>
                                             <td class="text-center">

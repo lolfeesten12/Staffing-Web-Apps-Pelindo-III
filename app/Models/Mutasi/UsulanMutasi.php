@@ -6,6 +6,7 @@ use App\Models\MasterData\MasterJabatan;
 use App\Models\MasterData\MasterPangkat;
 use App\Models\MasterData\MasterPegawai;
 use App\Models\MasterData\MasterPenempatan;
+use App\Models\MasterData\MasterSubUnit;
 use App\Models\MasterData\MasterUnitKerja;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -22,6 +23,7 @@ class UsulanMutasi extends Model
         'id_divisi_tujuan',
         'id_pangkat_tujuan',
         'id_jabatan_tujuan',
+        'id_sub_unit_tujuan',
         'jenis_mutasi',
         'alasan_usulan',
         'tanggal_surat',
@@ -71,6 +73,11 @@ class UsulanMutasi extends Model
     public function Unit()
     {
         return $this->belongsTo(MasterUnitKerja::class, 'id_divisi_tujuan', 'id_unit_kerja');
+    }
+
+    public function SubUnit()
+    {
+        return $this->belongsTo(MasterSubUnit::class, 'id_sub_unit_tujuan', 'id_sub_unit');
     }
 
     public function Pangkat()

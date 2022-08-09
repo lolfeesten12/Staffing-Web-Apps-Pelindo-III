@@ -18,19 +18,19 @@ class PelanggaranController extends Controller
      */
     public function index()
     {
-        if(Auth::user()->Pegawai->role == 'HRD'){
-            $pelanggaran = RiwayatPelanggaran::with('Pegawai','Pelanggaran')->leftjoin('tb_master_pegawai','tb_riwayat_pelanggaran.id_pegawai','tb_master_pegawai.id_pegawai')
-            ->join('tb_master_jabatan','tb_master_pegawai.id_jabatan','tb_master_jabatan.id_jabatan')->where('nama_jabatan', '=', 'Senior Manager Unit')->get();
+        if(Auth::user()->Pegawai->role == 'HRD' || Auth::user()->Pegawai->role == 'Kepala HRD'){
+            $pelanggaran = RiwayatPelanggaran::with('Pegawai','Pelanggaran')->get();
+            $pegawai = MasterPegawai::get();
+        }elseif(Auth::user()->Pegawai->role == 'Kepala Unit'){
+            $pelanggaran = RiwayatPelanggaran::with('Pegawai','Pelanggaran')->join('tb_master_pegawai','tb_riwayat_pelanggaran.id_pegawai','tb_master_pegawai.id_pegawai')
+            ->where('id_unit_kerja','=', Auth::user()->Pegawai->id_unit_kerja)->where('id_sub_unit', Auth::user()->Pegawai->id_sub_unit)->where('role', '=', 'Pegawai')->get();
 
-            $pegawai = MasterPegawai::join('tb_master_jabatan','tb_master_pegawai.id_jabatan','tb_master_jabatan.id_jabatan')
-            ->where('nama_jabatan', '=', 'Senior Manager Unit')->get();
+            $pegawai = MasterPegawai::where('id_unit_kerja','=', Auth::user()->Pegawai->id_unit_kerja)->where('id_sub_unit', Auth::user()->Pegawai->id_sub_unit)->get();
         }else{
             $pelanggaran = RiwayatPelanggaran::with('Pegawai','Pelanggaran')->leftjoin('tb_master_pegawai','tb_riwayat_pelanggaran.id_pegawai','tb_master_pegawai.id_pegawai')
-            ->join('tb_master_jabatan','tb_master_pegawai.id_jabatan','tb_master_jabatan.id_jabatan')
-            ->where('id_unit_kerja','=', Auth::user()->Pegawai->id_unit_kerja)->where('nama_jabatan', '=', 'Staff')->get();
+            ->where('id_unit_kerja','=', Auth::user()->Pegawai->id_unit_kerja)->where('role', '!=', 'Direktur')->OrWhere('role', '!=', 'Kepala HRD')->get();
 
-            $pegawai = MasterPegawai::join('tb_master_jabatan','tb_master_pegawai.id_jabatan','tb_master_jabatan.id_jabatan')
-            ->where('id_unit_kerja','=', Auth::user()->Pegawai->id_unit_kerja)->where('nama_jabatan', '=', 'Staff')->get();
+            $pegawai = MasterPegawai::where('id_unit_kerja', Auth::user()->Pegawai->id_unit_kerja)->get();
         }
 
         $masterdata = MasterPelanggaran::get();

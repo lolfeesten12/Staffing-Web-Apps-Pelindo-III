@@ -93,9 +93,16 @@ Usulan Mutasi
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
                                                 style="width: 80px;">Unit Asal</th>
+                                            @if (Auth::user()->Pegawai->role == 'Pegawai')
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
-                                                colspan="1" aria-label="Position: activate to sort column ascending"
-                                                style="width: 80px;">Unit/Penempatan Tujuan</th>
+                                            colspan="1" aria-label="Position: activate to sort column ascending"
+                                            style="width: 80px;">Sub Unit</th>
+                                            @else
+                                            <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
+                                            colspan="1" aria-label="Position: activate to sort column ascending"
+                                            style="width: 80px;">Unit/Penempatan Tujuan</th>
+                                            @endif
+                                          
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
                                                 style="width: 70px;">Status Acc</th>
@@ -113,13 +120,15 @@ Usulan Mutasi
                                             <td>{{ $item->jenis_mutasi }}</td>
                                             <td>{{ $item->Pegawai->nama_pegawai }}</td>
                                             <td>{{ $item->Pegawai->Penempatan->nama_penempatan }}</td>
-                                            <td>{{ $item->Pegawai->UnitKerja->unit_kerja}}</td>
+                                            <td>{{ $item->Pegawai->UnitKerja->unit_kerja}}, {{ $item->Pegawai->SubUnit->nama_sub_unit ?? '' }}</td>
                                             @if ($item->jenis_mutasi == 'Resign')
-                                                <td>Resign</td>
+                                                <td>{{ $item->SubUnit->nama_sub_unit ?? 'Resign' }}</td>
                                             @elseif ($item->jenis_mutasi == 'Mutasi Internal')
-                                                <td>{{ $item->Unit->unit_kerja }}</td>
+                                                <td>{{ $item->Unit->unit_kerja }}, {{ $item->SubUnit->nama_sub_unit ?? '' }}</td>
                                             @elseif ($item->jenis_mutasi == 'Mutasi Eksternal')
                                                 <td>{{ $item->Penempatan->nama_penempatan }} {{ $item->Penempatan->regional }}</td>
+                                            @else
+                                                <td>Pemecatan</td>
                                             @endif
                                           
                                             <td class="text-center">
@@ -136,8 +145,11 @@ Usulan Mutasi
 
                                             <td class="text-center">
                                                 @if ($item->status_approval == 'Terima')
-                                                <a href="{{ route('mutasi.index',$item->id_usulan) }}" 
-                                                    class="btn btn-sm btn-primary me-2">Proses SK</a>
+                                                    @if (Auth::user()->Pegawai->role == 'Kepala HRD' || Auth::user()->Pegawai->role == 'HRD')
+                                                    <a href="{{ route('mutasi.index',$item->id_usulan) }}" 
+                                                        class="btn btn-sm btn-primary me-2">Proses SK</a>
+                                                    @endif
+                                                   
                                                     <a href="{{ route('usulan-mutasi.show',$item->id_usulan) }}"
                                                         data-bs-toggle="tooltip" data-bs-placement="top" title=""
                                                         data-bs-original-title="Detail Data Usulan"
@@ -154,10 +166,10 @@ Usulan Mutasi
                                                     data-bs-toggle="tooltip" data-bs-placement="top" title=""
                                                     data-bs-original-title="Detail Data Usulan"
                                                     class="btn btn-sm btn-secondary"><i class="lni lni-eye"></i></a>
-                                                <a href="{{ route('usulan-mutasi.edit',$item->id_usulan) }}"
+                                                {{-- <a href="{{ route('usulan-mutasi.edit',$item->id_usulan) }}"
                                                     data-bs-toggle="tooltip" data-bs-placement="top" title=""
                                                     data-bs-original-title="Edit Data Usulan"
-                                                    class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i></a>
+                                                    class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i></a> --}}
                                                 <a href="javascript:;" class="btn btn-sm btn-danger"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#Modalhapus-{{ $item->id_usulan }}"><i

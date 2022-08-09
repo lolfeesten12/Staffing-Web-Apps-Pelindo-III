@@ -127,7 +127,7 @@ class PenilaianDiriController extends Controller
 
         // INORDER RANDOM ORDER UNTUK MEMERIKSA NILAI TEMAN SEJAWAT
         if($pegawai->role == 'Pegawai'){
-            $penilai = MasterPegawai::where('role','Kepala Unit')->where('id_unit_kerja', $pegawai->UnitKerja->id_unit_kerja)->first();
+            $penilai = MasterPegawai::where('role','Kepala Unit')->where('id_unit_kerja', $pegawai->UnitKerja->id_unit_kerja)->where('id_sub_unit', $pegawai->id_sub_unit)->first();
             $atasanpenilai = MasterPegawai::where('role','Manager Unit')->where('id_unit_kerja', $pegawai->UnitKerja->id_unit_kerja)->first();
         }elseif($pegawai->role == 'Kepala Unit'){
             $penilai = MasterPegawai::where('role','Manager Unit')->where('id_unit_kerja', $pegawai->UnitKerja->id_unit_kerja)->first();

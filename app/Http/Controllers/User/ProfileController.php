@@ -8,6 +8,7 @@ use App\Models\MasterData\MasterPegawai;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ProfileController extends Controller
 {
@@ -21,7 +22,9 @@ class ProfileController extends Controller
         $user = User::with('Pegawai')->where('id', Auth::user()->id)->first();
         $jadwal = JadwalPegawai::where('id_pegawai', Auth::user()->id_pegawai)->where('status','Pending Penukaran')->get();
         $jadwalcount = JadwalPegawai::where('id_pegawai', Auth::user()->id_pegawai)->where('status','Pending Penukaran')->count();
-     
+        if(count($jadwal) > 0){
+            Alert::warning('Warning Title', 'Warning Message');
+        }
 
         return view('user-views.pages.profile', compact('user','jadwalcount','jadwal'));
     }

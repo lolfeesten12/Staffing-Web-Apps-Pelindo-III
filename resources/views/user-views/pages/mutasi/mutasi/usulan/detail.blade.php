@@ -62,11 +62,23 @@ Detail Data Usulan
                                         <input type="text" class="form-control" value="{{ $item->Pegawai->UnitKerja->unit_kerja }}"
                                             readonly>
                                     </div>
-                                    @if ($item->Jenis_mutasi == 'Mutasi Internal')
+                                    @if ($item->jenis_mutasi == 'Mutasi Internal' || $item->jenis_mutasi == 'Mutasi Eksternal')
                                     <div class="col-4">
                                         <label class="form-label mr-1">Unit Kerja Tujuan</label><span class="mr-4 mb-3"
                                             style="color: red">*</span>
                                         <input type="text" class="form-control" value="{{ $item->Unit->unit_kerja }}"
+                                            readonly>
+                                    </div>
+                                    <div class="col-4">
+                                        <label class="form-label mr-1">Sub Unit Kerja Tujuan</label><span class="mr-4 mb-3"
+                                            style="color: red">*</span>
+                                        <input type="text" class="form-control" value="{{ $item->SubUnit->nama_sub_unit ?? '' }}"
+                                            readonly>
+                                    </div>
+                                    <div class="col-4">
+                                        <label class="form-label mr-1">Penempatan</label><span class="mr-4 mb-3"
+                                            style="color: red">*</span>
+                                        <input type="text" class="form-control" value="{{ $item->Penempatan->nama_penempatan ?? $item->Pegawai->Penempatan->nama_penempatan }}"
                                             readonly>
                                     </div>
                                     @endif

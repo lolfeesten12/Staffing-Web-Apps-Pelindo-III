@@ -124,8 +124,11 @@ Usulan Mutasi Jabatan
                                             </td>
                                             <td class="text-center">
                                                 @if ($item->status_approval == 'Terima')
-                                                <a href="{{ route('mutasi-jabatan.index',$item->id_usulan) }}" 
-                                                    class="btn btn-sm btn-primary me-2">Proses SK</a>
+                                                    @if (Auth::user()->Pegawai->role == 'HRD' || Auth::user()->Pegawai->role == 'Kepala HRD')
+                                                    <a href="{{ route('mutasi-jabatan.index',$item->id_usulan) }}" 
+                                                        class="btn btn-sm btn-primary me-2">Proses SK</a>
+                                                    @endif
+                                          
                                                     <a href="{{ route('usulan-jabatan.show',$item->id_usulan) }}"
                                                         data-bs-toggle="tooltip" data-bs-placement="top" title=""
                                                         data-bs-original-title="Detail Data Usulan"

@@ -166,10 +166,11 @@ return [
         /*
          * Package Service Providers...
          */
-        RealRashid\SweetAlert\SweetAlertServiceProvider::class,
+        
         /*
          * Application Service Providers...
          */
+        RealRashid\SweetAlert\SweetAlertServiceProvider::class,
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
@@ -232,7 +233,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
-        'QrCode'    => SimpleSoftwareIO\QrCode\Facades\QrCode::class
+        'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class
 
     ],
 

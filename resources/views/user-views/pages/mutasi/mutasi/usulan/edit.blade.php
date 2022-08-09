@@ -51,27 +51,65 @@ Edit Data Usulan
                                         <input type="date" class="form-control" placeholder="Input Tanggal Surat"
                                             name="tanggal_surat" value="{{ $item->tanggal_surat }}">
                                     </div>
-                                    <div class="col-6">
-                                        <label class="form-label mr-1" for="unit_kerja">Unit Kerja</label><span
-                                            class="mr-4 mb-3" style="color: red">*</span>
-                                        <input type="text" class="form-control" placeholder="Input Tanggal Surat"
-                                            name="unit_kerja" value="{{ $item->Pegawai->UnitKerja->unit_kerja }}" readonly>
-                                    </div>
-                                    <div class="col-6">
-                                        <label class="form-label mr-1" for="id_pegawai">Pegawai</label><span
-                                            class="mr-4 mb-3" style="color: red">*</span>
-                                        <input type="text" class="form-control" placeholder="Input Tanggal Surat"
-                                            name="id_pegawai" value="{{ $item->Pegawai->nama_pegawai }}" readonly>
-                                    </div>
+                                    @if (Auth::user()->Pegawai->role == 'Pegawai')
+                                        <div class="col-6">
+                                            <label class="small mb-1 mr-1" for="id_unit_kerja">Unit Kerja</label><span
+                                                class="mr-4 mb-3" style="color: red">*</span>
+                                            <select class="form-select" name="id_unit_kerja" id="id_unit_kerja"
+                                                value="{{ old('id_unit_kerja') }}"
+                                                class="form-control @error('id_unit_kerja') is-invalid @enderror">
+                                                <option value="{{ Auth::user()->Pegawai->UnitKerja->id_unit_kerja }}">{{ Auth::user()->Pegawai->UnitKerja->unit_kerja }}</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="small mb-1 mr-1" for="id_pegawai">Pegawai</label><span
+                                                class="mr-4 mb-3" style="color: red">*</span>
+                                            <select class="form-select" name="id_pegawai" id="id_pegawai"
+                                                value="{{ old('id_pegawai') }}"
+                                                class="form-control @error('id_pegawai') is-invalid @enderror">
+                                                <option value="{{ Auth::user()->Pegawai->id_pegawai }}">{{ Auth::user()->Pegawai->nama_pegawai }}</option>
+                                            </select>
+                                        </div>
+
+                                    @else
+                                        <div class="col-6">
+                                            <label class="small mb-1 mr-1" for="id_unit_kerja">Unit Kerja</label><span
+                                                class="mr-4 mb-3" style="color: red">*</span>
+                                            <select class="form-select" name="id_unit_kerja" id="id_unit_kerja"
+                                                value="{{ old('id_unit_kerja') }}"
+                                                class="form-control @error('id_unit_kerja') is-invalid @enderror">
+                                                <option value="{{ $item->Pegawai->id_unit_kerja }}">{{ $item->Pegawai->UnitKerja->unit_kerja }}</option>
+                                                @foreach ($unit as $item)
+                                                <option value="{{ $item->id_unit_kerja }}">{{ $item->unit_kerja }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="small mb-1 mr-1" for="id_pegawai">Pegawai</label><span
+                                                class="mr-4 mb-3" style="color: red">*</span>
+                                            <select class="form-select" name="id_pegawai" id="id_pegawai"
+                                                value="{{ old('id_pegawai') }}"
+                                                class="form-control @error('id_pegawai') is-invalid @enderror">
+                                                <option value="{{ $item->id_pegawai }}" holder>{{ $item->Pegawai[0]->nama_pegawai }}</option>
+                                                @foreach ($pegawai as $tes)
+                                                <option value="{{ $tes->id_pegawai }}">{{ $tes->nama_pegawai }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
+
+                                    @endif
+                        
                                     
-                                    @if ($item->jenis_mutasi != 'Resign')
-                                    <div class="col-12">
+                                    @if ($item->jenis_mutasi == 'Resign' || $item->jenis_mutasi == 'Pemecatan')
+                                    @else
+                                    <div class="col-6">
                                         <label class="small mb-1 mr-1" for="id_divisi_tujuan">Unit Kerja Tujuan</label><span
                                             class="mr-4 mb-3" style="color: red">*</span>
                                         <select class="form-select" name="id_divisi_tujuan" id="id_divisi_tujuan"
                                             value="{{ old('id_divisi_tujuan') }}"
                                             class="form-control @error('id_divisi_tujuan') is-invalid @enderror">
-                                            <option value="{{ $item->id_divisi_tujuan }}">{{ $item->Unit->unit_kerja }}</option>
+                                            <option value="{{ $item->id_divisi_tujuan ?? '' }}">{{ $item->Unit->unit_kerja ?? '' }}</option>
                                             @foreach ($unit as $item)
                                             <option value="{{ $item->id_unit_kerja }}">{{ $item->unit_kerja }}
                                             </option>
@@ -80,7 +118,24 @@ Edit Data Usulan
                                         @error('id_divisi_tujuan')<div class="text-danger small mb-1">{{ $message }}
                                         </div> @enderror
                                     </div>
+                                    <div class="col-6">
+                                        <label class="small mb-1 mr-1" for="id_sub_unit_tujuan">Sub Unit Kerja Tujuan</label><span
+                                            class="mr-4 mb-3" style="color: red">*</span>
+                                        <select class="form-select" name="id_sub_unit_tujuan" id="id_sub_unit_tujuan"
+                                            value="{{ old('id_sub_unit_tujuan') }}"
+                                            class="form-control @error('id_sub_unit_tujuan') is-invalid @enderror">
+                                            <option value="{{ $item->id_sub_unit_tujuan ?? '' }}">{{ $item->SubUnit->nama_sub_unit ?? '' }}</option>
+                                            @foreach ($sub as $s)
+                                            <option value="{{ $s->id_sub_unit }}">{{ $s->nama_sub_unit }}
+                                            </option>
+                                            @endforeach
+                                        </select>
+                                        @error('id_sub_unit_tujuan')<div class="text-danger small mb-1">{{ $message }}
+                                        </div> @enderror
+                                    </div>
+                                  
                                     @endif
+
                                     <div class="col-4">
                                         <label class="small mb-1" for="file">File</label><span class="mr-4 mb-3"
                                             style="color: red">*</span>
