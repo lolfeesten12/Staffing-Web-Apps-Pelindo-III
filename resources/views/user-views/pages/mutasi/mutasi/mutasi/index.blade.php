@@ -74,7 +74,10 @@ Mutasi
                                                 style="width: 80px;">Jenis Mutasi</th>
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
-                                                style="width: 80px;">Unit/Penempatan Tujuan</th>
+                                                style="width: 80px;">Unit Tujuan</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
+                                                colspan="1" aria-label="Position: activate to sort column ascending"
+                                                style="width: 80px;">Penempatan Tujuan</th>
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
                                                 style="width: 150px;">Pegawai</th>
@@ -102,12 +105,19 @@ Mutasi
                                             <td>{{ $item->nomor_surat }}</td>
                                             <td>{{ $item->jenis_mutasi }}</td>
                                             <td class="text-center">
-                                                @if ($item->jenis_mutasi == 'Mutasi Internal')
-                                                    {{ $item->Unit->unit_kerja }}
-                                                @elseif ($item->jenis_mutasi == 'Mutasi Eksternal')
-                                                    {{ $item->Penempatan->nama_penempatan }}
+                                                @if ($item->jenis_mutasi == 'Mutasi Internal' || $item->jenis_mutasi == 'Mutasi Eksternal')
+                                                    {{ $item->Unit->unit_kerja ?? '' }}, {{ $item->SubUnit->nama_sub_unit ?? '' }}
                                                 @else
-                                                    {{ "Resign" }}
+                                                    {{ $item->jenis_mutasi }}
+                                                @endif
+                                            </td>
+                                            <td class="text-center">
+                                                @if ($item->jenis_mutasi == 'Mutasi Internal')
+                                                    {{ Auth::user()->Pegawai->Penempatan->nama_penempatan ?? '' }}
+                                                @elseif ($item->jenis_mutasi == 'Mutasi Eksternal')
+                                                    {{ $item->Penempatan->nama_penempatan ?? '' }}
+                                                @else
+                                                    {{ $item->jenis_mutasi }}
                                                 @endif
                                             </td>
                                             
@@ -185,9 +195,34 @@ Mutasi
                         </div>
                         @if ($item->jenis_mutasi == 'Mutasi Internal')
                         <div class="col-6">
-                            <label class="small mb-1 mr-1">Divisi/Unit Kerja Tujuan</label>
-                            <input class="form-control"  type="text" value="{{ $item->Unit->unit_kerja }}" readonly></input>
+                            <label class="small mb-1 mr-1">Unit Kerja Tujuan</label>
+                            <input class="form-control"  type="text" value="{{ $item->Unit->unit_kerja ?? '' }}" readonly></input>
                         </div>
+                        <div class="col-6">
+                            <label class="small mb-1 mr-1">Sub Unit Kerja Tujuan</label>
+                            <input class="form-control"  type="text" value="{{ $item->SubUnit->nama_sub_unit ?? '' }}" readonly></input>
+                        </div>
+
+                        @elseif ($item->jenis_mutasi == 'Mutasi Eksternal')
+                        <div class="col-6">
+                            <label class="small mb-1 mr-1">Penempatan Tujuan</label>
+                            <input class="form-control"  type="text" value="{{ $item->Penempatan->nama_penempatan }}" readonly></input>
+                        </div>
+                        <div class="col-6">
+                            <label class="small mb-1 mr-1">Unit Kerja Tujuan</label>
+                            <input class="form-control"  type="text" value="{{ $item->Unit->unit_kerja ?? '' }}" readonly></input>
+                        </div>
+                        <div class="col-6">
+                            <label class="small mb-1 mr-1">Sub Unit Kerja Tujuan</label>
+                            <input class="form-control"  type="text" value="{{ $item->SubUnit->nama_sub_unit ?? '' }}" readonly></input>
+                        </div>
+
+                        @elseif ($item->jenis_mutasi == 'Pemecatan')
+                        <div class="col-6">
+                            <label class="small mb-1 mr-1">Resign</label>
+                            <input class="form-control"  type="text" value="{{ "Pemecatan" }}" readonly></input>
+                        </div>
+
                         @else
                         <div class="col-6">
                             <label class="small mb-1 mr-1">Resign</label>

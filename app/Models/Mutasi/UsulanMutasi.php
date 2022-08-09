@@ -97,7 +97,7 @@ class UsulanMutasi extends Model
 
     public function scopeInternal($query)
     {
-        return $query->where('jenis_mutasi', '=', 'Mutasi Internal')->orWhere('jenis_mutasi','=','Resign')->orWhere('jenis_mutasi','=','Mutasi Eksternal');
+        return $query->where('jenis_mutasi', '=', 'Mutasi Internal')->orWhere('jenis_mutasi','=','Resign')->orWhere('jenis_mutasi','=','Mutasi Eksternal')->orWhere('jenis_mutasi','=','Pemecatan');
     }
 
     public function scopeJabatan($query)

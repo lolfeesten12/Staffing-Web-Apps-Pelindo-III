@@ -36,7 +36,8 @@ class MasterPegawai extends Model
         'foto_pegawai',
         'role',
         'id_penempatan',
-        'id_sub_unit'
+        'id_sub_unit',
+        'status_aktif'
     ];
 
     protected $hidden = [

@@ -85,6 +85,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard', [App\Http\Controllers\DashboardHRDController::class, 'index'])->middleware(['hrd&direktur'])->name('dashboard');
     Route::post('/dashboard/role', [App\Http\Controllers\DashboardHRDController::class, 'role'])->name('pindah-role');
     Route::get('/dashboardunit', [App\Http\Controllers\DashboardHRDController::class, 'indexunit'])->middleware(['gabunganunit'])->name('dashboardunit');
+    Route::get('/dashboard/pegawai', [App\Http\Controllers\DashboardHRDController::class, 'dashboard_pegawai'])->name('dashboardpegawai');
     Route::get('/absen/{id}', [App\Http\Controllers\Absensi\AbsensiController::class, 'index']);
     Route::resource('absen', AbsensiController::class);
  

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Jadwal\JadwalPegawai;
 use App\Models\MasterData\MasterJabatan;
 use App\Models\MasterData\MasterOrientasi;
 use App\Models\MasterData\MasterPegawai;
@@ -9,6 +10,7 @@ use App\Models\MasterData\MasterShift;
 use App\Models\MasterData\MasterUnitKerja;
 use App\Models\Mutasi\UsulanMutasi;
 use App\Models\Pelatihan\ProgramPelatihan;
+use App\Models\Penilaian\Nilai;
 use App\Models\Riwayat\RiwayatCuti;
 use App\Models\WebRequirement\CalonPegawai;
 use App\Models\WebRequirement\Orientasi;
@@ -16,6 +18,7 @@ use App\Models\WebRequirement\Pengumuman;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class DashboardHRDController extends Controller
 {
@@ -77,6 +80,30 @@ class DashboardHRDController extends Controller
             'resign','resign_pending','resign_terima','resign_tolak','resign_dimutasi'
         
 
+        ));
+    }
+
+    public function dashboard_pegawai()
+    {
+        $hari = Carbon::now();
+        $haritext = Carbon::today()->toDayDateTimeString();
+        $jumlah_pelatihan_wajib = ProgramPelatihan::where('status','Pending')->where('status_wajib','Wajib')->count();
+        $jadwal_today = JadwalPegawai::with('ShiftKerja')->where('id_pegawai', Auth::user()->Pegawai->id_pegawai)->where('tanggal_masuk', Carbon::now()->format('Y-m-d'))->get();
+        $cuti_proses = RiwayatCuti::where('id_pegawai', Auth::user()->Pegawai->id_pegawai)->where('status_acc','Diproses')->count();
+        $cuti_terima = RiwayatCuti::where('id_pegawai', Auth::user()->Pegawai->id_pegawai)->where('status_acc','Terima')->count();
+        $cuti_tolak = RiwayatCuti::where('id_pegawai', Auth::user()->Pegawai->id_pegawai)->where('status_acc','Tolak')->count();
+        $mutasi = UsulanMutasi::where('id_pegawai', Auth::user()->Pegawai->id_pegawai)->where('status_approval','Dimutasi')->count();
+        $nilai = Nilai::where('id_pegawai', Auth::user()->Pegawai->id_pegawai)->where('status_acc','Disahkan')->count();
+
+        $jadwal = JadwalPegawai::where('id_pegawai', Auth::user()->id_pegawai)->where('status','Pending Penukaran')->get();
+        $tukarjadwal = JadwalPegawai::where('id_pegawai', Auth::user()->id_pegawai)->where('status','Pending Penukaran')->count();
+        if(count($jadwal) > 0){
+            Alert::warning('Warning Title', 'Warning Message');
+        }
+
+        return view('user-views.pages.dashboardpegawai', compact(
+            'jumlah_pelatihan_wajib','jadwal_today','cuti_proses','cuti_terima','cuti_tolak','mutasi',
+            'nilai','tukarjadwal','hari','haritext','jadwal'
         ));
     }
 

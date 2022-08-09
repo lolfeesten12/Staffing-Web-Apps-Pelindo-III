@@ -132,8 +132,13 @@
                     <div class="parent-icon"><i class="lni lni-home"></i></div>
                     <div class="menu-title">Dashboard</div>
                 </a>
-            @elseif (Auth::user()->Pegawai->role == 'Kepala Unit' || Auth::user()->Pegawai->role == 'Manager Unit')
+            @elseif (Auth::user()->Pegawai->role == 'Kepala Unit' || Auth::user()->Pegawai->role == 'Manager Unit' || Auth::user()->Pegawai->role == 'Direktur Unit')
             <a href="{{ route('dashboardunit') }}">
+                <div class="parent-icon"><i class="lni lni-home"></i></div>
+                <div class="menu-title">Dashboard</div>
+            </a>
+            @elseif (Auth::user()->Pegawai->role == 'Pegawai')
+            <a href="{{ route('dashboardpegawai') }}">
                 <div class="parent-icon"><i class="lni lni-home"></i></div>
                 <div class="menu-title">Dashboard</div>
             </a>

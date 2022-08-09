@@ -21,7 +21,6 @@ class MutasiPegawaiController extends Controller
       
 
         $mutasi = UsulanMutasi::active()->Internal()->get();
- 
 
         return view('user-views.pages.mutasi.mutasi.mutasi.index', compact('mutasi'));
     }
@@ -94,10 +93,15 @@ class MutasiPegawaiController extends Controller
         $item->save();
 
         $pegawai = MasterPegawai::where('id_pegawai', $item->id_pegawai)->first();
-        if($item->jenis_mutasi == 'Resign'){
-            $pegawai->status_aktif == 'Tidak Aktif';
+        if($item->jenis_mutasi == 'Resign' || $item->jenis_mutasi == 'Pemecatan'){
+            $pegawai->status_aktif = 'Tidak Aktif';
         }elseif($item->jenis_mutasi == 'Mutasi Internal'){
             $pegawai->id_unit_kerja = $item->id_divisi_tujuan;
+            $pegawai->id_sub_unit = $item->id_sub_unit_tujuan;
+        }elseif($item->jenis_mutasi == 'Mutasi Eksternal'){
+            $pegawai->id_unit_kerja = $item->id_divisi_tujuan;
+            $pegawai->id_sub_unit = $item->id_sub_unit_tujuan;
+            $pegawai->id_penempatan = $item->id_penempatan;
         }
         $pegawai->save();
 
