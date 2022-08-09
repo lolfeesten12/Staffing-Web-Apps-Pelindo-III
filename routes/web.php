@@ -19,6 +19,7 @@ use App\Http\Controllers\MasterData\MasterPelanggaranController;
 use App\Http\Controllers\MasterData\MasterPenempatanController;
 use App\Http\Controllers\MasterData\MasterSanksiController;
 use App\Http\Controllers\MasterData\MasterShiftController;
+use App\Http\Controllers\MasterData\MasterSubUnitController;
 use App\Http\Controllers\MasterData\MasterUnitKerjaController;
 use App\Http\Controllers\Mutasi\ApprovalMutasiJabatanController;
 use App\Http\Controllers\Mutasi\ApprovalMutasiPangkatController;
@@ -111,6 +112,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::resource('pelanggaran', MasterPelanggaranController::class);
             Route::resource('orientasi', MasterOrientasiController::class);
             Route::resource('penempatan', MasterPenempatanController::class);
+            Route::resource('sub-unit', MasterSubUnitController::class);
         });
 
     // RIWAYAT PEGAWAI
@@ -184,23 +186,21 @@ Route::group(['middleware' => 'auth'], function () {
         });
 
     Route::prefix('Mutasi')
-    ->middleware(['hrd'])
     ->group(function () {
         Route::resource('usulan-mutasi', UsulanMutasiController::class);
         Route::get('usulan-mutasi/getpegawai/{id}', [App\Http\Controllers\Mutasi\UsulanMutasiController::class, 'GetUnit']);
-        Route::resource('mutasi', MutasiPegawaiController::class);
+        Route::resource('mutasi', MutasiPegawaiController::class)->middleware(['hrd']);
 
         Route::get('/download_sk/{file_sk}', [App\Http\Controllers\Mutasi\MutasiPegawaiController::class, 'getFile'])->name('sk-mutasi');
 
         // MUTASI PANGKAT
         Route::resource('usulan-pangkat', UsulanPangkatController::class);
-        Route::resource('mutasi-pangkat', MutasiPangkatController::class);
+        Route::resource('mutasi-pangkat', MutasiPangkatController::class)->middleware(['hrd']);;
       
         // MUTASI JABATAN
         Route::resource('usulan-jabatan', UsulanJabatanController::class);
         Route::get('usulan-jabatan/getpegawai-jabatan/{id}', [App\Http\Controllers\Mutasi\UsulanJabatanController::class, 'GetJabatan']);
-        Route::resource('mutasi-jabatan', MutasiJabatanController::class);
-        
+        Route::resource('mutasi-jabatan', MutasiJabatanController::class)->middleware(['hrd']);;
     });
         
     Route::prefix('Pengumuman')

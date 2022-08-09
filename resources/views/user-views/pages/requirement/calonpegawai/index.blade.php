@@ -145,7 +145,7 @@ Calon Pegawai
                                                 @endif
                                             </td>
                                                 
-                                                @if (Auth::user()->Pegawai->role == 'HRD')
+                                                @if (Auth::user()->Pegawai->role == 'HRD' || Auth::user()->Pegawai->role == 'Kepala HRD')
                                                 <td class="text-center">
                                                     <a href="{{ route('calon-pegawai.show',$item->id_calon_pegawai) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Detail Calon Pegawai"
                                                         class="btn btn-sm btn-secondary"><i class="lni lni-eye"></i></a>
@@ -245,8 +245,8 @@ Calon Pegawai
                             </select>
                         </div>
                         <h6 style="display: none" id="pengaturan-{{ $item->id_calon_pegawai }}">Pengaturan Jabatan dan Unit Kerja Pegawai</h6>
-                        <div class="col-3" style="display: none" id="penempatan-{{ $item->id_calon_pegawai }}">
-                            <label class="small mb-1 mr-1" for="id_penempatan">Jabatan</label><span
+                        <div class="col-4" style="display: none" id="penempatan-{{ $item->id_calon_pegawai }}">
+                            <label class="small mb-1 mr-1" for="id_penempatan">Penempatan</label><span
                                 class="mr-4 mb-3" style="color: red">*</span>
                             <select class="form-select" name="id_penempatan" id="id_penempatan"
                                 value="{{ old('id_penempatan') }}"
@@ -260,7 +260,7 @@ Calon Pegawai
                             @error('id_penempatan')<div class="text-danger small mb-1">{{ $message }}
                             </div> @enderror
                         </div>
-                        <div class="col-3" style="display: none" id="role-{{ $item->id_calon_pegawai }}">
+                        <div class="col-4" style="display: none" id="role-{{ $item->id_calon_pegawai }}">
                             <label class="mb-1 mr-1" for="role">Role</label><span class="mr-4 mb-3"
                                 style="color: red">*</span>
                             <select name="role" id="role" class="form-select"
@@ -274,7 +274,7 @@ Calon Pegawai
                                 <option value="Pegawai HRD">Pegawai HRD</option>
                             </select>
                         </div>
-                        <div class="col-3" style="display: none" id="jabatan-{{ $item->id_calon_pegawai }}">
+                        <div class="col-4" style="display: none" id="jabatan-{{ $item->id_calon_pegawai }}">
                             <label class="small mb-1 mr-1" for="id_jabatan">Jabatan</label><span
                                 class="mr-4 mb-3" style="color: red">*</span>
                             <select class="form-select" name="id_jabatan" id="id_jabatan"
@@ -289,7 +289,22 @@ Calon Pegawai
                             @error('id_jabatan')<div class="text-danger small mb-1">{{ $message }}
                             </div> @enderror
                         </div>
-                        <div class="col-3" style="display: none" id="unitkerja-{{ $item->id_calon_pegawai }}">
+                        <div class="col-4" style="display: none" id="pangkat-{{ $item->id_calon_pegawai }}">
+                            <label class="small mb-1 mr-1" for="id_pangkat">Pangkat dan Golongan</label><span
+                                class="mr-4 mb-3" style="color: red">*</span>
+                            <select class="form-select" name="id_pangkat" id="id_pangkat"
+                                value="{{ old('id_pangkat') }}"
+                                class="form-control @error('id_pangkat') is-invalid @enderror">
+                                <option>Pilih Pangkat dan Golongan Calon Pegawai</option>
+                                @foreach ($pangkat as $pangkats)
+                                <option value="{{ $pangkats->id_pangkat }}">{{ $pangkats->nama_pangkat }}
+                                </option>
+                                @endforeach
+                            </select>
+                            @error('id_pangkat')<div class="text-danger small mb-1">{{ $message }}
+                            </div> @enderror
+                        </div>
+                        <div class="col-4" style="display: none" id="unitkerja-{{ $item->id_calon_pegawai }}">
                             <label class="small mb-1 mr-1" for="id_unit_kerja">Unit Kerja</label><span
                                 class="mr-4 mb-3" style="color: red">*</span>
                             <select class="form-select" name="id_unit_kerja" id="id_unit_kerja"
@@ -302,6 +317,21 @@ Calon Pegawai
                                 @endforeach
                             </select>
                             @error('id_unit_kerja')<div class="text-danger small mb-1">{{ $message }}
+                            </div> @enderror
+                        </div>
+                        <div class="col-4" style="display: none" id="subunit-{{ $item->id_calon_pegawai }}">
+                            <label class="small mb-1 mr-1" for="id_sub_unit">Sub Unit Kerja</label><span
+                                class="mr-4 mb-3" style="color: red">*</span>
+                            <select class="form-select" name="id_sub_unit" id="id_sub_unit"
+                                value="{{ old('id_sub_unit') }}"
+                                class="form-control @error('id_sub_unit') is-invalid @enderror">
+                                <option>Pilih Sub Unit Kerja Calon Pegawai</option>
+                                @foreach ($sub as $subs)
+                                <option value="{{ $subs->id_sub_unit }}">{{ $subs->nama_sub_unit }}
+                                </option>
+                                @endforeach
+                            </select>
+                            @error('id_sub_unit')<div class="text-danger small mb-1">{{ $message }}
                             </div> @enderror
                         </div>
                         <button class="btn btn-outline-secondary" type="button" id="button_lulus"
@@ -328,6 +358,8 @@ Calon Pegawai
         $(`#jabatan-${id_calon_pegawai}`).show()
         $(`#unitkerja-${id_calon_pegawai}`).show()
         $(`#penempatan-${id_calon_pegawai}`).show()
+        $(`#subunit-${id_calon_pegawai}`).show()
+        $(`#pangkat-${id_calon_pegawai}`).show()
      }
 
     function hitung(event, id_calon_pegawai) {

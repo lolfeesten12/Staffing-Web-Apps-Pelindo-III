@@ -83,7 +83,7 @@ Master Pegawai
                                                 style="width: 80px;">Unit Kerja</th>
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
-                                                style="width: 70px;">Jenis Kelamin</th>
+                                                style="width: 70px;">Sub Unit</th>
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
                                                 style="width: 70px;">No.Telp</th>
@@ -103,7 +103,7 @@ Master Pegawai
                                             <td>{{ $item->Jabatan->nama_jabatan }}</td>
                                             <td>{{ $item->Pangkat->nama_pangkat }}, {{ $item->Pangkat->golongan }}</td>
                                             <td>{{ $item->UnitKerja->unit_kerja }}</td>
-                                            <td>{{ $item->jenis_kelamin }}</td>
+                                            <td>{{ $item->SubUnit->nama_sub_unit ?? '' }}</td>
                                             <td>{{ $item->no_telp }}</td>
                                             <td class="text-center">
                                                 <a href="{{ route('pegawai-riwayat',$item->id_pegawai) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Riwayat Data Pegawai"

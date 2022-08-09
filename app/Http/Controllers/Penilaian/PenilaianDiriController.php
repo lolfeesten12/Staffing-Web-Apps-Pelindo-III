@@ -136,9 +136,12 @@ class PenilaianDiriController extends Controller
             $penilai = MasterPegawai::where('role','Manager Unit')->inRandomOrder()->first();
             $atasanpenilai = MasterPegawai::where('role','Direktur Unit')->where('')->first();
         }elseif($pegawai->role == 'HRD'){
-            $penilai = MasterPegawai::where('role','Direktur Unit')->inRandomOrder()->first();
+            $penilai = MasterPegawai::where('role','Kepala HRD')->first();
             $atasanpenilai = MasterPegawai::where('role','Direktur')->first();
         }elseif($pegawai->role == 'Direktur Unit'){
+            $penilai = $penilai = MasterPegawai::where('role','Direktur Unit')->inRandomOrder()->first();
+            $atasanpenilai = MasterPegawai::where('role','Direktur')->first();
+        }elseif($pegawai->role == 'Kepala HRD'){
             $penilai = $penilai = MasterPegawai::where('role','Direktur Unit')->inRandomOrder()->first();
             $atasanpenilai = MasterPegawai::where('role','Direktur')->first();
         }

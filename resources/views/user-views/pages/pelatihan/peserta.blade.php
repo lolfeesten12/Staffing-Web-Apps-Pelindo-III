@@ -2,7 +2,7 @@
 
 
 @section('name')
-Program {{ $detail[0]->Pelatihan->jenis_pelatihan }}
+Program {{ $tes->jenis_pelatihan }}
 @endsection
 
 @section('content')
@@ -17,7 +17,7 @@ Program {{ $detail[0]->Pelatihan->jenis_pelatihan }}
                     <ol class="breadcrumb mb-0 p-0">
                         <li class="breadcrumb-item"><a href="javascript:;"><i class="lni lni-database"></i></a>
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">Daftar Peserta {{ $detail[0]->Pelatihan->nama_pelatihan }}</li>
+                        <li class="breadcrumb-item active" aria-current="page">Daftar Peserta {{ $tes->nama_pelatihan }}</li>
                     </ol>
                 </nav>
             </div>
@@ -30,10 +30,10 @@ Program {{ $detail[0]->Pelatihan->jenis_pelatihan }}
             <div class="card p-5">
                 <div class="card-body text-center">
                     
-                    <h5 class="card-title">{{ $detail[0]->Pelatihan->jenis_pelatihan }}{{ $detail[0]->Pelatihan->nama_pelatihan }}</h5>
+                    <h5 class="card-title">{{ $tes->jenis_pelatihan }}{{ $tes->nama_pelatihan }}</h5>
                     <p class="card-text">Pelatihan dimulai dari tanggal<span class="text-purple">
-                            {{ $detail[0]->Pelatihan->periode_awal }} </span> sampai
-                        <span class="text-purple">{{ $detail[0]->Pelatihan->periode_akhir }} </span>.
+                            {{ $tes->periode_awal }} </span> sampai
+                        <span class="text-purple">{{ $tes->periode_akhir }} </span>.
                     </p>
                 </div>
                 <img src="{{ asset('assets/images/pelatihan.png') }}" class="card-img-top" alt="...">

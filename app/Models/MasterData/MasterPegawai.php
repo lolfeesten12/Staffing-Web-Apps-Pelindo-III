@@ -35,7 +35,8 @@ class MasterPegawai extends Model
         'kota_asal',
         'foto_pegawai',
         'role',
-        'id_penempatan'
+        'id_penempatan',
+        'id_sub_unit'
     ];
 
     protected $hidden = [
@@ -63,6 +64,11 @@ class MasterPegawai extends Model
     public function UnitKerja()
     {
         return $this->belongsTo(MasterUnitKerja::class, 'id_unit_kerja', 'id_unit_kerja')->withTrashed();
+    }
+
+    public function SubUnit()
+    {
+        return $this->belongsTo(MasterSubUnit::class, 'id_sub_unit', 'id_sub_unit')->withTrashed();
     }
 
     public function User()

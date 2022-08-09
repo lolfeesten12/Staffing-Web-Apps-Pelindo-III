@@ -19,7 +19,26 @@ class UsulanMutasiController extends Controller
      */
     public function index()
     {
-        $usulan = UsulanMutasi::with('Pegawai')->where('jenis_mutasi','Mutasi Internal')->orWhere('jenis_mutasi', 'Resign')->orWhere('jenis_mutasi','Mutasi Eksternal')->get();
+        if(Auth::user()->Pegawai->role == 'HRD' || Auth::user()->Pegawai->role == 'Kepala HRD'){
+            $usulan = UsulanMutasi::with('Pegawai')->where('jenis_mutasi','Mutasi Internal')
+            ->orWhere('jenis_mutasi', 'Resign')->orWhere('jenis_mutasi','Mutasi Eksternal')
+            ->orWhere('jenis_mutasi','Pemecatan')->get();
+        }elseif(Auth::user()->Pegawai->role == 'Kepala Unit'){
+            $tes = UsulanMutasi::join('tb_master_pegawai','tb_usulan_mutasi.id_pegawai','tb_master_pegawai.id_pegawai')
+            ->where('jenis_mutasi','Mutasi Internal')
+            ->orWhere('jenis_mutasi', 'Resign')->orWhere('jenis_mutasi','Mutasi Eksternal')
+            ->orWhere('jenis_mutasi','Pemecatan')->get();
+            
+            $usulan = $tes->where('id_unit_kerja','=', Auth::user()->Pegawai->id_unit_kerja)->where('id_sub_unit','=', Auth::user()->Pegawai->id_sub_unit);
+        }else{
+            $anjay = UsulanMutasi::join('tb_master_pegawai','tb_usulan_mutasi.id_pegawai','tb_master_pegawai.id_pegawai')
+            ->where('jenis_mutasi','Mutasi Internal')
+            ->orWhere('jenis_mutasi', 'Resign')->orWhere('jenis_mutasi','Mutasi Eksternal')
+            ->orWhere('jenis_mutasi','Pemecatan')->get();
+            
+            $usulan = $anjay->where('id_unit_kerja','=', Auth::user()->Pegawai->id_unit_kerja);
+        }
+        
         $pegawai = MasterPegawai::get();
         $unit = MasterUnitKerja::get();
 

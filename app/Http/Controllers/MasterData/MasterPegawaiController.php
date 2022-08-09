@@ -7,6 +7,7 @@ use App\Models\MasterData\MasterJabatan;
 use App\Models\MasterData\MasterPangkat;
 use App\Models\MasterData\MasterPegawai;
 use App\Models\MasterData\MasterPenempatan;
+use App\Models\MasterData\MasterSubUnit;
 use App\Models\MasterData\MasterUnitKerja;
 use App\Models\User;
 use Carbon\Carbon;
@@ -39,8 +40,9 @@ class MasterPegawaiController extends Controller
         $unit = MasterUnitKerja::get();
         $pangkat = MasterPangkat::get();
         $penempatan = MasterPenempatan::get();
+        $sub = MasterSubUnit::get();
 
-        return view('user-views.pages.masterdata.pegawai.create',compact('jabatan','unit','pangkat','penempatan'));
+        return view('user-views.pages.masterdata.pegawai.create',compact('jabatan','unit','pangkat','penempatan','sub'));
     }
 
     /**
@@ -62,6 +64,7 @@ class MasterPegawaiController extends Controller
         $pegawai = new MasterPegawai;
         $pegawai->id_jabatan = $request->id_jabatan;
         $pegawai->id_unit_kerja = $request->id_unit_kerja;
+        $pegawai->id_sub_unit = $request->id_sub_unit;
         $pegawai->id_pangkat = $request->id_pangkat;
         $pegawai->id_penempatan = $request->id_penempatan;
         $pegawai->nama_pegawai = $request->nama_pegawai;
@@ -150,6 +153,7 @@ class MasterPegawaiController extends Controller
             $pegawai = MasterPegawai::find($id);
             $pegawai->id_jabatan = $request->id_jabatan;
             $pegawai->id_unit_kerja = $request->id_unit_kerja;
+            $pegawai->id_sub_unit = $request->id_sub_unit;
             $pegawai->id_penempatan = $request->id_penempatan;
             $pegawai->id_pangkat = $request->id_pangkat;
             $pegawai->nama_pegawai = $request->nama_pegawai;
@@ -174,6 +178,7 @@ class MasterPegawaiController extends Controller
             $pegawai = MasterPegawai::find($id);
             $pegawai->id_jabatan = $request->id_jabatan;
             $pegawai->id_unit_kerja = $request->id_unit_kerja;
+            $pegawai->id_sub_unit = $request->id_sub_unit;
             $pegawai->id_penempatan = $request->id_penempatan;
             $pegawai->id_pangkat = $request->id_pangkat;
             $pegawai->nama_pegawai = $request->nama_pegawai;

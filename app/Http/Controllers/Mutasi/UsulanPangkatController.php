@@ -8,6 +8,7 @@ use App\Models\MasterData\MasterPegawai;
 use App\Models\MasterData\MasterUnitKerja;
 use App\Models\Mutasi\UsulanMutasi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UsulanPangkatController extends Controller
 {
@@ -18,7 +19,24 @@ class UsulanPangkatController extends Controller
      */
     public function index()
     {
-        $usulan = UsulanMutasi::with('Pegawai')->where('jenis_mutasi','Promosi Pangkat')->orWhere('jenis_mutasi', 'Demosi Pangkat')->get();
+        if(Auth::user()->Pegawai->role == 'HRD' || Auth::user()->Pegawai->role == 'Kepala HRD'){
+            $usulan = UsulanMutasi::with('Pegawai')->where('jenis_mutasi','Promosi Pangkat')->orWhere('jenis_mutasi', 'Demosi Pangkat')->get();
+        }elseif(Auth::user()->Pegawai->role == 'Kepala Unit'){
+            $tes = UsulanMutasi::with('Pegawai')->join('tb_master_pegawai','tb_usulan_mutasi.id_pegawai','tb_master_pegawai.id_pegawai')
+            ->where('jenis_mutasi','Promosi Pangkat')->orWhere('jenis_mutasi', 'Demosi Pangkat')->get();
+
+            $usulan = $tes->where('id_unit_kerja','=', Auth::user()->Pegawai->id_unit_kerja)
+            ->where('id_sub_unit', '=', Auth::user()->Pegawai->id_sub_unit);
+
+        }else{
+            $tes = UsulanMutasi::with('Pegawai')->join('tb_master_pegawai','tb_usulan_mutasi.id_pegawai','tb_master_pegawai.id_pegawai')
+            ->where('jenis_mutasi','Promosi Pangkat')->orWhere('jenis_mutasi', 'Demosi Pangkat')->get();
+
+            $usulan = $tes->where('id_unit_kerja','=', Auth::user()->Pegawai->id_unit_kerja);
+        }
+
+
+        
         $pegawai = MasterPegawai::get();
         $unit = MasterUnitKerja::get();
 

@@ -68,7 +68,7 @@ Create Master Pegawai
                                             <span class="text-muted">16 Digit Number </span>
                                         </div>
                                     </div>
-                                    <div class="col-4">
+                                    <div class="col-6">
                                         <label class="small mb-1 mr-1" for="id_jabatan">Jabatan</label><span
                                             class="mr-4 mb-3" style="color: red">*</span>
                                         <select class="form-select" name="id_jabatan" id="id_jabatan"
@@ -84,7 +84,7 @@ Create Master Pegawai
                                         </div> @enderror
                                     </div>
                                    
-                                    <div class="col-4">
+                                    <div class="col-6">
                                         <label class="small mb-1 mr-1" for="id_pangkat">Pangkat dan Golongan</label><span
                                             class="mr-4 mb-3" style="color: red">*</span>
                                         <select class="form-select" name="id_pangkat" id="id_pangkat"
@@ -97,22 +97,8 @@ Create Master Pegawai
                                         @error('id_pangkat')<div class="text-danger small mb-1">{{ $message }}
                                         </div> @enderror
                                     </div>
-                                    {{-- <div class="col-4">
-                                        <label class="small mb-1 mr-1" for="id_pangkat">Pangkat dan Golongan</label><span
-                                            class="mr-4 mb-3" style="color: red">*</span>
-                                        <select class="form-select" name="id_pangkat" id="id_pangkat"
-                                            value="{{ old('id_pangkat') }}"
-                                            class="form-control @error('id_pangkat') is-invalid @enderror">
-                                            <option>Pilih Pangkat dan Golongan</option>
-                                            @foreach ($pangkat as $item)
-                                            <option value="{{ $item->id_pangkat }}">{{ $item->nama_pangkat }}, {{ $item->golongan }}
-                                            </option>
-                                            @endforeach
-                                        </select>
-                                        @error('id_pangkat')<div class="text-danger small mb-1">{{ $message }}
-                                        </div> @enderror
-                                    </div> --}}
-                                    <div class="col-4">
+                                  
+                                    <div class="col-6">
                                         <label class="small mb-1 mr-1" for="id_unit_kerja">Unit kerja</label><span
                                             class="mr-4 mb-3" style="color: red">*</span>
                                         <select class="form-select" name="id_unit_kerja" id="id_unit_kerja"
@@ -125,6 +111,21 @@ Create Master Pegawai
                                             @endforeach
                                         </select>
                                         @error('id_unit_kerja')<div class="text-danger small mb-1">{{ $message }}
+                                        </div> @enderror
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="small mb-1 mr-1" for="id_sub_unit">Sub Unit kerja</label><span
+                                            class="mr-4 mb-3" style="color: red">*</span>
+                                        <select class="form-select" name="id_sub_unit" id="id_sub_unit"
+                                            value="{{ old('id_sub_unit') }}"
+                                            class="form-control @error('id_sub_unit') is-invalid @enderror">
+                                            <option>Pilih Sub Unit Kerja</option>
+                                            @foreach ($sub as $sub)
+                                            <option value="{{ $sub->id_sub_unit }}">{{ $sub->nama_sub_unit }}
+                                            </option>
+                                            @endforeach
+                                        </select>
+                                        @error('id_sub_unit')<div class="text-danger small mb-1">{{ $message }}
                                         </div> @enderror
                                     </div>
                                     <div class="col-4">

@@ -25,8 +25,9 @@ class ProgramPelatihanController extends Controller
     {
         // $detail = ProgramPelatihan::with('Detail')->where('id_pelatihan', $id_pelatihan)->get();
         $detail = DetailPelatihan::with('Pelatihan','Pegawai')->where('id_pelatihan', $id_pelatihan)->get();
+        $tes = ProgramPelatihan::find($id_pelatihan);
        
-        return view('user-views.pages.pelatihan.peserta', compact('detail'));
+        return view('user-views.pages.pelatihan.peserta', compact('detail','tes'));
     }
 
     public function Selesai($id_pelatihan)

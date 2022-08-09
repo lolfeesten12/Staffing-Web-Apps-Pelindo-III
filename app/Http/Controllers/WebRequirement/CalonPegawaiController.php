@@ -4,8 +4,10 @@ namespace App\Http\Controllers\WebRequirement;
 
 use App\Http\Controllers\Controller;
 use App\Models\MasterData\MasterJabatan;
+use App\Models\MasterData\MasterPangkat;
 use App\Models\MasterData\MasterPegawai;
 use App\Models\MasterData\MasterPenempatan;
+use App\Models\MasterData\MasterSubUnit;
 use App\Models\MasterData\MasterUnitKerja;
 use App\Models\User;
 use App\Models\WebRequirement\CalonPegawai;
@@ -26,7 +28,9 @@ class CalonPegawaiController extends Controller
         $jabatan = MasterJabatan::get();
         $unit_kerja = MasterUnitKerja::get();
         $penempatan = MasterPenempatan::get();
-        return view('user-views.pages.requirement.calonpegawai.index',compact('calon','jabatan','unit_kerja','penempatan'));
+        $sub = MasterSubUnit::get();
+        $pangkat = MasterPangkat::get();
+        return view('user-views.pages.requirement.calonpegawai.index',compact('calon','jabatan','unit_kerja','penempatan','sub','pangkat'));
     }
 
     public function HasilSeleksi()
@@ -136,6 +140,8 @@ class CalonPegawaiController extends Controller
             $tes->id_jabatan = $request->id_jabatan;
             $tes->id_unit_kerja = $request->id_unit_kerja;
             $tes->id_penempatan = $request->id_penempatan;
+            $tes->id_sub_unit = $request->id_sub_unit;
+            $tes->id_pangkat = $request->id_pangkat;
             $tes->save();
 
             $pass = $item->nama_panggilan . '1234';

@@ -42,14 +42,17 @@ Tambah Data Usulan
                                     <hr>
                                     </hr>
                                     <div class="row mb-1 mt-2" id="radio1">
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <input class="mr-1" value="Resign" type="radio" name="jenis_mutasi" checked> Resign
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <input class="mr-1" value="Mutasi Internal" type="radio" name="jenis_mutasi"> Mutasi Internal
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <input class="mr-1" value="Mutasi Eksternal" type="radio" name="jenis_mutasi"> Mutasi Eksternal
+                                        </div>       
+                                        <div class="col-md-3">
+                                            <input class="mr-1" value="Pemecatan" type="radio" name="jenis_mutasi"> Pemecatan
                                         </div>        
                                     </div>
                                     <div class="col-6">
@@ -201,6 +204,9 @@ Tambah Data Usulan
                 $('#Eksternal').hide()
             } else if(value == 'Mutasi Eksternal'){
                 $('#Eksternal').show()
+                $('#Internal').hide()
+            } else if(value == 'Pemecatan'){
+                $('#Eksternal').hide()
                 $('#Internal').hide()
             }
 

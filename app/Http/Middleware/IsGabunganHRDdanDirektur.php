@@ -19,7 +19,7 @@ class IsGabunganHRDdanDirektur
     public function handle(Request $request, Closure $next)
     {
         $pegawai_role = MasterPegawai::where('id_pegawai', Auth::user()->id_pegawai)->first()->role;
-        if($pegawai_role == 'HRD' || $pegawai_role == 'Direktur'){
+        if($pegawai_role == 'HRD' || $pegawai_role == 'Direktur' || $pegawai_role == 'Kepala HRD'){
             return $next($request);
         }
 

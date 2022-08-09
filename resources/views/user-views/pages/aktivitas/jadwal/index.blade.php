@@ -75,6 +75,9 @@ Penjadwal Pegawai
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
                                                 style="width: 80px;">Unit Kerja</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
+                                                colspan="1" aria-label="Position: activate to sort column ascending"
+                                                style="width: 80px;">Sub Unit</th>
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Salary: activate to sort column ascending"
                                                 style="width: 70px;">Action</th>
@@ -83,10 +86,16 @@ Penjadwal Pegawai
                                     <tbody>
                                         @forelse ($pegawai as $item)
                                         <tr role="row" class="odd">
-                                            <th scope="row" class="small" class="sorting_1">{{ $loop->iteration}}.</th>
+                                            <th scope="row" class="small" class="sorting_1">{{ $loop->iteration}}.</th>  
                                             <td>{{ $item->nama_pegawai }}</td>
-                                            <td>{{ $item->Jabatan->nama_jabatan }}</td>
+                                            @if ($item->role == 'HRD')
+                                            <td>Pegawai HRD</td>
+                                            @else
+                                            <td>{{ $item->role }}</td>
+                                            @endif
+                                         
                                             <td>{{ $item->UnitKerja->unit_kerja }}</td>
+                                            <td>{{ $item->SubUnit->nama_sub_unit ?? '' }}</td>
                                             <td class="text-center">
                                                 <a href="{{ route('jadwal-pegawai.show',$item->id_pegawai) }}"
                                                     class="btn btn-sm btn-primary"><i class="lni lni-calendar"></i> Atur Jadwal</a>
