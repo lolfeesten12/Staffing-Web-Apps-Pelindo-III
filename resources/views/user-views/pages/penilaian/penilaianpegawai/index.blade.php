@@ -138,11 +138,11 @@ Penilaian Pegawai
                                                     class="btn btn-sm btn-secondary"><i class="lni lni-eye"></i></a>
                                                 @if ($item->status_acc == 'Pending')
                                                 <a href="javascript:;" class="btn btn-sm btn-success"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#ModalTerima-{{ $item->id_penilaian }}"><i class="lni lni-checkmark"></i></a>
-                                            <a href="javascript:;" class="btn btn-sm btn-danger"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#ModalTolak-{{ $item->id_penilaian }}"><i class="lni lni-close"></i></a>
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#ModalTerima-{{ $item->id_penilaian }}"><i class="lni lni-checkmark"></i></a>
+                                                <a href="javascript:;" class="btn btn-sm btn-danger"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#ModalTolak-{{ $item->id_penilaian }}"><i class="lni lni-close"></i></a>
                                                 @endif
                                             </td>
                                         </tr>

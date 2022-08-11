@@ -208,14 +208,14 @@ Detail Penilaian Diri Pegawai
                                     <input class="form-control" type="text" value="{{ $nilai->nilai_sikap }}" min="1"
                                         readonly>
                                 </div>
-                                @if (Auth::user()->Pegawai->role != 'Pegawai')
+                                @if (Auth::user()->Pegawai->role == 'Pegawai' || Auth::user()->Pegawai->role == 'HRD')
+                            
+                                @else
                                 <div class="col-3">
                                     <label class="small mb-1 mr-1">Kepemimpinan</label>
                                     <input class="form-control" type="text" value="{{ $nilai->nilai_kepemimpinan }}"
                                         readonly>
                                 </div>
-                                @else
-
                                 @endif
                                 <div class="col-3">
                                     <label class="small mb-1 mr-1">Nilai SKP</label>

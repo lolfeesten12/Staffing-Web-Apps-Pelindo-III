@@ -18,7 +18,75 @@ Dashboard Unit
             </div>
         </div>
     </div>
+
+    @if (count($jadwal) > 0)
+    <div class="col-12">
+        <div class="card radius-10 bg-danger">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="">
+                        <p class="mb-1 text-white">Penukaran Jadwal</p>
+                        <h5 class="mb-0 text-white">{{ $tukarjadwal }} Data Penukaran</h5>
+                    </div>
+                  
+                    <div class="ms-auto bg-white-1 text-white">
+                        <a type="button" href="{{ route('jadwal-saya.show', Auth::user()->pegawai->id_pegawai) }}" class="btn btn-danger btn-sm">Cek Disini Sekarang!</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
     
+    @if (Auth::user()->Pegawai->role == 'Kepala Unit')
+    <div class="row">
+        <div class="col-4">
+            <div class="card radius-10 bg-primary">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="">
+                            <p class="mb-1 text-white">Divisi / Unit Kerja</p>
+                            <h5 class="mb-0 text-white">{{ Auth::user()->Pegawai->UnitKerja->unit_kerja }} </h5>
+                        </div>
+                        <div class="ms-auto widget-icon bg-white-1 text-white">
+                            <i class="lni lni-consulting"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="card radius-10 bg-primary">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="">
+                            <p class="mb-1 text-white">Sub Unit Kerja</p>
+                            <h5 class="mb-0 text-white">{{ Auth::user()->Pegawai->SubUnit->nama_sub_unit }} </h5>
+                        </div>
+                        <div class="ms-auto widget-icon bg-white-1 text-white">
+                            <i class="lni lni-consulting"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="card radius-10 bg-primary">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="">
+                            <p class="mb-1 text-white">Total Pegawai Unit</p>
+                            <h5 class="mb-0 text-white">{{ $jumlah_pegawai }} Orang</h5>
+                        </div>
+                        <div class="ms-auto widget-icon bg-white-1 text-white">
+                            <i class="lni lni-users"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @else
     <div class="row">
         <div class="col-6">
             <div class="card radius-10 bg-primary">
@@ -51,6 +119,8 @@ Dashboard Unit
             </div>
         </div>
     </div>
+    @endif
+   
 
     <div class="container-fluid">
         <div class="card">

@@ -18,6 +18,24 @@ Dashboard
             </div>
         </div>
     </div>
+    @if (count($jadwal) > 0)
+    <div class="col-12">
+        <div class="card radius-10 bg-danger">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="">
+                        <p class="mb-1 text-white">Penukaran Jadwal</p>
+                        <h5 class="mb-0 text-white">{{ $tukarjadwal }} Data Penukaran</h5>
+                    </div>
+                  
+                    <div class="ms-auto bg-white-1 text-white">
+                        <a type="button" href="{{ route('jadwal-saya.show', Auth::user()->pegawai->id_pegawai) }}" class="btn btn-danger btn-sm">Cek Disini Sekarang!</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 row-cols-xxl-4">
         <div class="col">
             <div class="card radius-10 bg-primary">

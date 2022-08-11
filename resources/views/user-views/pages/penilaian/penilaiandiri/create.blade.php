@@ -61,6 +61,7 @@ Penilaian Diri Pegawai
                                         <div class="row">
                                             <label class="col-sm-3 ">Nama</label>
                                             <div class="col-sm-9">: {{ Auth::user()->Pegawai->nama_pegawai }}</div>
+                                            <input type="hidden" value="{{ Auth::user()->Pegawai->role  }}" id="role_pegawai">
                                         </div>
                                     </div>
                                     <div class="col-12">
@@ -73,8 +74,7 @@ Penilaian Diri Pegawai
                                     <div class="col-12">
                                         <div class="row">
                                             <label class="col-sm-3 ">Unit Kerja</label>
-                                            <div class="col-sm-9">: {{ Auth::user()->Pegawai->UnitKerja->unit_kerja }}
-                                            </div>
+                                            <div class="col-sm-9">: {{ Auth::user()->Pegawai->UnitKerja->unit_kerja }}</div>
                                         </div>
                                     </div>
                                     <div class="col-12">
@@ -252,7 +252,9 @@ Penilaian Diri Pegawai
                                     @error('nilai_sikap')<div class="text-danger small mb-1">{{ $message }}
                                     </div> @enderror
                                 </div>
-                                @if (Auth::user()->Pegawai->role != 'Pegawai')
+                                @if (Auth::user()->Pegawai->role == 'Pegawai' || Auth::user()->Pegawai->role == 'HRD')
+                               
+                                @else
                                 <div class="col-3">
                                     <label class="small mb-1 mr-1" for="nilai_kepemimpinan">Kepemimpinan</label><span
                                         class="mr-4 mb-3" style="color: red">*</span>
@@ -263,8 +265,6 @@ Penilaian Diri Pegawai
                                     @error('nilai_kepemimpinan')<div class="text-danger small mb-1">{{ $message }}
                                     </div> @enderror
                                 </div>
-                                @else
-
                                 @endif
 
                                 <div class="col-3">
@@ -355,6 +355,8 @@ Penilaian Diri Pegawai
         var nilai_kerjasama = $('#nilai_kerjasama').val()
         var nilai_sikap = $('#nilai_sikap').val()
         var nilai_kepemimpinan = $('#nilai_kepemimpinan').val()
+        var role_pegawai = $('#role_pegawai').val()
+
 
         if (nilai_kepemimpinan == undefined) {
             if (nilai_tanggung_jawab == null | nilai_tanggung_jawab == 0 | nilai_integritas == null |
@@ -380,9 +382,14 @@ Penilaian Diri Pegawai
                     parseInt(nilai_disiplin) + parseInt(nilai_kerjasama) + parseInt(nilai_sikap)
                 $('#nilai_total').val(nilai_total);
 
-                var rata = nilai_total / 7;
+                if(role_pegawai == 'Pegawai' || role_pegawai == 'HRD'){
+                    var rata = nilai_total / 6;
+                }else{
+                    var rata = nilai_total / 7;
+                }
+                
                 var rata_rata = rata.toFixed(2)
-                $('#nilai_rata2').val(rata_rata);
+                $('#nilai_rata2').val(parseInt(rata_rata));
 
             }
         }else{
@@ -411,9 +418,13 @@ Penilaian Diri Pegawai
                         nilai_kepemimpinan)
                 $('#nilai_total').val(nilai_total);
 
-                var rata = nilai_total / 7;
+                if(role_pegawai == 'Pegawai' || role_pegawai == 'HRD'){
+                    var rata = nilai_total / 6;
+                }else{
+                    var rata = nilai_total / 7;
+                }
                 var rata_rata = rata.toFixed(2)
-                $('#nilai_rata2').val(rata_rata);
+                $('#nilai_rata2').val(parseInt(rata_rata));
 
             }
         }

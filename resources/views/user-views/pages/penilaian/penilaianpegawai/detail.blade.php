@@ -256,7 +256,7 @@ Detail Penilaian Diri Pegawai
                                     <textarea class="form-control" type="text" readonly>{{ $nilai->tanggapan_penilai }}</textarea>
                                 </div>
                                 <div class="col-12">
-                                    <a href="{{ route('penilaian-diri.index') }}" class="btn btn-primary px-4" type="button">Kembali</a>
+                                    <a href="{{ route('penilaian-pegawai.index') }}" class="btn btn-primary px-4" type="button">Kembali</a>
                                 </div>
                                 </form>
                             </div>

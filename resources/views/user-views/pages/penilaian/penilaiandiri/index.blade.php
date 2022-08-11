@@ -80,6 +80,9 @@ Penilaian Diri Pegawai
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
                                                 style="width: 80px;">Penilai</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
+                                                colspan="1" aria-label="Position: activate to sort column ascending"
+                                                style="width: 80px;">Pengesah</th>
                                             <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                 colspan="1" aria-label="Position: activate to sort column ascending"
                                                 style="width: 80px;">Nilai Rata Rata</th>
@@ -100,7 +103,13 @@ Penilaian Diri Pegawai
                                             <th scope="row" class="small" class="sorting_1">{{ $loop->iteration}}.</th>
                                             <td>{{ $item->periode }}</td>
                                             <td>{{ $item->tanggal_buat }}</td>
-                                            <td>{{ $item->Penilai->nama_pegawai }}</td>
+                                            <td>{{ $item->Penilai->nama_pegawai }}, {{ $item->Penilai->role }}</td>
+                                            @if ($item->AtasanPenilai->role == 'Direktur')
+                                                <td>Direktur</td>
+                                            @else
+                                            <td>{{ $item->AtasanPenilai->nama_pegawai }}</td>
+                                            @endif
+                                         
                                             <td>{{ $item->nilai_rata2 }}</td>
                                             <td>{{ $item->nilai_skp ?? "Belum Dinilai" }}</td>
                                             <td class="text-center">
@@ -110,7 +119,7 @@ Penilaian Diri Pegawai
                                                 <span class="badge bg-light-danger text-danger w-100">Ditolak</span>
                                                 @elseif ($item->status_acc == 'Disahkan')
                                                 <span
-                                                    class="badge bg-light-info text-info w-100">Telah Disahkan</span>
+                                                    class="badge bg-light-success text-success w-100">Telah Disahkan</span>
                                                 @else
                                                 <span class="badge bg-light-info text-info w-100">Diproses</span>
                                                 @endif
@@ -120,7 +129,8 @@ Penilaian Diri Pegawai
                                                     data-bs-toggle="tooltip" data-bs-placement="top" title=""
                                                     data-bs-original-title="Detail Data Penilaian"
                                                     class="btn btn-sm btn-secondary"><i class="lni lni-eye"></i></a>
-                                                <a href="{{ route('penilaian-diri.edit',$item->id_penilaian) }}"
+                                                @if ($item->status_acc == 'Pending' || $item->status_acc == 'Not Approved')
+                                                <a href="{{ route('penilaian-diri-edit',$item->id_penilaian) }}"
                                                     data-bs-toggle="tooltip" data-bs-placement="top" title=""
                                                     data-bs-original-title="Edit Data Penilaian"
                                                     class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i></a>
@@ -128,6 +138,11 @@ Penilaian Diri Pegawai
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#Modalhapus-{{ $item->id_penilaian }}"><i
                                                         class="bi bi-trash-fill"></i></a>
+                                                @else
+
+                                                @endif
+                                               
+                                             
                                             </td>
                                         </tr>
                                         @empty

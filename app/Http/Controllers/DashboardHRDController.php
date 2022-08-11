@@ -68,6 +68,12 @@ class DashboardHRDController extends Controller
         $resign_tolak = UsulanMutasi::where('jenis_mutasi','Resign')->where('status_approval','Tolak')->whereMonth('created_at', Carbon::now()->month)->count();
         $resign_dimutasi = UsulanMutasi::where('jenis_mutasi','Resign')->where('status_approval','Dimutasi')->whereMonth('created_at', Carbon::now()->month)->count();
 
+        $jadwal = JadwalPegawai::where('id_pegawai', Auth::user()->id_pegawai)->where('status','Pending Penukaran')->get();
+        $tukarjadwal = JadwalPegawai::where('id_pegawai', Auth::user()->id_pegawai)->where('status','Pending Penukaran')->count();
+        if(count($jadwal) > 0){
+            Alert::warning('Warning Title', 'Warning Message');
+        }
+
 
         return view('user-views.pages.dashboardhrd', compact(
             'jumlah_pegawai','jumlah_unit','jumlah_jabatan','jumlah_shift_kerja',
@@ -77,7 +83,7 @@ class DashboardHRDController extends Controller
             'jumlah_cuti','jumlah_cuti_pending','jumlah_cuti_terima','jumlah_cuti_tolak',
             'internal','internal_pending','internal_terima','internal_tolak','internal_dimutasi',
             'promosi','promosi_pangkat','promosi_jabatan','demosi','demosi_pangkat','demosi_jabatan',
-            'resign','resign_pending','resign_terima','resign_tolak','resign_dimutasi'
+            'resign','resign_pending','resign_terima','resign_tolak','resign_dimutasi','jadwal','tukarjadwal'
         
 
         ));
@@ -110,10 +116,26 @@ class DashboardHRDController extends Controller
     public function indexunit()
     {
         $haritext = Carbon::today()->toDayDateTimeString();
-        $jumlah_pegawai = MasterPegawai::where('id_unit_kerja', Auth::user()->Pegawai->UnitKerja->id_unit_kerja)->count();
-        $pegawai_unit = MasterPegawai::where('id_unit_kerja', Auth::user()->Pegawai->UnitKerja->id_unit_kerja)->get();
 
-        return view('user-views.pages.dashboardunit', compact('haritext','jumlah_pegawai','pegawai_unit'));
+        if(Auth::user()->Pegawai->role == 'Kepala Unit'){
+            $jumlah_pegawai = MasterPegawai::where('id_unit_kerja', Auth::user()->Pegawai->UnitKerja->id_unit_kerja)->where('id_sub_unit', Auth::user()->Pegawai->SubUnit->id_sub_unit)
+            ->where('role', 'Pegawai')
+            ->count();
+            $pegawai_unit = MasterPegawai::where('id_unit_kerja', Auth::user()->Pegawai->UnitKerja->id_unit_kerja)->where('id_sub_unit', Auth::user()->Pegawai->SubUnit->id_sub_unit)
+            ->where('role', 'Pegawai')
+            ->get();
+        }else{
+            $jumlah_pegawai = MasterPegawai::where('id_unit_kerja', Auth::user()->Pegawai->UnitKerja->id_unit_kerja)->count();
+            $pegawai_unit = MasterPegawai::where('id_unit_kerja', Auth::user()->Pegawai->UnitKerja->id_unit_kerja)->get();
+        }
+
+        $jadwal = JadwalPegawai::where('id_pegawai', Auth::user()->id_pegawai)->where('status','Pending Penukaran')->get();
+        $tukarjadwal = JadwalPegawai::where('id_pegawai', Auth::user()->id_pegawai)->where('status','Pending Penukaran')->count();
+        if(count($jadwal) > 0){
+            Alert::warning('Warning Title', 'Warning Message');
+        }
+       
+        return view('user-views.pages.dashboardunit', compact('haritext','jumlah_pegawai','pegawai_unit','tukarjadwal','jadwal'));
     }
 
     public function role(Request $request)
