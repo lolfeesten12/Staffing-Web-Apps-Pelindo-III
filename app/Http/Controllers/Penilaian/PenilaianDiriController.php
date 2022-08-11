@@ -165,7 +165,52 @@ class PenilaianDiriController extends Controller
      */
     public function update(Request $request, $id)
     {
+          // FILE SKP
+          $imagePath = $request->file('file_skp');
+          $files = $imagePath->getClientOriginalName();
+          $imagePath->move(public_path().'/Resume/', $files); 
+          $data[] = $files;
+  
+          // UPDATE
+          $nilai = Nilai::find($id);
+          $nilai->id_penilai = $request->id_penilai;
+          $nilai->id_pengesah = $request->id_pengesah;
+      
+          $nilai->nilai_tanggung_jawab = $request->nilai_tanggung_jawab;
+          $nilai->nilai_integritas = $request->nilai_integritas;
+          $nilai->nilai_komitmen = $request->nilai_komitmen;
+          $nilai->nilai_disiplin = $request->nilai_disiplin;
+          $nilai->nilai_kerjasama = $request->nilai_kerjasama;
+          $nilai->nilai_sikap = $request->nilai_sikap;
+          $nilai->file_skp = $files;
+          $nilai->nilai_skp = $request->nilai_skp;
+          $nilai->tanggal_buat = Carbon::now();
+  
+          if(Auth::user()->Pegawai->role != 'Pegawai' || Auth::user()->Pegawai->role != 'HRD'){
+              $nilai->nilai_kepemimpinan = $request->nilai_kepemimpinan;
+          }
+       
+          $nilai->nilai_total = $request->nilai_total;
+          $nilai->nilai_rata2 = $request->nilai_rata2;
+          $nilai->catatan_penilaian = $request->catatan_penilaian;
+          $nilai->status_acc = 'Pending';
+  
+          // NO PENILAIAN
+          $id = Nilai::getId();
+          foreach($id as $value);
+          $idlama = $value->id_penilaian;
+          $idbaru = $idlama + 1;
+          $periode = date("m",strtotime($nilai->periode));
+          $no_penilaian = 'PD'.'/'.$periode.'/'.$nilai->Pegawai->id_pegawai.'/'.$idbaru;
+          $nilai->no_penilaian = $no_penilaian;
+          $nilai->aktif_status = 'Aktif';
+          $nilai->update();
+  
+          return redirect()->route('penilaian-diri.index')->with('messageberhasil','Data Penilaian Diri Pegawai Berhasil Ditambahkan');
+    }
 
+    public function update_data(Request $request, $id)
+    {
         $nilai = Nilai::find($id);
         $nilai->nilai_tanggung_jawab = $request->nilai_tanggung_jawab;
         $nilai->nilai_integritas = $request->nilai_integritas;

@@ -213,6 +213,7 @@ Route::group(['middleware' => 'auth'], function () {
         ->group(function () {
             Route::resource('penilaian-diri', PenilaianDiriController::class);
             Route::get('/penilaian-diri/editdata/{id}', [App\Http\Controllers\Penilaian\PenilaianDiriController::class, 'edit_data'])->name('penilaian-diri-edit');
+            Route::put('penilaian-diri/updatedata/{id}', [App\Http\Controllers\Penilaian\PenilaianDiriController::class, 'update_data'])->name('penilaian-diri-update');
             Route::post('penilaian-diri/periode', [App\Http\Controllers\Penilaian\PenilaianDiriController::class, 'StorePeriode'])->name('store-periode-nilai');
             Route::resource('penilaian-pegawai', PenilaianPegawaiController::class);
             Route::post('approval-nilai/{id_penilaian}/set-status', [App\Http\Controllers\Penilaian\PenilaianPegawaiController::class, 'Status'])->name('penilaian-status');

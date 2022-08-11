@@ -49,7 +49,7 @@ Edit Penilaian Diri
                         <h5 class="mb-0">Penilai dan Pengesah</h5>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('penilaian-diri.update', $item->id_penilaian) }}" method="POST"
+                        <form action="{{ route('penilaian-diri-update', $item->id_penilaian) }}" method="POST"
                             id="form1" enctype="multipart/form-data">
                             @method('PUT')
                             @csrf
