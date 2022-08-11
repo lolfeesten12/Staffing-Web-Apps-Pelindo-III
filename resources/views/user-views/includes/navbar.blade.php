@@ -354,7 +354,9 @@
         </a>
         <ul>
             <li> <a href="{{ route('penilaian-diri.index') }}"><i class="bi bi-circle"></i>Penilaian Diri</a></li>
-            @if (Auth::user()->Pegawai->role != 'Pegawai')
+            @if (Auth::user()->Pegawai->role == 'Pegawai' || Auth::user()->Pegawai->role == 'HRD')
+        
+            @else
             <li> <a href="{{ route('penilaian-pegawai.index') }}"><i class="bi bi-circle"></i>Penilaian Pegawai</a></li>
             @endif
            
