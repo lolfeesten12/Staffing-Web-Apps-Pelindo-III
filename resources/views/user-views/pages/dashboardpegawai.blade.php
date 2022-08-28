@@ -90,14 +90,14 @@ Dashboard Pegawai
                     <div class="d-flex align-items-center">
                         <div class="">
                             <p class="mb-1">Jadwal Anda Hari Ini</p>
-                            <h5 class="mb-0 text-info">Shift {{ $jadwal_today[0]->ShiftKerja->jenis_shift }}</h5>
+                            <h5 class="mb-0 text-info">Shift {{ $jadwal_today[0]->ShiftKerja->jenis_shift ?? '' }}</h5>
                         </div>
                         <div class="ms-auto fs-2 text-primary">
                             <i class="bi bi-bell"></i>
                         </div>
                     </div>
                     <hr class="my-2">
-                    <small class="mb-0"><i class="bi bi-arrow-up"></i> <span>Jam Masuk {{ $jadwal_today[0]->ShiftKerja->jam_masuk }} - Jam Keluar {{ $jadwal_today[0]->ShiftKerja->jam_selesai }}</span></small>
+                    <small class="mb-0"><i class="bi bi-arrow-up"></i> <span>Jam Masuk {{ $jadwal_today[0]->ShiftKerja->jam_masuk ?? '' }} - Jam Keluar {{ $jadwal_today[0]->ShiftKerja->jam_selesai ?? '' }}</span></small>
                 </div>
             </div>
         </div>
