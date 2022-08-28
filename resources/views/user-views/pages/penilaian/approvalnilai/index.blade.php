@@ -110,13 +110,13 @@ Pengesahan Nilai Pegawai
                                             <td>{{ $item->periode }}</td>
                                             <td>{{ $item->Pegawai->nama_pegawai }}</td>
                                             <td>{{ $item->Pegawai->Jabatan->nama_jabatan }}</td>
-                                            <td>
+                                            
                                                 @if (Auth::user()->Pegawai->role == 'Direktur')
-                                                    {{ $item->Pegawai->UnitKerja->unit_kerja }}
+                                                <td>{{ $item->Pegawai->UnitKerja->unit_kerja }}</td>
                                                 @else
 
                                                 @endif
-                                            </td>
+                                            
                                             <td>{{ $item->Pegawai->Pangkat->nama_pangkat }},
                                                 {{ $item->Pegawai->Pangkat->golongan }}</td>
                                             <td>{{ $item->tanggal_buat }}</td>
