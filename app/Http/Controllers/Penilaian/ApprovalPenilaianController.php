@@ -30,7 +30,7 @@ class ApprovalPenilaianController extends Controller
             ->get();
 
         }elseif(Auth::user()->Pegawai->role == 'Manager Unit'){
-            $nilai = Nilai::where('id_unit_kerja', Auth::user()->Pegawai->id_unit_kerja)
+            $nilai = Nilai::where('id_pengesah', Auth::user()->Pegawai->id_pegawai)
             ->where('aktif_status','Aktif')
             ->where('status_acc','Approved')->OrWhere('status_acc','Disahkan')
             ->get();
