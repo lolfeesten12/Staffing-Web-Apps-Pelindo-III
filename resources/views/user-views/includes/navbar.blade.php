@@ -71,7 +71,7 @@
                                 </div>
                             </a>
                         </li>
-                        @if (Auth::user()->Pegawai->id_jabatan == '5' || Auth::user()->Pegawai->id_jabatan == '9' )
+                        @if (Auth::user()->Pegawai->id_jabatan == '10' || Auth::user()->Pegawai->id_jabatan == '9' )
                         <li>
                             <button class="dropdown-item" data-bs-toggle="modal"
                             data-bs-target="#ModalPindahRoleHRD">
